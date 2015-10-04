@@ -1,0 +1,111 @@
+\psset{unit=1.0cm}
+\begin{pspicture}(-8,-7)(8,5)
+
+% Horizontal lines (along x-axis).
+\psline[linewidth=0.5pt,linestyle=solid,arrowsize=4pt 2]{|->}(0,4.5)(1,4.5)
+\rput[l](1.2,4.5){$x$}
+
+\def\PstHorizontal{{%
+\psline[linestyle=dotted]{}(-5.5,0)(5,0)%
+\psline[linestyle=solid]{}(-5,0)(5,0)%
+\psline[linestyle=dotted]{}(5,0)(5.5,0)%
+}}
+\rput(0,2){\psset{linewidth=0.5pt}\PstHorizontal}
+\rput(0,0){\psset{linewidth=1pt}\PstHorizontal}
+\rput(0,-2){\psset{linewidth=0.5pt}\PstHorizontal}
+\rput(0,-4){\psset{linewidth=1pt}\PstHorizontal}
+
+\rput[l](6.2, 2){$t^{n+\frac{1}{2}}$}
+\rput[l](6.2, 0){$t^{n}$}
+\rput[l](6.2,-2){$t^{n-\frac{1}{2}}$}
+\rput[l](6.2,-4){$t^{n-1}$}
+
+% Vertical lines (along t/y-axis).
+\def\PstVertical{{%
+\psline[linestyle=dotted]{}(0,-5.5)(0,-5)%
+\psline[linestyle=solid]{}(0,-5)(0,3)%
+\psline[linestyle=dotted]{}(0,3)(0,3.5)%
+}}
+\rput(4,0){\psset{linewidth=1pt}\PstVertical}
+\rput(2,0){\psset{linewidth=0.5pt}\PstVertical}
+\rput(0,0){\psset{linewidth=1pt}\PstVertical}
+\rput(-2,0){\psset{linewidth=0.5pt}\PstVertical}
+\rput(-4,0){\psset{linewidth=1pt}\PstVertical}
+
+\psline[linewidth=0.5pt,linestyle=dotted]{}(-6.5,-0.5)(-6.5,0)
+\psline[linewidth=0.5pt,linestyle=solid,arrowsize=4pt 2]{->}(-6.5,0)(-6.5,1)
+\rput[b](-6.5,1.2){$t$}
+
+\rput[t]( 4,-6.2){$x_{j+1}$}
+\rput[t]( 2,-6.2){$x_{j+\frac{1}{2}}$}
+\rput[t]( 0,-6.2){$x_{j}$}
+\rput[t](-2,-6.2){$x_{j-\frac{1}{2}}$}
+\rput[t](-4,-6.2){$x_{j-1}$}
+
+% Solution element.
+\def\PstSolutionElement{{%
+\psset{linewidth=0.3pt,linestyle=dashed,dotsize=0.15 1}%
+\psdot(0,0)%
+\psline{}(0.1,0.1)(0.1,1.8)%
+\psline{}(-0.1,1.8)(-0.1,0.1)%
+\psarc(0,1.8){0.1}{0}{180}%
+\psline{}(-0.1,0.1)(-1.8,0.1)%
+\psline{}(-1.8,-0.1)(-0.1,-0.1)%
+\psarc(-1.8,0){0.1}{90}{270}%
+\psline{}(-0.1,-0.1)(-0.1,-1.8)%
+\psline{}(0.1,-1.8)(0.1,-0.1)%
+\psarc(0,-1.8){0.1}{180}{0}%
+\psline{}(0.1,-0.1)(1.8,-0.1)%
+\psline{}(1.8,0.1)(0.1,0.1)%
+\psarc(1.8,0){0.1}{270}{90}%
+}}
+
+\rput(-2,2){\psset{dotstyle=*}\PstSolutionElement}
+\rput( 2,2){\psset{dotstyle=*}\PstSolutionElement}
+
+\rput(-4,0){\psset{dotstyle=*}\PstSolutionElement}
+\rput( 0,0){\psset{dotstyle=*}\PstSolutionElement}
+\rput( 4,0){\psset{dotstyle=*}\PstSolutionElement}
+
+\rput(-2,-2){\psset{dotstyle=*}\PstSolutionElement}
+\rput( 2,-2){\psset{dotstyle=*}\PstSolutionElement}
+
+\rput(-4,-4){\psset{dotstyle=*}\PstSolutionElement}
+\rput( 0,-4){\psset{dotstyle=*}\PstSolutionElement}
+\rput( 4,-4){\psset{dotstyle=*}\PstSolutionElement}
+
+% Information propagation.
+\def\PstPropagateLeft{{%
+\psline[linewidth=0.7pt,linestyle=dotted,arrowsize=4pt 2]%
+{->}(-0.2,0.2)(-1.8,1.8)%
+}}
+\def\PstPropagateRight{{%
+\psline[linewidth=0.7pt,linestyle=dotted,arrowsize=4pt 2]%
+{->}(0.2,0.2)(1.8,1.8)%
+}}
+
+\rput(-2, 2){\PstPropagateLeft\PstPropagateRight}
+\rput( 2, 2){\PstPropagateLeft\PstPropagateRight}
+
+\rput(-4, 0){\PstPropagateLeft\PstPropagateRight}
+\rput( 0, 0){\PstPropagateLeft\PstPropagateRight}
+\rput( 4, 0){\PstPropagateLeft\PstPropagateRight}
+
+\rput(-2,-2){\PstPropagateLeft\PstPropagateRight}
+\rput( 2,-2){\PstPropagateLeft\PstPropagateRight}
+
+\rput(-4,-4){\PstPropagateLeft\PstPropagateRight}
+\rput( 0,-4){\PstPropagateLeft\PstPropagateRight}
+\rput( 4,-4){\PstPropagateLeft\PstPropagateRight}
+
+% Point markers.
+\rput( 0, 0){\rput[lb]( 0.4, 0.2){$A$}}
+\rput(-2, 0){\rput[rb](-0.2, 0.2){$B$}}
+\rput(-2,-2){\rput[rb](-0.2, 0.5){$C$}}
+\rput( 0,-2){\rput[lt]( 0.2,-0.2){$D$}}
+\rput( 2,-2){\rput[lb]( 0.2, 0.5){$E$}}
+\rput( 2, 0){\rput[lb]( 0.2, 0.2){$F$}}
+
+\end{pspicture}
+
+% vim: set fenc=utf8 ff=unix nobomb et sw=2 ts=2 tw=79:

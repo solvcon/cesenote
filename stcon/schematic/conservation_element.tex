@@ -1,0 +1,34 @@
+\psset{unit=1.0cm}
+\begin{pspicture}(-3,-3)(3,1)
+
+\psline[linewidth=1.5pt,linestyle=solid](-2,0)(2, 0)
+\psline[linewidth=1.5pt,linestyle=solid]( 0,0)(0,-2)
+\psline[linewidth=0.5pt,linestyle=solid](-2,-2)(2,-2)
+\psline[linewidth=0.5pt,linestyle=solid](-2,0)(-2,-2)
+\psline[linewidth=0.5pt,linestyle=solid](2,0)(2,-2)
+
+\psdot[dotsize=0.15 1]( 0, 0)
+\psdot[dotsize=0.15 1](-2,-2)
+\psdot[dotsize=0.15 1]( 2,-2)
+
+\rput( 0, 0){\rput[ b]( 0  , 0.2){$A$}}
+\rput(-2, 0){\rput[rb](-0.2, 0.2){$B$}}
+\rput(-2,-2){\rput[rt](-0.2,-0.2){$C$}}
+\rput( 0,-2){\rput[ t]( 0  ,-0.2){$D$}}
+\rput( 2,-2){\rput[lt]( 0.2,-0.2){$E$}}
+\rput( 2, 0){\rput[lb]( 0.2, 0.2){$F$}}
+
+\def\PstPropagateLeft{{%
+\psline[linewidth=0.7pt,linestyle=dotted,arrowsize=4pt 2]%
+{->}(-0.2,0.2)(-1.8,1.8)%
+}}
+\rput( 2,-2){\PstPropagateLeft}
+\def\PstPropagateRight{{%
+\psline[linewidth=0.7pt,linestyle=dotted,arrowsize=4pt 2]%
+{->}(0.2,0.2)(1.8,1.8)%
+}}
+\rput(-2,-2){\PstPropagateRight}
+
+\end{pspicture}
+
+% vim: set fenc=utf8 ff=unix nobomb et sw=2 ts=2 tw=79:

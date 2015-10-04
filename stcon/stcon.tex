@@ -1,0 +1,235 @@
+\documentclass[a4paper,12pt,dvips]{article}
+\usepackage[textwidth=6.5in,textheight=9in]{geometry}
+\usepackage[colorlinks=true]{hyperref}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage[monochrome]{color}
+\usepackage{graphicx}     % From LaTeX distribution
+%\usepackage{subfigure}    % From CTAN/macros/latex/contrib/supported/subfigure
+\usepackage{pst-all}      % From PSTricks
+\usepackage{pst-poly}     % From pstricks/contrib/pst-poly
+\usepackage{multido}      % From PSTricks
+\usepackage[center,footnotesize]{caption}
+\usepackage[subrefformat=parens]{subcaption}
+
+\graphicspath{{eps/}{result_simple/}}
+
+%\numberwithin{equation}{section}
+
+\newcommand*\diff{\mathop{}\!\mathrm{d}}
+\newcommand*\Diff[1]{\mathop{}\!\mathrm{d^#1}}
+\newcommand*\defeq{\buildrel{\text{def}}\over{=}}
+
+\begin{document}
+
+\title{Introduction to the CESE Method}
+\author{Yung-Yu Chen}
+\date{2015.10.4}
+
+\maketitle
+
+\tableofcontents
+%\listoffigures
+
+\hspace{.5cm}
+
+\section{Space-Time Conservation}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics{staggered_stencil.eps}
+\caption{The space-time staggered stencil.  The dashed cross enclosure denotes
+the solution elements (SEs).  The solid dots are the solution points of the
+associated solution elements.  $A$, $B$, $C$, $D$, $E$, and $F$ are
+intersections of half grid lines.  The rectangle enclosed by the line segments
+$\overline{AB}$, $\overline{BC}$, $\overline{CD}$, $\overline{DE}$,
+$\overline{EF}$, and $\overline{FA}$ defines a conservation element that allows
+the solution to march in time.  The dotted arrow lines show the dependency of
+the solution values.}
+\label{f:staggered_stencil}
+\end{figure}
+
+The Conservation Element and Solution Element (CESE) method\cite{b:chang95}
+solves conservation laws by using a non-conventional formulation in space-time.
+It significantly differs from well established methods because of two traits:
+%
+\begin{enumerate}
+%
+\item It uses an untraditional formulation that unifies space and time.
+%
+\item It selects both the solution variable and its gradient as unknowns.
+%
+\end{enumerate}
+
+We start with a one-dimensional hyperbolic partial differential equation (PDE)
+\begin{align}
+  \frac{\partial u}{\partial t} + \frac{\partial f}{\partial x} = 0
+  \label{e:claw1d}
+\end{align}
+where $u(x, t)$ is the solution variable, and $f(u) = f(x, t)$ is the flux
+function.  Let $t = c_0t_0$ have the same dimension as $x$, where $t_0$ is time
+and $c_0$ is a scaling constant having the dimension of velocity.  Now $x$ and
+$t$ both have the dimension of space.  Rewrite Eq.~(\ref{e:claw1d}) in an
+Euclidean space $\mathbb{E}_2$ where $x_1 = x$ and $x_2 = t$
+\begin{align*}
+  \nabla \cdot \mathbf{h} = 0
+\end{align*}
+where
+\begin{align*}
+  \mathbf{h} \defeq \left(\begin{array}{c}
+    f \\ u
+  \end{array}\right)
+\end{align*}
+is defined as the space-time flux function.  Aided by the convergence theorem,
+it is converted to an integral equation 
+\begin{align}
+  \int_{S(V)} \mathbf{h} \cdot \diff \boldsymbol\sigma = 0
+  \label{e:claw1dint}
+\end{align}
+where $\diff\boldsymbol\sigma = (\diff x, \diff t)^t$, $V$ the control
+volume, and $S(V)$ the control surface.
+
+The CESE method uses a staggered grid, as shown in
+Fig.~\ref{f:staggered_stencil}, to develop time-marching schemes.  The
+space-time domain is discretized as non-overlapping conservation elements
+(CEs), e.g., the rectangle $\square ABCD$ or $\square FADE$.  In the grid,
+\begin{align*}
+  \Delta x \defeq x_j - x_{j-1}, \quad \Delta t \defeq t^n - t^{n-1}
+\end{align*}
+Define solution points at the intersection of integer grid lines $t = \ldots,
+t^{n-1}, t^n, t^{n+1}, \ldots$ and $x = \ldots, x_{j-1}, x_j, x_{j+1}, \ldots$,
+and that of half grid lines $t = \ldots, t^{n-\frac{1}{2}}, t^{n+\frac{1}{2}},
+\ldots$ and $x = \ldots, x_{j-\frac{1}{2}}, x_{j+\frac{1}{2}}, \ldots$, which
+are marked with the solid dots in Fig.~\ref{f:staggered_stencil}.  Each
+solution point is associated with a solution element (SE).
+
+At a solution point, the unknowns include both the solution variable itself
+($u_j^n$) and its gradient ($(u_x)_j^n$).  Let $\mathrm{SE}(j,n)$ denote the
+solution element having the solution point at $(x_j, t^n)$.  In that solution
+element, we approximate the solution variable as
+\begin{align}
+  &u^*(x,t; j,n) = u_j^n + (x-x_j) (u_x)_j^n + (t-t^n) (u_t)_j^n,
+  \label{e:solapprox} \\
+  &\quad\quad
+  x_{j-\frac{1}{2}} < x < x_{j+\frac{1}{2}}, \quad
+  t^{n-\frac{1}{2}} < t < t^{n+\frac{1}{2}} \notag
+\end{align}
+and
+\begin{align*}
+  u_j^n \defeq u(x_j, t_n), \quad
+  (u_x)_j^n \defeq \left.\frac{\partial u}{\partial x}\right|_{x=x_j,t=t^n},
+  \quad
+  (u_t)_j^n \defeq \left.\frac{\partial u}{\partial t}\right|_{x=x_j,t=t^n}
+  = -(f_u)_j^n (u_x)_j^n
+\end{align*}
+are treated as constants.  The flux function is approximated as
+\begin{align}
+  &f^*(x,t; j,n) = f_j^n + (x-x_j) (f_x)_j^n + (t-t^n) (f_t)_j^n,
+  \label{e:fluxapprox} \\
+  &\quad\quad
+  x_{j-\frac{1}{2}} < x < x_{j+\frac{1}{2}}, \quad
+  t^{n-\frac{1}{2}} < t < t^{n+\frac{1}{2}} \notag
+\end{align}
+and
+\begin{align*}
+  f_j^n \defeq f(x_j, t_n), \quad
+  (f_x)_j^n &\defeq \left.\frac{\partial f}{\partial x}\right|_{x=x_j,t=t^n}
+  = (f_u)_j^n (u_x)_j^n, \\
+  (f_t)_j^n &\defeq \left.\frac{\partial f}{\partial t}\right|_{x=x_j,t=t^n}
+  = -(f_u)_j^n (f_u)_j^n (u_x)_j^n
+\end{align*}
+are treated as constants.
+
+A conservation element is called a basic conservation element (BCE) if it
+relates a single solution point at past to a solution point at present.  If two
+adjacent BCEs relate two solution points at past to a single solution point at
+present, they can be combined to a compound conservation element (CCE).  Figure
+\ref{f:conservation_element} shows the relation specifically for
+$\mathrm{CE}(j,n)$.  $\mathrm{CE}(j,n)$ is a compound conservation element,
+which consists of two basic conservation elements $\mathrm{CE}_-(j,n)$ and
+$\mathrm{CE}_+(j,n)$.
+
+\begin{figure}[htbp]
+\centering
+%
+\begin{subfigure}{0.45\textwidth}
+\centering
+\includegraphics{left_bce.eps}
+\caption{The basic conservation element $\mathrm{CE}_-(j,n)$, which is the left
+half of the $\mathrm{CE}(j,n)$ (shown in \subref{f:cce}), enclosed by line
+segments $\overline{AB}$, $\overline{BC}$, $\overline{CD}$, and
+$\overline{DA}$.}
+\label{f:left_bce}
+\end{subfigure}
+\hskip 0.02\textwidth
+%
+\begin{subfigure}{0.45\textwidth}
+\centering
+\includegraphics{right_bce.eps}
+\caption{The basic conservation element $\mathrm{CE}_+(j,n)$, which is the
+right half of $\mathrm{CE}(j,n)$ (shown in \subref{f:cce}), enclosed by line
+segments $\overline{AD}$, $\overline{DE}$, $\overline{EF}$, and
+$\overline{FA}$.}
+\label{f:right_bce}
+\end{subfigure}
+\\
+%
+\begin{subfigure}{0.45\textwidth}
+\centering
+\includegraphics{conservation_element.eps}
+\caption{The compound conservation element $\mathrm{CE}(j,n)$, enclosed by line
+segments $\overline{AB}$, $\overline{BC}$, $\overline{CD}$, $\overline{DE}$,
+$\overline{EF}$, and $\overline{FA}$, as shown in
+Fig.~\ref{f:staggered_stencil}.}
+\label{f:cce}
+\end{subfigure}
+%
+\caption{Conservation elements.  \subref{f:left_bce} is the basic conservation
+element taking the left half of a compound conservation element.
+\subref{f:right_bce} is the basic conservation element taking the right half of
+a compound conservation element.  \subref{f:cce} is the compound conservation
+element.}
+\label{f:conservation_element}
+\end{figure}
+
+Conservation elements and solution elements allow us to approximate the
+original integral equation, Eq.~(\ref{e:claw1dint}).  Define
+\begin{align*}
+  \mathbf{h}^* \defeq \left(\begin{array}{c}
+    f^* \\ u^*
+  \end{array}\right)
+\end{align*}
+Aided by Eqs.~(\ref{e:solapprox}) and (\ref{e:fluxapprox}), we obtain
+\begin{align}
+  \int_{S(\mathrm{CE})} \mathbf{h}^*\cdot\diff\boldsymbol{\sigma} = 0
+  \label{e:claw1dintapprox}
+\end{align}
+We require Eq.~(\ref{e:claw1dintapprox}) to apply to any conservation element.
+Therefore,
+\begin{align*}
+  \int_{S(\mathrm{CE}(j,n))} \mathbf{h}^*\cdot\diff\boldsymbol{\sigma} = 0,
+  \quad
+  \int_{S(\mathrm{CE}_-(j,n))} \mathbf{h}^*\cdot\diff\boldsymbol{\sigma} = 0,
+  \quad
+  \int_{S(\mathrm{CE}_+(j,n))} \mathbf{h}^*\cdot\diff\boldsymbol{\sigma} = 0
+\end{align*}
+The approximated integral equation will be used to construct time-marching
+schemes.
+
+\section{Viscous Model Equation}
+
+\section{Inviscid model equation}
+
+\subsection{Formulation for artificial viscosity}
+
+\subsection{Simplified scheme}
+
+\begin{thebibliography}{99}
+\bibitem{b:chang95} Chang, S.-C. (1995), 
+``The Method of Space-Time Conservation Element and Solution Element -- 
+A New Approach for Solving the Navier-Stokes and Euler Equation.''
+Journal of Computational Physics 119(2): 295-324.
+\end{thebibliography}
+
+\end{document}
