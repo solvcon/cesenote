@@ -1,12 +1,17 @@
 syntax: glob
 .DS_Store
-eps/
-handover/
 tmp/
-*/*.pdf
-*.toc
-*.aux
-*.log
-*.out
-*.dvi
-*.ps
+
+# stcon
+stcon/eps/
+stcon/handover/
+stcon/*.toc
+stcon/*.aux
+stcon/*.log
+stcon/*.out
+stcon/*.dvi
+stcon/*.ps
+stcon/*.pdf
+
+# shocktube
+shocktube/
