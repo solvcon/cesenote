@@ -24,8 +24,9 @@ EPS_DIR := eps
 SCHEMATIC_DIR := schematic
 LATEX_DERIVED_EXT := toc aux log out dvi ps pdf
 NOWDATE := $(shell date +"%Y%m%d")
+NOWID := $(shell hg parent --template '{node|short}\n')
 HANDOVER_DIR := handover
-HANDOVER_FN = $(HANDOVER_DIR)/$(basename $<).$(NOWDATE).pdf
+HANDOVER_FN = $(HANDOVER_DIR)/$(basename $<).$(NOWID).$(NOWDATE).pdf
 
 # Targets.
 ALL_TEX = $(wildcard $(SCHEMATIC_DIR)/*.tex)
