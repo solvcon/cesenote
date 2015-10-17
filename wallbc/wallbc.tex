@@ -1,0 +1,183 @@
+\documentclass[a4paper,12pt,dvips]{article}
+\usepackage[textwidth=6.5in,textheight=9in]{geometry}
+\usepackage[colorlinks=true]{hyperref}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage[monochrome]{color}
+\usepackage{graphicx}     % From LaTeX distribution
+%\usepackage{subfigure}    % From CTAN/macros/latex/contrib/supported/subfigure
+\usepackage{pst-all}      % From PSTricks
+\usepackage{pst-poly}     % From pstricks/contrib/pst-poly
+\usepackage{multido}      % From PSTricks
+\usepackage[center,footnotesize]{caption}
+\usepackage[subrefformat=parens]{subcaption}
+
+\graphicspath{{eps/}}
+
+%\numberwithin{equation}{section}
+
+\newcommand*\diff{\mathop{}\!\mathrm{d}}
+\newcommand*\Diff[1]{\mathop{}\!\mathrm{d^#1}}
+\newcommand*\defeq{\buildrel{\text{def}}\over{=}}
+
+\begin{document}
+
+\title{Wall Boundary Condition Treatments for Gas Dynamics}
+\author{Yung-Yu Chen}
+\date{2015.10.11}
+
+\maketitle
+
+\tableofcontents
+%\listoffigures
+
+\hspace{.5cm}
+
+\section{Inviscid Solid Wall}
+
+Solid-wall boundary condition is usually treated with a reflection
+flow\cite{laney_computational_1998}.  Similar to the method of image for the
+Laplace equation, by creating a flow mirroring the interior flow, the
+no-penetration condition is enforced on the boundary for the Euler equation.
+Because the reflection flow is artificial and locates outside the computing
+domain, it is called the ghost flow.
+
+To implement the treatment, the technique of ghost cell is employed.  Consider
+an (interior) mesh element, $\bigtriangleup ABD$, as shown in
+Fig.~\ref{f:wall_coordinate}.  $\overline{BD}$ is a boundary line of the
+element, below which is outside the computing domain.  A ghost cell
+$\bigtriangleup CBD$ is constructed as a mirror image of $\bigtriangleup ABD$
+with respect to $\overline{BD}$.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics{wall_coordinate.eps}
+\caption{Coordinate systems of the boundary face.}
+\label{f:wall_coordinate}
+\end{figure}
+
+For the interior cell $\bigtriangleup ABD$ and the ghost cell $\bigtriangleup
+CBD$, a local coordinate system $(\xi, \eta)$ is defined.  The local coordinate
+system rotates $\theta$ with respect to the global coordinate system $(x, y)$.
+Both coordinate systems are Cartesian.  An arbitrary vector (say, $\mathbf{w}$)
+can be transformed from the global coordinate system to the local coordinate
+system by using the rotation matrix $\mathrm{R}$
+\begin{align*}
+\left(\begin{array}{c} w_{\xi} \\ w_{\eta} \end{array}\right)
+= \mathrm{R}
+\left(\begin{array}{c} w_x \\ w_y \end{array}\right), \quad
+\mathrm{R} \defeq \left(\begin{array}{cc}
+  \cos\theta & -\sin\theta \\ \sin\theta & \cos\theta
+\end{array}\right)
+\end{align*}
+To apply the reflection treatment, vectors should be transformed to the local
+coordinate system.
+
+Consider a scalar value $\alpha'$ at point $E'$ in the interior cell
+$\bigtriangleup ABD$.  For the reflection ghost flow, the corresponding value
+$\alpha''$ at point $E''$ should be exactly the same as $\alpha'$
+\begin{align}
+\alpha'' = \alpha', \quad
+\frac{\partial\alpha''}{\partial\xi} = \frac{\partial\alpha'}{\partial\xi},
+\quad
+\frac{\partial\alpha''}{\partial\eta} = \frac{\partial\alpha'}{\partial\eta}
+\label{e:reflection_sca}
+\end{align}
+It can be shown that the gradient of $\alpha''$ or $\alpha'$ in the local
+coordinate system is a rotation of that in the global coordinate system
+\begin{align}
+\renewcommand{\arraystretch}{2.2}
+\left(\begin{array}{c}
+  \dfrac{\partial\alpha}{\partial\xi} \\ 
+  \dfrac{\partial\alpha}{\partial\eta}
+\end{array}\right) = \mathrm{R}^{-1}
+\left(\begin{array}{c}
+  \dfrac{\partial\alpha}{\partial x} \\ 
+  \dfrac{\partial\alpha}{\partial y}
+\end{array}\right), \quad
+\renewcommand{\arraystretch}{2.2}
+\left(\begin{array}{c}
+  \dfrac{\partial\alpha}{\partial x} \\ 
+  \dfrac{\partial\alpha}{\partial y}
+\end{array}\right) = \mathrm{R}
+\left(\begin{array}{c}
+  \dfrac{\partial\alpha}{\partial\xi} \\ 
+  \dfrac{\partial\alpha}{\partial\eta}
+\end{array}\right) \label{e:reflection_sca_trans}
+\end{align}
+$\mathrm{R}$ is orthogonal.
+
+Consider a vector (for velocity or momentum)
+\begin{align*}
+\mathbf{v} = \left(\begin{array}{c}
+  v_x \\ v_y
+\end{array}\right)_{\text{global}}
+= \left(\begin{array}{c}
+  v_{\xi} \\ v_{\eta}
+\end{array}\right)_{\text{local}}
+\end{align*}
+The reflection requires
+\begin{alignat}{3}
+\begin{aligned}
+v''_{\xi}
+&= v'_{\xi}, \quad
+&\frac{\partial v''_{\xi}}{\partial\xi}
+&= \frac{\partial v'_{\xi}}{\partial\xi}, \quad
+&\frac{\partial v''_{\xi}}{\partial\eta}
+&= -\frac{\partial v'_{\xi}}{\partial\eta}, \\
+v''_{\eta}
+&= -v'_{\eta}, \quad
+&\frac{\partial v''_{\eta}}{\partial\xi}
+&= -\frac{\partial v'_{\eta}}{\partial\xi}, \quad
+&\frac{\partial v''_{\eta}}{\partial\eta}
+&= \frac{\partial v'_{\eta}}{\partial\eta}
+\end{aligned} \label{e:reflection_vec}
+\end{alignat}
+It can be shown that the coordinate transform of the vector represented between
+the local and global coordinate systems is
+\begin{align}
+\begin{aligned}
+\renewcommand{\arraystretch}{2.2}
+\left(\begin{array}{cc}
+  \dfrac{\partial v_{\xi}}{\partial\xi} &
+  \dfrac{\partial v_{\xi}}{\partial\eta} \\
+  \dfrac{\partial v_{\eta}}{\partial\xi} &
+  \dfrac{\partial v_{\eta}}{\partial\eta}
+\end{array}\right)
+= \mathrm{R}^{-1}
+\left(\begin{array}{cc}
+  \dfrac{\partial v_x}{\partial x} &
+  \dfrac{\partial v_x}{\partial y} \\
+  \dfrac{\partial v_y}{\partial x} &
+  \dfrac{\partial v_y}{\partial y}
+\end{array}\right)
+\mathrm{R}, \\
+\renewcommand{\arraystretch}{2.2}
+\left(\begin{array}{cc}
+  \dfrac{\partial v_x}{\partial x} &
+  \dfrac{\partial v_x}{\partial y} \\
+  \dfrac{\partial v_y}{\partial x} &
+  \dfrac{\partial v_y}{\partial y}
+\end{array}\right)
+= \mathrm{R}
+\left(\begin{array}{cc}
+  \dfrac{\partial v_{\xi}}{\partial\xi} &
+  \dfrac{\partial v_{\xi}}{\partial\eta} \\
+  \dfrac{\partial v_{\eta}}{\partial\xi} &
+  \dfrac{\partial v_{\eta}}{\partial\eta}
+\end{array}\right)
+\mathrm{R}^{-1}
+\end{aligned} \label{e:reflection_vec_trans}
+\end{align}
+
+Equations \ref{e:reflection_sca} through \ref{e:reflection_vec_trans} will help
+to formulate the treatment of reflection boundary condition for the Euler
+equation.
+
+\begin{thebibliography}{99}
+\bibitem{laney_computational_1998} C. B. Laney, Computational Gasdynamics.
+Cambridge: Cambridge University Press, 1998.
+\end{thebibliography}
+
+\end{document}
