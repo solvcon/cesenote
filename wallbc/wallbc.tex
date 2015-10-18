@@ -65,7 +65,7 @@ can be transformed from the global coordinate system to the local coordinate
 system by using the rotation matrix $\mathrm{R}$
 \begin{align*}
 \left(\begin{array}{c} w_{\xi} \\ w_{\eta} \end{array}\right)
-= \mathrm{R}
+= \mathrm{R}^{-1}
 \left(\begin{array}{c} w_x \\ w_y \end{array}\right), \quad
 \mathrm{R} \defeq \left(\begin{array}{cc}
   \cos\theta & -\sin\theta \\ \sin\theta & \cos\theta
@@ -81,7 +81,7 @@ $\alpha''$ at point $E''$ should be exactly the same as $\alpha'$
 \alpha'' = \alpha', \quad
 \frac{\partial\alpha''}{\partial\xi} = \frac{\partial\alpha'}{\partial\xi},
 \quad
-\frac{\partial\alpha''}{\partial\eta} = \frac{\partial\alpha'}{\partial\eta}
+\frac{\partial\alpha''}{\partial\eta} = -\frac{\partial\alpha'}{\partial\eta}
 \label{e:reflection_sca}
 \end{align}
 It can be shown that the gradient of $\alpha''$ or $\alpha'$ in the local
@@ -120,18 +120,18 @@ Consider a vector (for velocity or momentum)
 The reflection requires
 \begin{alignat}{3}
 \begin{aligned}
-v''_{\xi}
-&= v'_{\xi}, \quad
-&\frac{\partial v''_{\xi}}{\partial\xi}
-&= \frac{\partial v'_{\xi}}{\partial\xi}, \quad
-&\frac{\partial v''_{\xi}}{\partial\eta}
-&= -\frac{\partial v'_{\xi}}{\partial\eta}, \\
-v''_{\eta}
-&= -v'_{\eta}, \quad
-&\frac{\partial v''_{\eta}}{\partial\xi}
-&= -\frac{\partial v'_{\eta}}{\partial\xi}, \quad
-&\frac{\partial v''_{\eta}}{\partial\eta}
-&= \frac{\partial v'_{\eta}}{\partial\eta}
+  v''_{\xi}
+  &= v'_{\xi}, \quad
+  &\frac{\partial v''_{\xi}}{\partial\xi}
+  &= \frac{\partial v'_{\xi}}{\partial\xi}, \quad
+  &\frac{\partial v''_{\xi}}{\partial\eta}
+  &= -\frac{\partial v'_{\xi}}{\partial\eta}, \\
+  v''_{\eta}
+  &= -v'_{\eta}, \quad
+  &\frac{\partial v''_{\eta}}{\partial\xi}
+  &= -\frac{\partial v'_{\eta}}{\partial\xi}, \quad
+  &\frac{\partial v''_{\eta}}{\partial\eta}
+  &= \frac{\partial v'_{\eta}}{\partial\eta}
 \end{aligned} \label{e:reflection_vec}
 \end{alignat}
 It can be shown that the coordinate transform of the vector represented between
@@ -173,7 +173,139 @@ the local and global coordinate systems is
 
 Equations \ref{e:reflection_sca} through \ref{e:reflection_vec_trans} will help
 to formulate the treatment of reflection boundary condition for the Euler
-equation.
+equation, of which the conservative variables are
+\begin{align*}
+\renewcommand{\arraystretch}{2.2}
+\mathbf{u} = \left(\begin{array}{c}
+  u_1 \\ u_2 \\ u_3 \\ u_4
+\end{array}\right)
+= \left(\begin{array}{c}
+  \rho \\ \rho v_x \\ \rho v_y \\
+  \rho\left(e + \dfrac{v_x^2 + v_y^2}{2}\right)
+\end{array}\right)
+\end{align*}
+Let $\mathbf{q}$ be the solution variables in the local coordinate system
+\begin{align*}
+q_1 = u_1, \quad q_4 = u_4, \quad
+\left(\begin{array}{c}
+  q_2 \\ q_3
+\end{array}\right)
+= \mathrm{R}^{-1} \left(\begin{array}{c}
+  u_2 \\ u_3
+\end{array}\right)
+\end{align*}
+Let $\mathbf{u}'$ and $\mathbf{q}'$ be the solution variables in the interior
+cell, and $\mathbf{u}''$ and $\mathbf{q}''$ in the ghost cell.  The reflection
+condition requires
+\begin{alignat*}{3}
+\begin{aligned}
+  q''_1
+  &= q'_1, \quad
+  &\frac{\partial q''_1}{\partial\xi}
+  &= \frac{\partial q'_1}{\partial\xi}, \quad
+  &\frac{\partial q''_1}{\partial\eta}
+  &= -\frac{\partial q'_1}{\partial\eta}, \\
+  q''_2
+  &= q'_2, \quad
+  &\frac{\partial q''_2}{\partial\xi}
+  &= \frac{\partial q'_2}{\partial\xi}, \quad
+  &\frac{\partial q''_2}{\partial\eta}
+  &= -\frac{\partial q'_2}{\partial\eta}, \\
+  q''_3
+  &= -q'_3, \quad
+  &\frac{\partial q''_3}{\partial\xi}
+  &= -\frac{\partial q'_3}{\partial\xi}, \quad
+  &\frac{\partial q''_3}{\partial\eta}
+  &= \frac{\partial q'_3}{\partial\eta}, \\
+  q''_4
+  &= q'_4, \quad
+  &\frac{\partial q''_4}{\partial\xi}
+  &= \frac{\partial q'_4}{\partial\xi}, \quad
+  &\frac{\partial q''_4}{\partial\eta}
+  &= -\frac{\partial q'_4}{\partial\eta}
+\end{aligned}
+\end{alignat*}
+which can be simplified as
+\begin{alignat}{4}
+\renewcommand{\arraystretch}{2.2}
+\begin{aligned}
+  q''_m &= q'_m&,& \quad
+  &\left(\begin{array}{c}
+    \dfrac{\partial q''_m}{\partial\xi} \\
+    \dfrac{\partial q''_m}{\partial\eta}
+  \end{array}\right)
+  &= \mathrm{N} \left(\begin{array}{c}
+    \dfrac{\partial q'_m}{\partial\xi} \\
+    \dfrac{\partial q'_m}{\partial\eta}
+  \end{array}\right)&,& \quad m = 1, 4, \\
+  \left(\begin{array}{c}
+    q''_2 \\ q''_3
+  \end{array}\right)
+  &= \mathrm{N} \left(\begin{array}{c}
+    q'_2 \\ q'_3
+  \end{array}\right)&,& \quad
+  &\left(\begin{array}{cc}
+    \dfrac{\partial q''_2}{\partial\xi} &
+    \dfrac{\partial q''_2}{\partial\eta} \\
+    \dfrac{\partial q''_3}{\partial\xi} &
+    \dfrac{\partial q''_3}{\partial\eta}
+  \end{array}\right)
+  &= \mathrm{N} \left(\begin{array}{cc}
+    \dfrac{\partial q'_2}{\partial\xi} &
+    \dfrac{\partial q'_2}{\partial\eta} \\
+    \dfrac{\partial q'_3}{\partial\xi} &
+    \dfrac{\partial q'_3}{\partial\eta}
+  \end{array}\right) \mathrm{N}&&
+\end{aligned} \label{e:reflection_euler_2d_local}
+\end{alignat}
+by letting
+\begin{align*}
+  \mathrm{N} = \left(\begin{array}{cc}
+    1 & 0 \\ 0 & -1
+  \end{array}\right)
+\end{align*}
+
+Equation (\ref{e:reflection_euler_2d_local}) can be written back in the global
+coordinate system
+\begin{alignat}{4}
+\renewcommand{\arraystretch}{2.2}
+\begin{aligned}
+  u''_m &= u'_m&,& \quad
+  &\left(\begin{array}{c}
+    \dfrac{\partial u''_m}{\partial x} \\
+    \dfrac{\partial u''_m}{\partial y}
+  \end{array}\right)
+  &= \mathrm{T} \left(\begin{array}{c}
+    \dfrac{\partial u'_m}{\partial x} \\
+    \dfrac{\partial u'_m}{\partial y}
+  \end{array}\right)&,& \quad m = 1, 4, \\
+  \left(\begin{array}{c}
+    u''_2 \\ u''_3
+  \end{array}\right)
+  &= \mathrm{T} \left(\begin{array}{c}
+    u'_2 \\ u'_3
+  \end{array}\right)&,& \quad
+  &\left(\begin{array}{cc}
+    \dfrac{\partial q''_2}{\partial\xi} &
+    \dfrac{\partial q''_2}{\partial\eta} \\
+    \dfrac{\partial q''_3}{\partial\xi} &
+    \dfrac{\partial q''_3}{\partial\eta}
+  \end{array}\right)
+  &= \mathrm{T} \left(\begin{array}{cc}
+    \dfrac{\partial q'_2}{\partial\xi} &
+    \dfrac{\partial q'_2}{\partial\eta} \\
+    \dfrac{\partial q'_3}{\partial\xi} &
+    \dfrac{\partial q'_3}{\partial\eta}
+  \end{array}\right) \mathrm{T}&&
+\end{aligned} \label{e:reflection_euler_2d_global}
+\end{alignat}
+where
+\begin{align}
+  \mathrm{T} \defeq \mathrm{R}\mathrm{N}\mathrm{R}^{-1}
+  = \left(\begin{array}{cc}
+    \cos2\theta & \sin2\theta \\ sin2\theta & -\cos2\theta
+  \end{array}\right) \label{e:reflection_T}
+\end{align}
 
 \begin{thebibliography}{99}
 \bibitem{laney_computational_1998} C. B. Laney, Computational Gasdynamics.
