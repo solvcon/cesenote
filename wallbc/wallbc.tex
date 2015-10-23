@@ -36,16 +36,18 @@
 
 \section{Inviscid Solid Wall}
 
-Solid-wall boundary condition is usually treated with a reflection
-flow\cite{laney_computational_1998}.  Similar to the method of image for the
-Laplace equation, by creating a flow mirroring the interior flow, the
-no-penetration condition is enforced on the boundary for the Euler equation.
-Because the reflection flow is artificial and locates outside the computing
-domain, it is called the ghost flow.
+Regarding gas dynamics, almost all problem setups involve walls.  For the Euler
+equation, which doesn't have a diffusion term, inviscid solid walls are
+commonplace.  A reflection flow is usually used to treat the solid-wall
+boundary condition\cite{laney_computational_1998}.  The technique is similar to
+the method of image for the Laplace equation.  For the Euler equation, if there
+is a flow mirroring the flow inside the wall, the boundary will not be
+penetrated.  The reflection flow is also called a ghost flow because it is
+artificially created outside the computing domain.
 
-To implement the treatment, the technique of ghost cell is employed.  Consider
-an (interior) mesh element, $\bigtriangleup ABD$, as shown in
-Fig.~\ref{f:wall_coordinate}.  $\overline{BD}$ is a boundary line of the
+To produce the ghost flow by mirror image, the concept of ghost cell is
+employed.  Consider an (interior) mesh element, $\bigtriangleup ABD$, as shown
+in Fig.~\ref{f:wall_coordinate}.  $\overline{BD}$ is a boundary line of the
 element, below which is outside the computing domain.  A ghost cell
 $\bigtriangleup CBD$ is constructed as a mirror image of $\bigtriangleup ABD$
 with respect to $\overline{BD}$.
