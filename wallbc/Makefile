@@ -1,13 +1,15 @@
+SHELL := bash
+
 # Outside control.
 NUM ?= 3 # For LaTeX to correctly cross-reference.  To save time, use 1.
 VERBOSE ?= 0
 
 ifeq ($(VERBOSE),0)
 	CMDLOG_REDIRECT := > /dev/null
-	PSTAKE := pstake -q
+	PSTAKE := ./pstake.py -q
 else
 	CMDLOG_REDIRECT := >&1
-	PSTAKE := pstake
+	PSTAKE := ./pstake.py
 endif
 
 # Environmental setting.
@@ -34,7 +36,7 @@ ALL_SRC = $(MAIN_FN).tex $(ALL_TEX)
 
 default: $(MAIN_FN).pdf
 
-$(EPS_DIR)/%.eps: $(SCHEMATIC_DIR)/%.tex Makefile
+$(EPS_DIR)/%.eps: $(SCHEMATIC_DIR)/%.tex Makefile pstake.py
 	mkdir -p $(EPS_DIR)
 	$(PSTAKE) $< $@
 
