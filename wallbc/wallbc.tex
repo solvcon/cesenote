@@ -25,7 +25,7 @@
 
 \title{Inviscid Wall Boundary Treatment for Gas Dynamics}
 \author{Yung-Yu Chen}
-\date{2015.11.2}
+\date{2015.12.5}
 
 \maketitle
 
@@ -54,10 +54,23 @@ $\hat{\boldsymbol{\zeta}}$ that fulfill the following condition
   \hat{\boldsymbol{\eta}} =
   \hat{\boldsymbol{\zeta}} \times \hat{\boldsymbol{\xi}}
 \end{align*}
-we can define a local coordinate system at any location of the boundary.
+we can define a local coordinate system $(\xi, \eta, \zeta)$ at the boundary.
 Figure~\ref{f:boundary_coordinate} shows the local coordinate system of a
 certain boundary face.  Note that $\hat{\boldsymbol{\xi}}$ points outward from
-the computing domain to the external space.
+the computing domain to the external space.  For a vector $\mathbf{w}$ in the
+global coordinate system $(x, y, z)$, we define the transformation matrix 
+\begin{align*}
+  \mathrm{T} \defeq \left(\begin{array}{ccc}
+    \xi_1 & \xi_2 & \xi_3 \\
+    \eta_1 & \eta_2 & \eta_3 \\
+    \zeta_1 & \zeta_2 & \zeta_3
+  \end{array}\right)
+\end{align*}
+which transforms the vector to the local coordinate system (denoted by the
+over bar):
+\begin{align*}
+  \bar{\mathbf{w}} = \mathrm{T}\mathbf{w}
+\end{align*}
 
 \begin{figure}[htbp]
 \centering
@@ -66,29 +79,50 @@ the computing domain to the external space.
 \label{f:boundary_coordinate}
 \end{figure}
 
-The no-penetration condition enforces that nothing flows through the boundary
-face.  In other words, the velocity component in the
-$\hat{\boldsymbol{\xi}}$-direction must be zero:
+The no-penetration condition enforces that nothing flows through the boundary.
+In other words, at all time, the velocity component in the $\xi$-direction must
+be zero:
 \begin{align*}
-  \left.v_{\xi}\right|_{\xi=0} = 0
+  \left.\bar{v}_1\right|_{\xi=0} = 0
 \end{align*}
-at all time.  A common treatment of the no-penetration boundary condition is to
-use reflection flow with the ghost cell.  By creating a ghost flow mirroring
-the interior flow, the above no-penetration condition is satisfied at the
-boundary ($\xi = 0$).  The normal component of the velocity in the ghost cell
-can be set as
+A common treatment of the no-penetration boundary condition is to use
+reflection flow with the ghost cell.  By creating a ghost flow mirroring the
+interior flow, the above no-penetration condition is satisfied at the boundary
+($\xi = 0$).  The normal component of the velocity in the ghost cell can be set
+as
 \begin{align*}
-  v_{\xi}(\xi, t) = -v_{\xi}(-\xi, t)
+  \bar{v}_1(\xi, t) = -\bar{v}_1(-\xi, t)
 \end{align*}
-Because the CESE method solves also spatial derivatives, they need to be
-treated as well
+Spatial derivatives are part of solutions in the CESE method, and they need to
+be treated as well:
 \begin{align*}
-  \frac{\partial v_{\xi}}{\partial\xi}(\xi, t) &=
-  \frac{\partial v_{\xi}}{\partial\xi}(-\xi, t), \\
-  \frac{\partial v_{\xi}}{\partial\eta}(\xi, t) &=
-  -\frac{\partial v_{\xi}}{\partial\eta}(-\xi, t), \\
-  \frac{\partial v_{\xi}}{\partial\zeta}(\xi, t) &=
-  -\frac{\partial v_{\xi}}{\partial\zeta}(-\xi, t)
+  \frac{\partial \bar{v}_1}{\partial\xi}(\xi, t) &=
+  \frac{\partial \bar{v}_1}{\partial\xi}(-\xi, t), \\
+  \frac{\partial \bar{v}_1}{\partial\eta}(\xi, t) &=
+  -\frac{\partial \bar{v}_1}{\partial\eta}(-\xi, t), \\
+  \frac{\partial \bar{v}_1}{\partial\zeta}(\xi, t) &=
+  -\frac{\partial \bar{v}_1}{\partial\zeta}(-\xi, t)
+\end{align*}
+The tangential components should remain unchanged.  Their treatment is
+\begin{align*}
+  \bar{v}_i(\xi, t) &= \bar{v}_i(-\xi, t), \\
+  \frac{\partial \bar{v}_i}{\partial\xi}(\xi, t) &=
+  -\frac{\partial \bar{v}_i}{\partial\xi}(-\xi, t), \\
+  \frac{\partial \bar{v}_i}{\partial\eta}(\xi, t) &=
+  \frac{\partial \bar{v}_i}{\partial\eta}(-\xi, t), \\
+  \frac{\partial \bar{v}_i}{\partial\zeta}(\xi, t) &=
+  \frac{\partial \bar{v}_i}{\partial\zeta}(-\xi, t)
+\end{align*}
+where $i = 2, 3$.  The treatment for a scalar property ($\alpha$) is the same
+as that of the tangential components
+\begin{align*}
+  \alpha(\xi, t) &= \alpha(-\xi, t), \\
+  \frac{\partial \alpha}{\partial\xi}(\xi, t) &=
+  -\frac{\partial \alpha}{\partial\xi}(-\xi, t), \\
+  \frac{\partial \alpha}{\partial\eta}(\xi, t) &=
+  \frac{\partial \alpha}{\partial\eta}(-\xi, t), \\
+  \frac{\partial \alpha}{\partial\zeta}(\xi, t) &=
+  \frac{\partial \alpha}{\partial\zeta}(-\xi, t)
 \end{align*}
 
 \section{Inviscid Solid Wall}
