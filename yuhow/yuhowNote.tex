@@ -1,0 +1,54 @@
+\documentclass[a4paper,12pt,dvips]{article}
+\usepackage[textwidth=6.5in,textheight=9in]{geometry}
+\usepackage[colorlinks=true]{hyperref}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage[monochrome]{color}
+\usepackage{graphicx}     % From LaTeX distribution
+%\usepackage{subfigure}    % From CTAN/macros/latex/contrib/supported/subfigure
+\usepackage{pst-all}      % From PSTricks
+\usepackage{pst-poly}     % From pstricks/contrib/pst-poly
+\usepackage{multido}      % From PSTricks
+\usepackage[center,footnotesize]{caption}
+\usepackage[subrefformat=parens]{subcaption}
+
+\graphicspath{{eps/}}
+
+%\numberwithin{equation}{section}
+
+\newcommand*\diff{\mathop{}\!\mathrm{d}}
+\newcommand*\Diff[1]{\mathop{}\!\mathrm{d^#1}}
+\newcommand*\defeq{\buildrel{\text{def}}\over{=}}
+
+\begin{document}
+
+\title{Yuhow's Note}
+\author{You-Hao Chang}
+\date{2015.12.1}
+
+\maketitle
+
+\tableofcontents
+%\listoffigures
+
+\hspace{.5cm}
+
+This note contains some questions Yuhow encounter in CESE paper~\cite{CESE_Shin_Chung_Chang_1995}
+
+\section{Questions in section of the $\alpha-\mu$ scheme}
+ \begin{enumerate}
+  \item As a result of Eq. (2.4), this implies Eq. (2.5).  Why?
+  \item Why can Eq. (2.9) be proved using the fact that the total flux of $h^{*}$ leaving the boundary of any space-time region that is the union of any combination of CEs vanishes? Can't figure it out.
+  \item What's the finite-difference appromixation?
+  \item What's the Lax scheme?
+  \item What's the amplification factors? Also what's their meaning/usage in the Leapfrog/DuFort-Frankel scheme?
+  \item What's the meaning of "two-level" and "three-level" scheme?
+ \end{enumerate}
+
+
+\begin{thebibliography}{99}
+\bibitem{CESE_Shin_Chung_Chang_1995} Sin-Chung Chang, The Method of Space-Time Conservation Element and Solution Element—A New Approach for Solving the Navier-Stokes and Euler Equations. Journal of Computational Physics, 119, 295-324, 1995.
+\end{thebibliography}
+
+\end{document}
