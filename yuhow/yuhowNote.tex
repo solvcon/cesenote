@@ -23,7 +23,7 @@
 
 \begin{document}
 
-\title{Yuhow's Note}
+\title{Working Note}
 \author{You-Hao Chang}
 \date{2015.12.1}
 
@@ -38,13 +38,37 @@ This note contains some questions Yuhow encounter in CESE paper~\cite{CESE_Shin_
 
 \section{Questions in section of the $\alpha-\mu$ scheme}
  \begin{enumerate}
-  \item As a result of Eq. (2.4), this implies Eq. (2.5).  Why?
+  \item Why does Eq. (2.4) imply Eq. (2.5). ?
   \item Why can Eq. (2.9) be proved using the fact that the total flux of $h^{*}$ leaving the boundary of any space-time region that is the union of any combination of CEs vanishes? Can't figure it out.
   \item What's the finite-difference appromixation?
+  \item What's the meaning of "the $\alpha-\mu$ scheme uses a mesh that is staggered in time"?
   \item What's the Lax scheme?
   \item What's the amplification factors? Also what's their meaning/usage in the Leapfrog/DuFort-Frankel scheme?
   \item What's the meaning of "two-level" and "three-level" scheme?
+  \item Why does not solutions of Eq. (2.22) dissipate with time? Or why is "no dissipation" equivalent to "neutrally stable"?
+  \item Why the total flux leaving any conservation element is zero? This question is relevant to the definition of Eq. (2.28).
+  \item Why does the term "$-\mu\partial^{2}u^{*}(x, t; j, n)/\partial x^{2} $ vanish "in Eq. (2.29)?
+  \item (In page 303) Why is the condition that Eq. (2.30) being valid uniformly within an SE stronger than Eq. (2.28) for a higher-order expansion? Are they the same thing but just in different form?
+  \item Eq. (2.33) maybe is wrong. The partial derivative in the left-hand side of Eq. (2.33) should be with respect to x instead of t. Will try to double check with author though email. (STATUS: waiting for Prof. Chang's reply)
  \end{enumerate}
+
+\section{Something about Python in Solvcon}
+Some libraries which are maybe used in implementation of CESE method: 
+ \begin{enumerate}
+  \item Numpy, matplotlib
+ \end{enumerate}
+Useful tools:
+ \begin{enumerate}
+  \item PyCharm
+  \item iPython
+ \end{enumerate}
+
+\section{Progress report}
+ \begin{enumerate}
+  \item ( - 20151211) reading the CESE paper~\cite{CESE_Shin_Chung_Chang_1995}, Achievement: Section 2 and 3.
+  \item (20151212 - ) start to focus on Euler solver and make my own 1-D solver which is refer to Tai-Hsiang's code and appendix B of the CESE paper~\cite{CESE_Shin_Chung_Chang_1995}
+ \end{enumerate}
+
 
 
 \begin{thebibliography}{99}
