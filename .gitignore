@@ -23,6 +23,3 @@ wallbc/*.out
 wallbc/*.dvi
 wallbc/*.ps
 wallbc/*.pdf
-
-# shocktube
-shocktube/
