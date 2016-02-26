@@ -12,14 +12,3 @@ stcon/*.out
 stcon/*.dvi
 stcon/*.ps
 stcon/*.pdf
-
-# wallbc
-wallbc/eps/
-wallbc/handover/
-wallbc/*.toc
-wallbc/*.aux
-wallbc/*.log
-wallbc/*.out
-wallbc/*.dvi
-wallbc/*.ps
-wallbc/*.pdf
