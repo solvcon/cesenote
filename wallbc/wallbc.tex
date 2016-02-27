@@ -40,37 +40,17 @@ looks basic, but exhibits tremendous usefulness.
 
 \section{No-Penetration Boundary Condition}
 
-Let us consider the general case in the three-dimensional Euclidean coordinate
-system.  Let $\hat{\boldsymbol{\xi}}$ be the unit normal vector of the
-boundary.  By choosing two orthogonal unit vectors $\hat{\boldsymbol{\eta}}$,
-$\hat{\boldsymbol{\zeta}}$ that fulfill the following condition
-\begin{align*}
-  \hat{\boldsymbol{\zeta}} =
-  \hat{\boldsymbol{\xi}} \times \hat{\boldsymbol{\eta}},
-  \quad
-  \hat{\boldsymbol{\xi}} =
-  \hat{\boldsymbol{\eta}} \times \hat{\boldsymbol{\zeta}},
-  \quad
-  \hat{\boldsymbol{\eta}} =
-  \hat{\boldsymbol{\zeta}} \times \hat{\boldsymbol{\xi}}
-\end{align*}
-we can define a local coordinate system $(\xi, \eta, \zeta)$ at the boundary.
-Figure~\ref{f:boundary_coordinate} shows the local coordinate system of a
-certain boundary face.  Note that $\hat{\boldsymbol{\xi}}$ points outward from
-the computing domain to the external space.  For a vector $\mathbf{w}$ in the
-global coordinate system $(x, y, z)$, we define the transformation matrix 
-\begin{align*}
-  \mathrm{T} \defeq \left(\begin{array}{ccc}
-    \xi_1 & \xi_2 & \xi_3 \\
-    \eta_1 & \eta_2 & \eta_3 \\
-    \zeta_1 & \zeta_2 & \zeta_3
-  \end{array}\right)
-\end{align*}
-which transforms the vector to the local coordinate system (denoted by the
-over bar):
-\begin{align*}
-  \bar{\mathbf{w}} = \mathrm{T}\mathbf{w}
-\end{align*}
+Consider the general case in the three-dimensional Euclidean coordinate system.
+Let $\hat{\boldsymbol{\xi}}$ be the unit normal vector of the boundary.  By
+choosing two orthogonal unit vectors $\hat{\boldsymbol{\eta}}$,
+$\hat{\boldsymbol{\zeta}}$, define a loca coordinate system $(\xi, \eta,
+\zeta)$ (see Figure~\ref{f:boundary_coordinate}; $\hat{\boldsymbol{\xi}}$
+points outward from the computing domain to the external space) at the boundary
+(it fulfills the condition $\hat{\boldsymbol{\zeta}} = \hat{\boldsymbol{\xi}}
+\times \hat{\boldsymbol{\eta}}, \hat{\boldsymbol{\xi}} =
+\hat{\boldsymbol{\eta}} \times \hat{\boldsymbol{\zeta}},
+\hat{\boldsymbol{\eta}} = \hat{\boldsymbol{\zeta}} \times
+\hat{\boldsymbol{\xi}}$).
 
 \begin{figure}[htbp]
 \centering
@@ -79,53 +59,163 @@ over bar):
 \label{f:boundary_coordinate}
 \end{figure}
 
+For a vector $\mathbf{w}$ in the global coordinate system $(x, y, z)$, we
+define the matrix
+\begin{align*}
+  \mathrm{R} \defeq \left(\begin{array}{ccc}
+    \xi_1 & \eta_1 & \zeta_1 \\
+    \xi_2 & \eta_2 & \zeta_2 \\
+    \xi_3 & \eta_3 & \zeta_3
+  \end{array}\right)
+\end{align*}
+which transforms a vector from the global coordination system to the local
+coordinate system (denoted by the over bar):
+\begin{align*}
+  \bar{\mathbf{w}} = \mathrm{R}^{-1}\mathbf{w}
+\end{align*}
+
 The no-penetration condition enforces that nothing flows through the boundary.
 In other words, at all time, the velocity component in the $\xi$-direction must
 be zero:
 \begin{align*}
-  \left.\bar{v}_1\right|_{\xi=0} = 0
+  \Bigl.\bar{v}_1\Bigr|_{\xi=0} = 0
 \end{align*}
 A common treatment of the no-penetration boundary condition is to use
 reflection flow with the ghost cell.  By creating a ghost flow mirroring the
 interior flow, the above no-penetration condition is satisfied at the boundary
-($\xi = 0$).  The normal component of the velocity in the ghost cell can be set
-as
+($\xi = 0$).  Let $\bar{v}''_1$ denote the value of the ghost cell (outside the
+computing domain), and $\bar{v}'_1$ denote the value of the interior cell,
+write
 \begin{align*}
-  \bar{v}_1(\xi, t) = -\bar{v}_1(-\xi, t)
+  \bar{v}''_1 = -\bar{v}'_1
 \end{align*}
 Spatial derivatives are part of solutions in the CESE method, and they need to
 be treated as well:
 \begin{align*}
-  \frac{\partial \bar{v}_1}{\partial\xi}(\xi, t) &=
-  \frac{\partial \bar{v}_1}{\partial\xi}(-\xi, t), \\
-  \frac{\partial \bar{v}_1}{\partial\eta}(\xi, t) &=
-  -\frac{\partial \bar{v}_1}{\partial\eta}(-\xi, t), \\
-  \frac{\partial \bar{v}_1}{\partial\zeta}(\xi, t) &=
-  -\frac{\partial \bar{v}_1}{\partial\zeta}(-\xi, t)
+  \frac{\partial \bar{v}''_1}{\partial\xi} =
+  \frac{\partial \bar{v}'_1}{\partial\xi}, \quad
+  \frac{\partial \bar{v}''_1}{\partial\eta} =
+  -\frac{\partial \bar{v}'_1}{\partial\eta}, \quad
+  \frac{\partial \bar{v}''_1}{\partial\zeta} =
+  -\frac{\partial \bar{v}'_1}{\partial\zeta}
 \end{align*}
 The tangential components should remain unchanged.  Their treatment is
 \begin{align*}
-  \bar{v}_i(\xi, t) &= \bar{v}_i(-\xi, t), \\
-  \frac{\partial \bar{v}_i}{\partial\xi}(\xi, t) &=
-  -\frac{\partial \bar{v}_i}{\partial\xi}(-\xi, t), \\
-  \frac{\partial \bar{v}_i}{\partial\eta}(\xi, t) &=
-  \frac{\partial \bar{v}_i}{\partial\eta}(-\xi, t), \\
-  \frac{\partial \bar{v}_i}{\partial\zeta}(\xi, t) &=
-  \frac{\partial \bar{v}_i}{\partial\zeta}(-\xi, t)
+\begin{gathered}
+  \bar{v}''_i = \bar{v}'_i, \\
+  \frac{\partial \bar{v}''_i}{\partial\xi} =
+  -\frac{\partial \bar{v}'_i}{\partial\xi}, \quad
+  \frac{\partial \bar{v}''_i}{\partial\eta} =
+  \frac{\partial \bar{v}'_i}{\partial\eta}, \quad
+  \frac{\partial \bar{v}''_i}{\partial\zeta} =
+  \frac{\partial \bar{v}'_i}{\partial\zeta}
+\end{gathered}
 \end{align*}
-where $i = 2, 3$.  The treatment for a scalar property ($\alpha$) is the same
-as that of the tangential components
+where $i = 2, 3$.
+
+Aided by letting
 \begin{align*}
-  \alpha(\xi, t) &= \alpha(-\xi, t), \\
-  \frac{\partial \alpha}{\partial\xi}(\xi, t) &=
-  -\frac{\partial \alpha}{\partial\xi}(-\xi, t), \\
-  \frac{\partial \alpha}{\partial\eta}(\xi, t) &=
-  \frac{\partial \alpha}{\partial\eta}(-\xi, t), \\
-  \frac{\partial \alpha}{\partial\zeta}(\xi, t) &=
-  \frac{\partial \alpha}{\partial\zeta}(-\xi, t)
+  \mathrm{N} \defeq \left(\begin{array}{ccc}
+    1 & 0 & 0 \\ 0 & -1 & 0 \\ 0 & 0 & -1
+  \end{array}\right)
+\end{align*}
+write the treatments in the vector-matrix form in the local coordinate system
+\begin{align*}
+\begin{gathered}
+  \bar{\mathbf{v}}'' = -\mathrm{N}\bar{\mathbf{v}}', \\
+  \renewcommand{\arraystretch}{2.2}
+  \left(\begin{array}{ccc}
+    \dfrac{\partial \bar{v}''_1}{\partial\xi} &
+    \dfrac{\partial \bar{v}''_1}{\partial\eta} &
+    \dfrac{\partial \bar{v}''_1}{\partial\zeta} \\
+    \dfrac{\partial \bar{v}''_2}{\partial\xi} &
+    \dfrac{\partial \bar{v}''_2}{\partial\eta} &
+    \dfrac{\partial \bar{v}''_2}{\partial\zeta} \\
+    \dfrac{\partial \bar{v}''_3}{\partial\xi} &
+    \dfrac{\partial \bar{v}''_3}{\partial\eta} &
+    \dfrac{\partial \bar{v}''_3}{\partial\zeta}
+  \end{array}\right)
+  = \mathrm{N}
+  \left(\begin{array}{ccc}
+    \dfrac{\partial \bar{v}'_1}{\partial\xi} &
+    \dfrac{\partial \bar{v}'_1}{\partial\eta} &
+    \dfrac{\partial \bar{v}'_1}{\partial\zeta} \\
+    \dfrac{\partial \bar{v}'_2}{\partial\xi} &
+    \dfrac{\partial \bar{v}'_2}{\partial\eta} &
+    \dfrac{\partial \bar{v}'_2}{\partial\zeta} \\
+    \dfrac{\partial \bar{v}'_3}{\partial\xi} &
+    \dfrac{\partial \bar{v}'_3}{\partial\eta} &
+    \dfrac{\partial \bar{v}'_3}{\partial\zeta}
+  \end{array}\right)
+  \mathrm{N}
+\end{gathered}
+\end{align*}
+and further in the global coordinate system
+\begin{align*}
+\begin{gathered}
+  \mathbf{v}'' = -\mathrm{T}\mathbf{v}', \\
+  \renewcommand{\arraystretch}{2.2}
+  \left(\begin{array}{ccc}
+    \dfrac{\partial v''_1}{\partial x} &
+    \dfrac{\partial v''_1}{\partial y} &
+    \dfrac{\partial v''_1}{\partial z} \\
+    \dfrac{\partial v''_2}{\partial x} &
+    \dfrac{\partial v''_2}{\partial y} &
+    \dfrac{\partial v''_2}{\partial z} \\
+    \dfrac{\partial v''_3}{\partial x} &
+    \dfrac{\partial v''_3}{\partial y} &
+    \dfrac{\partial v''_3}{\partial z}
+  \end{array}\right)
+  = \mathrm{T}
+  \left(\begin{array}{ccc}
+    \dfrac{\partial v'_1}{\partial x} &
+    \dfrac{\partial v'_1}{\partial y} &
+    \dfrac{\partial v'_1}{\partial z} \\
+    \dfrac{\partial v'_2}{\partial x} &
+    \dfrac{\partial v'_2}{\partial y} &
+    \dfrac{\partial v'_2}{\partial z} \\
+    \dfrac{\partial v'_3}{\partial x} &
+    \dfrac{\partial v'_3}{\partial y} &
+    \dfrac{\partial v'_3}{\partial z}
+  \end{array}\right)
+  \mathrm{T}
+\end{gathered}
+\end{align*}
+where $\mathrm{T} \defeq \mathrm{RNR^{-1}}$.
+
+The treatment for a scalar property ($\alpha$) is the same as that of the
+tangential component of $\mathbf{v}$
+\begin{align*}
+\begin{gathered}
+  \alpha'' = \alpha', \\
+  \frac{\partial \alpha''}{\partial\xi} =
+  -\frac{\partial \alpha'}{\partial\xi}, \quad
+  \frac{\partial \alpha''}{\partial\eta} =
+  \frac{\partial \alpha'}{\partial\eta}, \quad
+  \frac{\partial \alpha''}{\partial\zeta} =
+  \frac{\partial \alpha'}{\partial\zeta}
+\end{gathered}
+\end{align*}
+Aided by $\mathrm{R}$, write it in the vector-matrix form
+\begin{align*}
+\begin{gathered}
+  \alpha'' = \alpha', \\
+  \renewcommand{\arraystretch}{2.2}
+  \left(\begin{array}{c}
+    \dfrac{\partial\alpha''}{\partial x} \\
+    \dfrac{\partial\alpha''}{\partial y} \\
+    \dfrac{\partial\alpha''}{\partial z} \\
+  \end{array}\right)
+  = \mathrm{R}^{-1}
+  \left(\begin{array}{c}
+    \dfrac{\partial\alpha'}{\partial x} \\
+    \dfrac{\partial\alpha'}{\partial y} \\
+    \dfrac{\partial\alpha'}{\partial z} \\
+  \end{array}\right)
+\end{gathered}
 \end{align*}
 
-\section{Inviscid Solid Wall}
+\subsection{Special Case in Two-Dimensional Space}
 
 Regarding gas dynamics, almost all problem setups involve walls.  For the Euler
 equation, which doesn't have a diffusion term, inviscid solid walls are
