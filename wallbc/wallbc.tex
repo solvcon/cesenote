@@ -34,23 +34,52 @@
 
 \hspace{.5cm}
 
-Boundary conditions are what make flow interesting.  Among various conditions,
-the no-penetration wall (also known as slip wall or inviscid wall) boundary
-looks basic, but exhibits tremendous usefulness.
-
-\section{No-Penetration Boundary Condition}
+\section{Rotational Coordinate Transform}
 
 Consider the general case in the three-dimensional Euclidean coordinate system.
-Let $\hat{\boldsymbol{\xi}}$ be the unit normal vector of the boundary.  By
-choosing two orthogonal unit vectors $\hat{\boldsymbol{\eta}}$,
-$\hat{\boldsymbol{\zeta}}$, define a loca coordinate system $(\xi, \eta,
-\zeta)$ (see Figure~\ref{f:boundary_coordinate}; $\hat{\boldsymbol{\xi}}$
-points outward from the computing domain to the external space) at the boundary
-(it fulfills the condition $\hat{\boldsymbol{\zeta}} = \hat{\boldsymbol{\xi}}
-\times \hat{\boldsymbol{\eta}}, \hat{\boldsymbol{\xi}} =
-\hat{\boldsymbol{\eta}} \times \hat{\boldsymbol{\zeta}},
-\hat{\boldsymbol{\eta}} = \hat{\boldsymbol{\zeta}} \times
-\hat{\boldsymbol{\xi}}$).
+%
+$x_1$, $x_2$, and $x_3$
+%
+denote the three axes, and
+%
+$\hat{\mathbf{x}}_1$, $\hat{\mathbf{x}}_2$, and $\hat{\mathbf{x}}_3$
+%
+the unit vectors along the axes, respectively.  Of a certain boundary face, let
+%
+\begin{align*}
+  \hat{\boldsymbol{\xi}}_1
+  = \xi_{11} \hat{\mathbf{x}}_1
+  + \xi_{12} \hat{\mathbf{x}}_2
+  + \xi_{13} \hat{\mathbf{x}}_3
+\end{align*}
+%
+be the unit normal vector.  See Figure~\ref{f:boundary_coordinate}.  By
+choosing two other orthogonal unit vectors
+%
+\begin{align*}
+  \hat{\boldsymbol{\xi}}_2
+ &= \xi_{21} \hat{\mathbf{x}}_1
+  + \xi_{22} \hat{\mathbf{x}}_2
+  + \xi_{23} \hat{\mathbf{x}}_3
+  \\
+  \hat{\boldsymbol{\xi}}_3
+ &= \xi_{31} \hat{\mathbf{x}}_1
+  + \xi_{32} \hat{\mathbf{x}}_2
+  + \xi_{33} \hat{\mathbf{x}}_3
+\end{align*}
+%
+that fulfill the right-hand rule:
+%
+$\hat{\boldsymbol{\xi}}_3 = \hat{\boldsymbol{\xi}}_1 \times
+\hat{\boldsymbol{\xi}}_2$,
+%
+$\hat{\boldsymbol{\xi}}_1 = \hat{\boldsymbol{\xi}}_2 \times
+\hat{\boldsymbol{\xi}}_3$, and
+%
+$\hat{\boldsymbol{\xi}}_2 = \hat{\boldsymbol{\xi}}_3 \times
+\hat{\boldsymbol{\xi}}_1$,
+%
+define a local coordinate system $(\xi_1, \xi_2, \xi_3)$ on the boundary face.
 
 \begin{figure}[htbp]
 \centering
@@ -59,56 +88,155 @@ points outward from the computing domain to the external space) at the boundary
 \label{f:boundary_coordinate}
 \end{figure}
 
-For a vector $\mathbf{w}$ in the global coordinate system $(x, y, z)$, we
-define the matrix
+It can be show that a vector
 \begin{align*}
-  \mathrm{R} \defeq \left(\begin{array}{ccc}
-    \xi_1 & \eta_1 & \zeta_1 \\
-    \xi_2 & \eta_2 & \zeta_2 \\
-    \xi_3 & \eta_3 & \zeta_3
+  \mathbf{v}
+  = \left(\begin{array}{c}
+    v_1 \\ v_2 \\ v_3
   \end{array}\right)
 \end{align*}
-which transforms a vector from the global coordination system to the local
-coordinate system (denoted by the over bar):
+in the global coordinate system $(x_1, x_2, x_3)$ can be transformed to the
+local coordinate system $(\xi_1, \xi_2, \xi_3)$ by using the following formula:
 \begin{align*}
-  \bar{\mathbf{w}} = \mathrm{R}^{-1}\mathbf{w}
+  \bar{\mathbf{v}}
+  = \left(\begin{array}{c}
+    \bar{v}_1 \\ \bar{v}_2 \\ \bar{v}_3
+  \end{array}\right)
+  = \left(\begin{array}{ccc}
+    \xi_{11} & \xi_{12} & \xi_{13} \\
+    \xi_{21} & \xi_{22} & \xi_{23} \\
+    \xi_{31} & \xi_{32} & \xi_{33}
+  \end{array}\right)
+  \mathbf{v}
+\end{align*}
+The above equation can be rewritten to
+\begin{align*}
+  \bar{\mathbf{v}} = \mathrm{R}^{-1}\mathbf{v}
+\end{align*}
+by introducing
+\begin{align*}
+  \mathrm{R} \defeq \left(\begin{array}{ccc}
+    \boldsymbol{\xi}_1 &
+    \boldsymbol{\xi}_2 &
+    \boldsymbol{\xi}_3
+  \end{array}\right)
+  = \left(\begin{array}{ccc}
+    \xi_{11} & \xi_{21} & \xi_{31} \\
+    \xi_{12} & \xi_{22} & \xi_{32} \\
+    \xi_{13} & \xi_{23} & \xi_{33}
+  \end{array}\right)
 \end{align*}
 
-The no-penetration condition enforces that nothing flows through the boundary.
-In other words, at all time, the velocity component in the $\xi$-direction must
-be zero:
+Consider the spatial derivatives of the vector $\mathbf{v}$.  Write the
+Jacobian matrices in the global and local coordinate systems, respectively:
 \begin{align*}
-  \Bigl.\bar{v}_1\Bigr|_{\xi=0} = 0
+  \renewcommand{\arraystretch}{2.2}
+  \mathrm{J}
+  \defeq \left(\begin{array}{ccc}
+    \dfrac{\partial v_1}{\partial x_1} &
+    \dfrac{\partial v_1}{\partial x_2} &
+    \dfrac{\partial v_1}{\partial x_3} \\
+    \dfrac{\partial v_2}{\partial x_1} &
+    \dfrac{\partial v_2}{\partial x_2} &
+    \dfrac{\partial v_2}{\partial x_3} \\
+    \dfrac{\partial v_3}{\partial x_1} &
+    \dfrac{\partial v_3}{\partial x_2} &
+    \dfrac{\partial v_3}{\partial x_3}
+  \end{array}\right)
+  \; \mbox{and} \;
+  \bar{\mathrm{J}}
+  \defeq \left(\begin{array}{ccc}
+    \dfrac{\partial \bar{v}_1}{\partial\xi_1} &
+    \dfrac{\partial \bar{v}_1}{\partial\xi_2} &
+    \dfrac{\partial \bar{v}_1}{\partial\xi_3} \\
+    \dfrac{\partial \bar{v}_2}{\partial\xi_1} &
+    \dfrac{\partial \bar{v}_2}{\partial\xi_2} &
+    \dfrac{\partial \bar{v}_2}{\partial\xi_3} \\
+    \dfrac{\partial \bar{v}_3}{\partial\xi_1} &
+    \dfrac{\partial \bar{v}_3}{\partial\xi_2} &
+    \dfrac{\partial \bar{v}_3}{\partial\xi_3}
+  \end{array}\right)
 \end{align*}
+Aided by $\mathbf{v} = \mathrm{R}\bar{\mathbf{v}}$, write
+\begin{align*}
+  \frac{\partial v_i}{\partial x_j}
+  = \frac{\partial (\mathrm{R}\bar{\mathbf{v}})_i}{\partial x_j}
+  = \frac{\partial}{\partial x_j}
+    \left( \sum_{k=1}^3 \xi_{ki}\bar{v}_k \right)
+  = \sum_{k=1}^3
+    \left( \xi_{ki} \frac{\partial \bar{v}_k}{\partial x_j} \right),
+  \; i,j = 1, 2, 3
+\end{align*}
+The chain rule further gives
+\begin{align*}
+  \frac{\partial \bar{v}_k}{\partial x_j}
+  = \sum_{l=1}^3
+    \left(
+      \frac{\partial \bar{v}_k}{\partial \xi_l}
+      \frac{\partial \xi_l}{\partial x_j}
+    \right)
+  = \sum_{l=1}^3
+    \left( \xi_{lj} \frac{\partial \bar{v}_k}{\partial \xi_l} \right),
+  \; j,k = 1, 2, 3
+\end{align*}
+Combine the above two equations and obtain
+\begin{align*}
+  \frac{\partial v_i}{\partial x_j}
+  = \sum_{k,l=1}^3
+    \left(
+      \xi_{ki} \xi_{lj} \frac{\partial \bar{v}_k}{\partial \xi_l}
+    \right),
+  \; i,j = 1, 2, 3
+\end{align*}
+The vector-matrix form of the above transformation is
+\begin{align*}
+  \mathrm{J} = \mathrm{R\bar{J}R^{-1}}
+\end{align*}
+And the inverse transformation is
+\begin{align*}
+  \bar{\mathrm{J}} = \mathrm{R^{-1}JR}
+\end{align*}
+
+\section{No-Penetration Boundary Condition}
+
+The no-penetration condition enforces that nothing flows through the boundary.
+That is, at all time, the vector component in the $\xi_1$-direction must be
+zero on the boundary:
+\begin{align*}
+  \Bigl.\bar{v}_1\Bigr|_{\xi_1=0} = 0
+\end{align*}
+For the concept of ``flow'' to make sense, here the vector $\mathbf{v}$ is
+considered as velocity.
+
 A common treatment of the no-penetration boundary condition is to use
-reflection flow with the ghost cell.  By creating a ghost flow mirroring the
-interior flow, the above no-penetration condition is satisfied at the boundary
-($\xi = 0$).  Let $\bar{v}''_1$ denote the value of the ghost cell (outside the
-computing domain), and $\bar{v}'_1$ denote the value of the interior cell,
-write
+reflection flow with the ghost cell.  The ghost cell is mirror image of the
+interior cell.  By creating a ghost flow mirroring the interior flow, the above
+no-penetration condition is satisfied.  Let the double prime ${}''$ denote the
+value of the ghost cell (outside the computing domain), and the single prime
+${}'$ denote the value of the interior cell, write
 \begin{align*}
   \bar{v}''_1 = -\bar{v}'_1
 \end{align*}
 Spatial derivatives are part of solutions in the CESE method, and they need to
 be treated as well:
 \begin{align*}
-  \frac{\partial \bar{v}''_1}{\partial\xi} =
-  \frac{\partial \bar{v}'_1}{\partial\xi}, \quad
-  \frac{\partial \bar{v}''_1}{\partial\eta} =
-  -\frac{\partial \bar{v}'_1}{\partial\eta}, \quad
-  \frac{\partial \bar{v}''_1}{\partial\zeta} =
-  -\frac{\partial \bar{v}'_1}{\partial\zeta}
+  \frac{\partial \bar{v}''_1}{\partial\xi_1} =
+  \frac{\partial \bar{v}'_1}{\partial\xi_1}, \quad
+  \frac{\partial \bar{v}''_1}{\partial\xi_2} =
+  -\frac{\partial \bar{v}'_1}{\partial\xi_2}, \quad
+  \frac{\partial \bar{v}''_1}{\partial\xi_3} =
+  -\frac{\partial \bar{v}'_1}{\partial\xi_3}
 \end{align*}
 The tangential components should remain unchanged.  Their treatment is
 \begin{align*}
 \begin{gathered}
   \bar{v}''_i = \bar{v}'_i, \\
-  \frac{\partial \bar{v}''_i}{\partial\xi} =
-  -\frac{\partial \bar{v}'_i}{\partial\xi}, \quad
-  \frac{\partial \bar{v}''_i}{\partial\eta} =
-  \frac{\partial \bar{v}'_i}{\partial\eta}, \quad
-  \frac{\partial \bar{v}''_i}{\partial\zeta} =
-  \frac{\partial \bar{v}'_i}{\partial\zeta}
+  \frac{\partial \bar{v}''_i}{\partial\xi_1} =
+  -\frac{\partial \bar{v}'_i}{\partial\xi_1}, \quad
+  \frac{\partial \bar{v}''_i}{\partial\xi_2} =
+  \frac{\partial \bar{v}'_i}{\partial\xi_2}, \quad
+  \frac{\partial \bar{v}''_i}{\partial\xi_3} =
+  \frac{\partial \bar{v}'_i}{\partial\xi_3}
 \end{gathered}
 \end{align*}
 where $i = 2, 3$.
@@ -119,69 +247,110 @@ Aided by letting
     1 & 0 & 0 \\ 0 & -1 & 0 \\ 0 & 0 & -1
   \end{array}\right)
 \end{align*}
-write the treatments in the vector-matrix form in the local coordinate system
-\begin{align*}
-\begin{gathered}
-  \bar{\mathbf{v}}'' = -\mathrm{N}\bar{\mathbf{v}}', \\
+the treatments can be written in the vector-matrix form in the local coordinate
+system $(\xi_1, \xi_2, \xi_3)$:
+\begin{gather*}
+  \left(\begin{array}{c}
+    \bar{v}''_1 \\ \bar{v}''_2 \\ \bar{v}''_3
+  \end{array}\right)
+  = -\mathrm{N}
+    \left(\begin{array}{c}
+      \bar{v}'_1 \\ \bar{v}'_2 \\ \bar{v}'_3
+    \end{array}\right),
+  \\
   \renewcommand{\arraystretch}{2.2}
   \left(\begin{array}{ccc}
-    \dfrac{\partial \bar{v}''_1}{\partial\xi} &
-    \dfrac{\partial \bar{v}''_1}{\partial\eta} &
-    \dfrac{\partial \bar{v}''_1}{\partial\zeta} \\
-    \dfrac{\partial \bar{v}''_2}{\partial\xi} &
-    \dfrac{\partial \bar{v}''_2}{\partial\eta} &
-    \dfrac{\partial \bar{v}''_2}{\partial\zeta} \\
-    \dfrac{\partial \bar{v}''_3}{\partial\xi} &
-    \dfrac{\partial \bar{v}''_3}{\partial\eta} &
-    \dfrac{\partial \bar{v}''_3}{\partial\zeta}
+    \dfrac{\partial \bar{v}''_1}{\partial\xi_1} &
+    \dfrac{\partial \bar{v}''_1}{\partial\xi_2} &
+    \dfrac{\partial \bar{v}''_1}{\partial\xi_3} \\
+    \dfrac{\partial \bar{v}''_2}{\partial\xi_1} &
+    \dfrac{\partial \bar{v}''_2}{\partial\xi_2} &
+    \dfrac{\partial \bar{v}''_2}{\partial\xi_3} \\
+    \dfrac{\partial \bar{v}''_3}{\partial\xi_1} &
+    \dfrac{\partial \bar{v}''_3}{\partial\xi_2} &
+    \dfrac{\partial \bar{v}''_3}{\partial\xi_3}
   \end{array}\right)
   = \mathrm{N}
   \left(\begin{array}{ccc}
-    \dfrac{\partial \bar{v}'_1}{\partial\xi} &
-    \dfrac{\partial \bar{v}'_1}{\partial\eta} &
-    \dfrac{\partial \bar{v}'_1}{\partial\zeta} \\
-    \dfrac{\partial \bar{v}'_2}{\partial\xi} &
-    \dfrac{\partial \bar{v}'_2}{\partial\eta} &
-    \dfrac{\partial \bar{v}'_2}{\partial\zeta} \\
-    \dfrac{\partial \bar{v}'_3}{\partial\xi} &
-    \dfrac{\partial \bar{v}'_3}{\partial\eta} &
-    \dfrac{\partial \bar{v}'_3}{\partial\zeta}
+    \dfrac{\partial \bar{v}'_1}{\partial\xi_1} &
+    \dfrac{\partial \bar{v}'_1}{\partial\xi_2} &
+    \dfrac{\partial \bar{v}'_1}{\partial\xi_3} \\
+    \dfrac{\partial \bar{v}'_2}{\partial\xi_1} &
+    \dfrac{\partial \bar{v}'_2}{\partial\xi_2} &
+    \dfrac{\partial \bar{v}'_2}{\partial\xi_3} \\
+    \dfrac{\partial \bar{v}'_3}{\partial\xi_1} &
+    \dfrac{\partial \bar{v}'_3}{\partial\xi_2} &
+    \dfrac{\partial \bar{v}'_3}{\partial\xi_3}
   \end{array}\right)
   \mathrm{N}
-\end{gathered}
-\end{align*}
-and further in the global coordinate system
+\end{gather*}
+or, more concisely,
 \begin{align*}
-\begin{gathered}
-  \mathbf{v}'' = -\mathrm{T}\mathbf{v}', \\
-  \renewcommand{\arraystretch}{2.2}
-  \left(\begin{array}{ccc}
-    \dfrac{\partial v''_1}{\partial x} &
-    \dfrac{\partial v''_1}{\partial y} &
-    \dfrac{\partial v''_1}{\partial z} \\
-    \dfrac{\partial v''_2}{\partial x} &
-    \dfrac{\partial v''_2}{\partial y} &
-    \dfrac{\partial v''_2}{\partial z} \\
-    \dfrac{\partial v''_3}{\partial x} &
-    \dfrac{\partial v''_3}{\partial y} &
-    \dfrac{\partial v''_3}{\partial z}
-  \end{array}\right)
-  = \mathrm{T}
-  \left(\begin{array}{ccc}
-    \dfrac{\partial v'_1}{\partial x} &
-    \dfrac{\partial v'_1}{\partial y} &
-    \dfrac{\partial v'_1}{\partial z} \\
-    \dfrac{\partial v'_2}{\partial x} &
-    \dfrac{\partial v'_2}{\partial y} &
-    \dfrac{\partial v'_2}{\partial z} \\
-    \dfrac{\partial v'_3}{\partial x} &
-    \dfrac{\partial v'_3}{\partial y} &
-    \dfrac{\partial v'_3}{\partial z}
-  \end{array}\right)
-  \mathrm{T}
-\end{gathered}
+  \bar{\mathbf{v}}'' = -\mathrm{N}\bar{\mathbf{v}}'
+  \; \mbox{and} \;
+  \bar{\mathrm{J}}'' = \mathrm{N\bar{J}'N}
 \end{align*}
-where $\mathrm{T} \defeq \mathrm{RNR^{-1}}$.
+
+It is not convenient to specify the boundary condition using the local
+coordinate system $(\xi_1, \xi_2, \xi_3)$.  We'd like to use the global
+coordinate system $(x_1, x_2, x_3)$.  For the vector itself, perform the
+coordinate transform:
+\begin{gather*}
+  \mathrm{R}^{-1}\mathbf{v}''
+  = \bar{\mathbf{v}}''
+  = -\mathrm{N}\bar{\mathbf{v}}'
+  = -\mathrm{N}\mathrm{R}^{-1}\mathbf{v}'
+  \\
+  \Rightarrow \;
+  \mathbf{v}'' = -\mathrm{RNR^{-1}}\mathbf{v}'
+\end{gather*}
+The above equation can be rewritten as
+\begin{align*}
+  \mathbf{v}'' = -\mathrm{T}\mathbf{v}'
+\end{align*}
+by letting
+\begin{align*}
+  \mathrm{T}
+ &\defeq \mathrm{RNR^{-1}}
+  = \left(\begin{array}{ccc}
+    \xi_{11} & \xi_{21} & \xi_{31} \\
+    \xi_{12} & \xi_{22} & \xi_{32} \\
+    \xi_{13} & \xi_{23} & \xi_{33}
+  \end{array}\right)
+  \left(\begin{array}{ccc}
+    1 & 0 & 0 \\
+    0 & -1 & 0 \\
+    0 & 0 & -1
+  \end{array}\right)
+  \left(\begin{array}{ccc}
+    \xi_{11} & \xi_{12} & \xi_{13} \\
+    \xi_{21} & \xi_{22} & \xi_{23} \\
+    \xi_{31} & \xi_{32} & \xi_{33}
+  \end{array}\right)
+  \\
+ &= \left(\begin{array}{ccc}
+    \xi_{11}^2       - \xi_{21}^2       - \xi_{31}^2       &
+    \xi_{11}\xi_{12} - \xi_{21}\xi_{22} - \xi_{31}\xi_{32} &
+    \xi_{11}\xi_{13} - \xi_{21}\xi_{23} - \xi_{31}\xi_{33} \\
+    \xi_{11}\xi_{12} - \xi_{21}\xi_{22} - \xi_{31}\xi_{32} &
+    \xi_{12}^2       - \xi_{22}^2       - \xi_{32}^2       &
+    \xi_{12}\xi_{13} - \xi_{22}\xi_{23} - \xi_{32}\xi_{33} \\
+    \xi_{11}\xi_{13} - \xi_{21}\xi_{23} - \xi_{31}\xi_{33} &
+    \xi_{12}\xi_{13} - \xi_{22}\xi_{23} - \xi_{32}\xi_{33} &
+    \xi_{13}^2       - \xi_{23}^2       - \xi_{33}^2
+  \end{array}\right)
+\end{align*}
+Similarly,
+\begin{gather*}
+  \mathrm{R^{-1}J''R} = \bar{\mathrm{J}}'' = \mathrm{N\bar{J}'N}
+  = \mathrm{NR^{-1}J'RN}
+  \\
+  \Rightarrow \;
+  \mathrm{J}'' = \mathrm{RNR^{-1}J'RNR^{-1}}
+  \\
+  \Rightarrow \;
+  \mathrm{J}'' = \mathrm{TJ'T}
+\end{gather*}
 
 The treatment for a scalar property ($\alpha$) is the same as that of the
 tangential component of $\mathbf{v}$
@@ -215,7 +384,7 @@ Aided by $\mathrm{R}$, write it in the vector-matrix form
 \end{gathered}
 \end{align*}
 
-\subsection{Special Case in Two-Dimensional Space}
+\section{Special Case in Two-Dimensional Space}
 
 Regarding gas dynamics, almost all problem setups involve walls.  For the Euler
 equation, which doesn't have a diffusion term, inviscid solid walls are
@@ -489,8 +658,6 @@ where
     \cos2\theta & \sin2\theta \\ sin2\theta & -\cos2\theta
   \end{array}\right) \label{e:reflection_T}
 \end{align}
-
-\section{Three-Dimensional Inviscid Solid Wall}
 
 \begin{thebibliography}{99}
 \bibitem{laney_computational_1998} C. B. Laney, Computational Gasdynamics.
