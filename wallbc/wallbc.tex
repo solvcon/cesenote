@@ -23,9 +23,9 @@
 
 \begin{document}
 
-\title{Inviscid Wall Boundary Treatment for Gas Dynamics}
+\title{Wall Boundary Treatment for Gas Dynamics}
 \author{Yung-Yu Chen}
-\date{2015.12.5}
+\date{2016.2.29}
 
 \maketitle
 
@@ -37,26 +37,34 @@
 \section{Rotational Coordinate Transform}
 
 Consider the general case in the three-dimensional Euclidean coordinate system.
-%
-$x_1$, $x_2$, and $x_3$
-%
-denote the three axes, and
+Call $(x_1, x_2, x_3)$ a global coordinate system of which
 %
 $\hat{\mathbf{x}}_1$, $\hat{\mathbf{x}}_2$, and $\hat{\mathbf{x}}_3$
 %
-the unit vectors along the axes, respectively.  Of a certain boundary face, let
+are the unit vectors along the axes, respectively.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics{boundary_coordinate.eps}
+\caption{The local coordinate system of a boundary face.}
+\label{f:boundary_coordinate}
+\end{figure}
+
+Of a certain boundary face, let
 %
-\begin{align*}
+\begin{align}
   \hat{\boldsymbol{\xi}}_1
   = \xi_{11} \hat{\mathbf{x}}_1
   + \xi_{12} \hat{\mathbf{x}}_2
   + \xi_{13} \hat{\mathbf{x}}_3
-\end{align*}
+  \label{e:coord:xi1}
+\end{align}
 %
 be the unit normal vector.  See Figure~\ref{f:boundary_coordinate}.  By
 choosing two other orthogonal unit vectors
 %
-\begin{align*}
+\begin{align}
+\begin{aligned}
   \hat{\boldsymbol{\xi}}_2
  &= \xi_{21} \hat{\mathbf{x}}_1
   + \xi_{22} \hat{\mathbf{x}}_2
@@ -66,7 +74,9 @@ choosing two other orthogonal unit vectors
  &= \xi_{31} \hat{\mathbf{x}}_1
   + \xi_{32} \hat{\mathbf{x}}_2
   + \xi_{33} \hat{\mathbf{x}}_3
-\end{align*}
+\end{aligned}
+\label{e:coord:xi23}
+\end{align}
 %
 that fulfill the right-hand rule:
 %
@@ -79,60 +89,102 @@ $\hat{\boldsymbol{\xi}}_1 = \hat{\boldsymbol{\xi}}_2 \times
 $\hat{\boldsymbol{\xi}}_2 = \hat{\boldsymbol{\xi}}_3 \times
 \hat{\boldsymbol{\xi}}_1$,
 %
-define a local coordinate system $(\xi_1, \xi_2, \xi_3)$ on the boundary face.
+a local coordinate system $(\xi_1, \xi_2, \xi_3)$ is defined on the boundary
+face.  Assume the two coordinate systems can be transformed to each other by
+rotation.
 
-\begin{figure}[htbp]
-\centering
-\includegraphics{boundary_coordinate.eps}
-\caption{The local coordinate system of a boundary face.}
-\label{f:boundary_coordinate}
-\end{figure}
+\subsection{Vector Rotation}
 
-It can be show that a vector
+A certain vector, or point, in space can be represented using both of the
+coordinate systems.  That is, with $\mathbf{p}$ denoting the point in $(x_1,
+x_2, x_3)$, and $\bar{\mathbf{p}}$ denoting it in $(\xi_1, \xi_2, \xi_3)$, the
+following equation holds
 \begin{align*}
-  \mathbf{v}
-  = \left(\begin{array}{c}
-    v_1 \\ v_2 \\ v_3
+  \mathbf{p}
+  = p_1 \hat{\mathbf{x}}_1 + p_2 \hat{\mathbf{x}}_2 + p_3 \hat{\mathbf{x}}_3
+  = \bar{\mathbf{p}}
+  = \bar{p}_1 \hat{\boldsymbol{\xi}}_1
+  + \bar{p}_2 \hat{\boldsymbol{\xi}}_2
+  + \bar{p}_3 \hat{\boldsymbol{\xi}}_3
+\end{align*}
+Substitute Eqs.~(\ref{e:coord:xi1}) and (\ref{e:coord:xi23}) into the above
+equation:
+\begin{align*}
+  p_1 \hat{\mathbf{x}}_1 + p_2 \hat{\mathbf{x}}_2 + p_3 \hat{\mathbf{x}}_3
+  = \; 
+   &\bar{p}_1 (\xi_{11} \hat{\mathbf{x}}_1 + \xi_{12} \hat{\mathbf{x}}_2
+             + \xi_{13} \hat{\mathbf{x}}_3)
+  \\
+  + \;
+   &\bar{p}_2 (\xi_{21} \hat{\mathbf{x}}_1 + \xi_{22} \hat{\mathbf{x}}_2
+             + \xi_{23} \hat{\mathbf{x}}_3)
+  \\
+  + \;
+   &\bar{p}_3 (\xi_{31} \hat{\mathbf{x}}_1 + \xi_{32} \hat{\mathbf{x}}_2
+             + \xi_{33} \hat{\mathbf{x}}_3)
+\end{align*}
+Because $\hat{\mathbf{x}}_1$, $\hat{\mathbf{x}}_2$, and $\hat{\mathbf{x}}_3$
+are orthogonal, reorganizing the equation gives the transformation relation
+between the two coordinate systems $(x_1, x_2, x_3)$, and $(\xi_1, \xi_2,
+\xi_3)$ as three independent equations
+\begin{align}
+\begin{aligned}
+  p_1 &= \bar{p}_1 \xi_{11} + \bar{p}_2 \xi_{21} + \bar{p}_3 \xi_{31}
+  \\
+  p_2 &= \bar{p}_1 \xi_{12} + \bar{p}_2 \xi_{22} + \bar{p}_3 \xi_{32}
+  \\
+  p_3 &= \bar{p}_1 \xi_{13} + \bar{p}_2 \xi_{23} + \bar{p}_3 \xi_{33}
+\end{aligned}
+\label{e:rotrel}
+\end{align}
+
+If the vector $\mathbf{p}$ (and $\bar{\mathbf{p}}$) is written as a column
+vector
+\begin{align*}
+  \mathbf{p} = \left(\begin{array}{c}
+    p_1 \\ p_2 \\ p_3
+  \end{array}\right), \;
+  \bar{\mathbf{p}} = \left(\begin{array}{c}
+    \bar{p}_1 \\ \bar{p}_2 \\ \bar{p}_3
   \end{array}\right)
 \end{align*}
-in the global coordinate system $(x_1, x_2, x_3)$ can be transformed to the
-local coordinate system $(\xi_1, \xi_2, \xi_3)$ by using the following formula:
-\begin{align*}
-  \bar{\mathbf{v}}
-  = \left(\begin{array}{c}
-    \bar{v}_1 \\ \bar{v}_2 \\ \bar{v}_3
-  \end{array}\right)
-  = \left(\begin{array}{ccc}
-    \xi_{11} & \xi_{12} & \xi_{13} \\
-    \xi_{21} & \xi_{22} & \xi_{23} \\
-    \xi_{31} & \xi_{32} & \xi_{33}
-  \end{array}\right)
-  \mathbf{v}
-\end{align*}
-The above equation can be rewritten to
-\begin{align*}
-  \bar{\mathbf{v}} = \mathrm{R}^{-1}\mathbf{v}
-\end{align*}
-by introducing
-\begin{align*}
-  \mathrm{R} \defeq \left(\begin{array}{ccc}
-    \boldsymbol{\xi}_1 &
-    \boldsymbol{\xi}_2 &
-    \boldsymbol{\xi}_3
-  \end{array}\right)
-  = \left(\begin{array}{ccc}
+The transformation relation Eq.~(\ref{e:rotrel}) can be rewritten in the
+vector-matrix form
+\begin{align}
+  \mathbf{p} = \mathrm{R}\bar{\mathbf{p}},
+  \; \mbox{and conversely} \;
+  \bar{\mathbf{p}} = \mathrm{R}^{-1}\mathbf{p}
+  \label{e:rotmv}
+\end{align}
+where
+\begin{align}
+  \mathrm{R}
+  \defeq \left(\begin{array}{ccc}
     \xi_{11} & \xi_{21} & \xi_{31} \\
     \xi_{12} & \xi_{22} & \xi_{32} \\
     \xi_{13} & \xi_{23} & \xi_{33}
   \end{array}\right)
-\end{align*}
+  = \left(\begin{array}{ccc}
+    \hat{\boldsymbol{\xi}}_1 &
+    \hat{\boldsymbol{\xi}}_2 &
+    \hat{\boldsymbol{\xi}}_3
+  \end{array}\right)
+  \label{e:rotmat}
+\end{align}
+Note, if $\mathbf{x}$ is used to represent a position vector in $(x_1, x_2,
+x_3)$, and $\boldsymbol{\xi}$ is used to represent a position vector in
+$(\xi_1, \xi_2, \xi_3)$, then when the two position vectors point to the same
+location, $\mathbf{p} = \mathbf{x}$, $\bar{\mathbf{p}} = \boldsymbol{\xi}$, and
+$\mathbf{x} = \boldsymbol{\xi}$.
 
-Consider the spatial derivatives of the vector $\mathbf{v}$.  Write the
-Jacobian matrices in the global and local coordinate systems, respectively:
+\subsection{Jacobian Rotation}
+
+Consider a vector function $\mathbf{v}(\mathbf{x})$.  Write the Jacobian
+matrices in both the global and local coordinate systems, respectively:
 \begin{align*}
   \renewcommand{\arraystretch}{2.2}
   \mathrm{J}
-  \defeq \left(\begin{array}{ccc}
+  = \left(\begin{array}{ccc}
     \dfrac{\partial v_1}{\partial x_1} &
     \dfrac{\partial v_1}{\partial x_2} &
     \dfrac{\partial v_1}{\partial x_3} \\
@@ -145,7 +197,7 @@ Jacobian matrices in the global and local coordinate systems, respectively:
   \end{array}\right)
   \; \mbox{and} \;
   \bar{\mathrm{J}}
-  \defeq \left(\begin{array}{ccc}
+  = \left(\begin{array}{ccc}
     \dfrac{\partial \bar{v}_1}{\partial\xi_1} &
     \dfrac{\partial \bar{v}_1}{\partial\xi_2} &
     \dfrac{\partial \bar{v}_1}{\partial\xi_3} \\
@@ -157,6 +209,24 @@ Jacobian matrices in the global and local coordinate systems, respectively:
     \dfrac{\partial \bar{v}_3}{\partial\xi_3}
   \end{array}\right)
 \end{align*}
+Remind that a Jacobian is defined as
+\begin{align*}
+  \dfrac{\partial\mathbf{v}}{\partial\mathbf{x}}
+  = \dfrac{\partial(v_1, \ldots, v_n)}{\partial(x_1, \ldots, x_n)},
+  \; \mbox{or} \;
+  \renewcommand{\arraystretch}{2.2}
+  \dfrac{\partial\mathbf{v}}{\partial\mathbf{x}}
+  = \left(\begin{array}{ccc}
+    \dfrac{\partial v_1}{\partial x_1} &
+    \cdots &
+    \dfrac{\partial v_2}{\partial x_n} \\
+    \vdots & \ddots & \vdots \\
+    \dfrac{\partial v_n}{\partial x_1} &
+    \cdots &
+    \dfrac{\partial v_n}{\partial x_n}
+  \end{array}\right),
+  \; n = \dim(\mathbb{E}^n)
+\end{align*}
 Aided by $\mathbf{v} = \mathrm{R}\bar{\mathbf{v}}$, write
 \begin{align*}
   \frac{\partial v_i}{\partial x_j}
@@ -167,7 +237,7 @@ Aided by $\mathbf{v} = \mathrm{R}\bar{\mathbf{v}}$, write
     \left( \xi_{ki} \frac{\partial \bar{v}_k}{\partial x_j} \right),
   \; i,j = 1, 2, 3
 \end{align*}
-The chain rule further gives
+By following the chain rule, write
 \begin{align*}
   \frac{\partial \bar{v}_k}{\partial x_j}
   = \sum_{l=1}^3
@@ -179,7 +249,7 @@ The chain rule further gives
     \left( \xi_{lj} \frac{\partial \bar{v}_k}{\partial \xi_l} \right),
   \; j,k = 1, 2, 3
 \end{align*}
-Combine the above two equations and obtain
+Combining the above two equations gives
 \begin{align*}
   \frac{\partial v_i}{\partial x_j}
   = \sum_{k,l=1}^3
@@ -188,32 +258,30 @@ Combine the above two equations and obtain
     \right),
   \; i,j = 1, 2, 3
 \end{align*}
-The vector-matrix form of the above transformation is
-\begin{align*}
-  \mathrm{J} = \mathrm{R\bar{J}R^{-1}}
-\end{align*}
-And the inverse transformation is
-\begin{align*}
+The vector-matrix form of the above equations is
+\begin{align}
+  \mathrm{J} = \mathrm{R\bar{J}R^{-1}},
+  \; \mbox{with the inverse transformation} \;
   \bar{\mathrm{J}} = \mathrm{R^{-1}JR}
-\end{align*}
+  \label{e:rotjac}
+\end{align}
 
 \section{No-Penetration Boundary Condition}
 
 The no-penetration condition enforces that nothing flows through the boundary.
 That is, at all time, the vector component in the $\xi_1$-direction must be
-zero on the boundary:
+zero at the boundary:
 \begin{align*}
   \Bigl.\bar{v}_1\Bigr|_{\xi_1=0} = 0
 \end{align*}
 For the concept of ``flow'' to make sense, here the vector $\mathbf{v}$ is
 considered as velocity.
 
-A common treatment of the no-penetration boundary condition is to use
-reflection flow with the ghost cell.  The ghost cell is mirror image of the
-interior cell.  By creating a ghost flow mirroring the interior flow, the above
-no-penetration condition is satisfied.  Let the double prime ${}''$ denote the
-value of the ghost cell (outside the computing domain), and the single prime
-${}'$ denote the value of the interior cell, write
+A common treatment is to use a reflection flow with a ghost cell.  A ghost cell
+is mirror image of an interior cell.  By creating a ghost flow mirroring the
+interior flow, the no-penetration condition is satisfied.  Let the double prime
+(${}''$) denote the value with the ghost cell (outside the computing domain),
+and the single prime (${}'$) denote the value with the interior cell.  Write
 \begin{align*}
   \bar{v}''_1 = -\bar{v}'_1
 \end{align*}
@@ -291,8 +359,10 @@ or, more concisely,
   \bar{\mathrm{J}}'' = \mathrm{N\bar{J}'N}
 \end{align*}
 
-It is not convenient to specify the boundary condition using the local
-coordinate system $(\xi_1, \xi_2, \xi_3)$.  We'd like to use the global
+\subsection{Treatment Final Form}
+
+It is not convenient nor efficient to specify the boundary condition using the
+local coordinate system $(\xi_1, \xi_2, \xi_3)$.  We'd like to use the global
 coordinate system $(x_1, x_2, x_3)$.  For the vector itself, perform the
 coordinate transform:
 \begin{gather*}
@@ -308,7 +378,7 @@ The above equation can be rewritten as
 \begin{align*}
   \mathbf{v}'' = -\mathrm{T}\mathbf{v}'
 \end{align*}
-by letting
+where
 \begin{align*}
   \mathrm{T}
  &\defeq \mathrm{RNR^{-1}}
@@ -351,6 +421,63 @@ Similarly,
   \Rightarrow \;
   \mathrm{J}'' = \mathrm{TJ'T}
 \end{gather*}
+Spelling out the treatments:
+\begin{align}
+\begin{aligned}
+  \left(\begin{array}{c}
+    v''_1 \\ v''_2 \\ v''_3
+  \end{array}\right)
+  = &\;
+ -\left(\begin{array}{ccc}
+    T_{11} & T_{12} & T_{13} \\
+    T_{21} & T_{22} & T_{23} \\
+    T_{31} & T_{32} & T_{33}
+  \end{array}\right)
+  \left(\begin{array}{c}
+    v'_1 \\ v'_2 \\ v'_3
+  \end{array}\right),
+  \\
+  \renewcommand{\arraystretch}{2.2}
+  \left(\begin{array}{ccc}
+    \dfrac{\partial v''_1}{\partial x_1} &
+    \dfrac{\partial v''_1}{\partial x_2} &
+    \dfrac{\partial v''_1}{\partial x_3} \\
+    \dfrac{\partial v''_2}{\partial x_1} &
+    \dfrac{\partial v''_2}{\partial x_2} &
+    \dfrac{\partial v''_2}{\partial x_3} \\
+    \dfrac{\partial v''_3}{\partial x_1} &
+    \dfrac{\partial v''_3}{\partial x_2} &
+    \dfrac{\partial v''_3}{\partial x_3}
+  \end{array}\right)
+  = &\;
+  \renewcommand{\arraystretch}{2.2}
+  \left(\begin{array}{ccc}
+    T_{11} & T_{12} & T_{13} \\
+    T_{21} & T_{22} & T_{23} \\
+    T_{31} & T_{32} & T_{33}
+  \end{array}\right)
+  \left(\begin{array}{ccc}
+    \dfrac{\partial v'_1}{\partial x_1} &
+    \dfrac{\partial v'_1}{\partial x_2} &
+    \dfrac{\partial v'_1}{\partial x_3} \\
+    \dfrac{\partial v'_2}{\partial x_1} &
+    \dfrac{\partial v'_2}{\partial x_2} &
+    \dfrac{\partial v'_2}{\partial x_3} \\
+    \dfrac{\partial v'_3}{\partial x_1} &
+    \dfrac{\partial v'_3}{\partial x_2} &
+    \dfrac{\partial v'_3}{\partial x_3}
+  \end{array}\right)
+  \\ &\;
+  \renewcommand{\arraystretch}{2.2}
+  \left(\begin{array}{ccc}
+    T_{11} & T_{12} & T_{13} \\
+    T_{21} & T_{22} & T_{23} \\
+    T_{31} & T_{32} & T_{33}
+  \end{array}\right)
+\end{aligned}
+\label{e:treat:vec}
+\end{align}
+Note $\mathrm{T}$ is a real symmetric matrix.
 
 The treatment for a scalar property ($\alpha$) is the same as that of the
 tangential component of $\mathbf{v}$
@@ -366,7 +493,7 @@ tangential component of $\mathbf{v}$
 \end{gathered}
 \end{align*}
 Aided by $\mathrm{R}$, write it in the vector-matrix form
-\begin{align*}
+\begin{align}
 \begin{gathered}
   \alpha'' = \alpha', \\
   \renewcommand{\arraystretch}{2.2}
@@ -381,10 +508,21 @@ Aided by $\mathrm{R}$, write it in the vector-matrix form
     \dfrac{\partial\alpha'}{\partial y} \\
     \dfrac{\partial\alpha'}{\partial z} \\
   \end{array}\right)
+  = \left(\begin{array}{ccc}
+    \xi_{11} & \xi_{12} & \xi_{13} \\
+    \xi_{21} & \xi_{22} & \xi_{23} \\
+    \xi_{31} & \xi_{32} & \xi_{33}
+  \end{array}\right)
+  \left(\begin{array}{c}
+    \dfrac{\partial\alpha'}{\partial x} \\
+    \dfrac{\partial\alpha'}{\partial y} \\
+    \dfrac{\partial\alpha'}{\partial z} \\
+  \end{array}\right)
 \end{gathered}
-\end{align*}
+\label{e:treat:sca}
+\end{align}
 
-\section{Special Case in Two-Dimensional Space}
+\section{The Euler Equation}
 
 Regarding gas dynamics, almost all problem setups involve walls.  For the Euler
 equation, which doesn't have a diffusion term, inviscid solid walls are
@@ -660,6 +798,8 @@ where
 \end{align}
 
 \begin{thebibliography}{99}
+\bibitem{aris_vectors_1962} Rutherford Aris, Vectors, Tensors, and the Basic
+Equations of Fluid Mechanics, Prentice-Hall, 1962.
 \bibitem{laney_computational_1998} C. B. Laney, Computational Gasdynamics.
 Cambridge: Cambridge University Press, 1998.
 \end{thebibliography}
