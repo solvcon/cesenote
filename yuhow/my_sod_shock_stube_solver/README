@@ -1,0 +1,44 @@
+****************************************************************
+README of sod shock tube solver which is made by You-Hao Chang.
+****************************************************************
+
+run_cese.py :
+    1. You can use this python code to solve 1-D sod shock tube 
+       problem. Is can also export the solution and present the
+       results with animation.
+    2. It imports "my_cese_solver.py", which contains the main
+       solver.
+Command:
+    ./run_cese.py
+
+----------------------------------------------------------------
+
+cese_unit_test.py :
+    1. This python code takes responsibility for unit test of 
+       porting. There is a standard CESE solution which can be
+       used for validating the modification of code or any new 
+       implementation.
+    2. It also contains some other useful class method. For 
+       example, it implements a method which can return the
+       analytic solution.
+    3. It should be noted that you have to run cese solver first
+       in order to get your cese solution.
+
+For unit test of porting:
+    nosetests
+
+----------------------------------------------------------------
+
+results_comparison.py :
+    1. This python code can be used for comparing the results 
+       between CESE solver and Analytic solver or two different 
+       CESE solvers.
+    2. You can store any two results separately in two different
+       directories 'result1' and 'result2' with specific format.
+    3. It should be noted that the results stored in different
+       directories should have the same setting, for example, like
+       the number of iteration, size of time space... etc.
+
+Command:
+    ./results_comparison.py result1 result2
+

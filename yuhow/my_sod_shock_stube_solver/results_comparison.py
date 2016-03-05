@@ -1,7 +1,9 @@
+#!/usr/bin/python
+
 """
 Compare the results between CESE solver and Analytic solver
-                         or two different CESE solvers
-Editor: You-Hao Chang
+                              or two different CESE solvers
+Author: You-Hao Chang
 2016/01/09
 
 Input: two text files which contain information of Sod shock tube:
@@ -13,7 +15,7 @@ Input: two text files which contain information of Sod shock tube:
        IMPORTANT: The name of the file will be referred to the iteration number
                   or the time stamp. For example: 001.dat, 002.dat and etc.
 
-Command: python results_comparison.py [DIR_1] [DIR_2]
+Command: ./results_comparison.py [DIR_1] [DIR_2]
 
 """
 
@@ -27,7 +29,7 @@ DIRECTORY_1 = sys.argv[1]
 DIRECTORY_2 = sys.argv[2]
 
 # starting to extract the inforamtion of input files 
-file_idx = 1
+file_idx = 100
 while file_idx <= ITERATION:
     file1 = open(DIRECTORY_1 + "/" + "%03d" % file_idx + ".dat", 'r')
     file2 = open(DIRECTORY_2 + "/" + "%03d" % file_idx + ".dat", 'r')
@@ -81,5 +83,3 @@ while file_idx <= ITERATION:
     file2.close()
     file_idx += 1
     
-
-

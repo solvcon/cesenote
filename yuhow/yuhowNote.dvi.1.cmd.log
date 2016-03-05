@@ -1,0 +1,302 @@
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=latex)
+ restricted \write18 enabled.
+entering extended mode
+(./yuhowNote.tex
+LaTeX2e <2015/01/01>
+Babel <3.9l> and hyphenation patterns for 79 languages loaded.
+(/usr/local/texlive/2015/texmf-dist/tex/latex/base/article.cls
+Document Class: article 2014/09/29 v1.4h Standard LaTeX document class
+(/usr/local/texlive/2015/texmf-dist/tex/latex/base/size12.clo))
+(/usr/local/texlive/2015/texmf-dist/tex/latex/geometry/geometry.sty
+(/usr/local/texlive/2015/texmf-dist/tex/latex/graphics/keyval.sty)
+(/usr/local/texlive/2015/texmf-dist/tex/generic/oberdiek/ifpdf.sty)
+(/usr/local/texlive/2015/texmf-dist/tex/generic/oberdiek/ifvtex.sty)
+(/usr/local/texlive/2015/texmf-dist/tex/generic/ifxetex/ifxetex.sty))
+(/usr/local/texlive/2015/texmf-dist/tex/latex/hyperref/hyperref.sty
+(/usr/local/texlive/2015/texmf-dist/tex/generic/oberdiek/hobsub-hyperref.sty
+(/usr/local/texlive/2015/texmf-dist/tex/generic/oberdiek/hobsub-generic.sty))
+(/usr/local/texlive/2015/texmf-dist/tex/latex/oberdiek/auxhook.sty)
+(/usr/local/texlive/2015/texmf-dist/tex/latex/oberdiek/kvoptions.sty)
+(/usr/local/texlive/2015/texmf-dist/tex/latex/hyperref/pd1enc.def)
+(/usr/local/texlive/2015/texmf-dist/tex/latex/latexconfig/hyperref.cfg)
+(/usr/local/texlive/2015/texmf-dist/tex/latex/url/url.sty))
+
+Package hyperref Message: Driver: hdvips.
+
+(/usr/local/texlive/2015/texmf-dist/tex/latex/hyperref/hdvips.def
+(/usr/local/texlive/2015/texmf-dist/tex/latex/hyperref/pdfmark.def
+(/usr/local/texlive/2015/texmf-dist/tex/latex/oberdiek/rerunfilecheck.sty)))
+(/usr/local/texlive/2015/texmf-dist/tex/latex/amsmath/amsmath.sty
+For additional information on amsmath, use the `?' option.
+(/usr/local/texlive/2015/texmf-dist/tex/latex/amsmath/amstext.sty
+(/usr/local/texlive/2015/texmf-dist/tex/latex/amsmath/amsgen.sty))
+(/usr/local/texlive/2015/texmf-dist/tex/latex/amsmath/amsbsy.sty)
+(/usr/local/texlive/2015/texmf-dist/tex/latex/amsmath/amsopn.sty))
+(/usr/local/texlive/2015/texmf-dist/tex/latex/amsfonts/amssymb.sty
+(/usr/local/texlive/2015/texmf-dist/tex/latex/amsfonts/amsfonts.sty))
+(/usr/local/texlive/2015/texmf-dist/tex/latex/amscls/amsthm.sty)
+(/usr/local/texlive/2015/texmf-dist/tex/latex/graphics/color.sty
+(/usr/local/texlive/2015/texmf-dist/tex/latex/latexconfig/color.cfg)
+(/usr/local/texlive/2015/texmf-dist/tex/latex/graphics/dvips.def)
+(/usr/local/texlive/2015/texmf-dist/tex/latex/graphics/dvipsnam.def))
+(/usr/local/texlive/2015/texmf-dist/tex/latex/graphics/graphicx.sty
+(/usr/local/texlive/2015/texmf-dist/tex/latex/graphics/graphics.sty
+(/usr/local/texlive/2015/texmf-dist/tex/latex/graphics/trig.sty)
+(/usr/local/texlive/2015/texmf-dist/tex/latex/latexconfig/graphics.cfg)))
+(/usr/local/texlive/2015/texmf-dist/tex/latex/pdfpages/pdfpages.sty
+(/usr/local/texlive/2015/texmf-dist/tex/latex/base/ifthen.sty)
+(/usr/local/texlive/2015/texmf-dist/tex/latex/tools/calc.sty)
+(/usr/local/texlive/2015/texmf-dist/tex/latex/eso-pic/eso-pic.sty)
+(/usr/local/texlive/2015/texmf-dist/tex/latex/pdfpages/ppdvips.def))
+(/usr/local/texlive/2015/texmf-dist/tex/latex/graphics/epsfig.sty)
+(/usr/local/texlive/2015/texmf-dist/tex/latex/pstricks/pst-all.sty
+(/usr/local/texlive/2015/texmf-dist/tex/latex/pstricks/pstricks.sty
+(/usr/local/texlive/2015/texmf-dist/tex/generic/pstricks/pstricks.tex
+(/usr/local/texlive/2015/texmf-dist/tex/generic/xkeyval/pst-xkey.tex
+(/usr/local/texlive/2015/texmf-dist/tex/latex/xkeyval/xkeyval.sty
+(/usr/local/texlive/2015/texmf-dist/tex/generic/xkeyval/xkeyval.tex
+(/usr/local/texlive/2015/texmf-dist/tex/generic/xkeyval/xkvutils.tex))))
+(/usr/local/texlive/2015/texmf-dist/tex/generic/pstricks/pst-fp.tex
+`pst-fp' v0.05, 2010/01/17 (hv))
+(/usr/local/texlive/2015/texmf-dist/tex/generic/pgf/utilities/pgfutil-common.te
+x
+(/usr/local/texlive/2015/texmf-dist/tex/generic/pgf/utilities/pgfutil-common-li
+sts.tex))
+(/usr/local/texlive/2015/texmf-dist/tex/generic/pgf/utilities/pgfkeys.code.tex
+(/usr/local/texlive/2015/texmf-dist/tex/generic/pgf/utilities/pgfkeysfiltered.c
+ode.tex))
+(/usr/local/texlive/2015/texmf-dist/tex/generic/pgf/utilities/pgffor.code.tex
+(/usr/local/texlive/2015/texmf-dist/tex/generic/pgf/math/pgfmath.code.tex
+(/usr/local/texlive/2015/texmf-dist/tex/generic/pgf/math/pgfmathcalc.code.tex
+(/usr/local/texlive/2015/texmf-dist/tex/generic/pgf/math/pgfmathutil.code.tex)
+(/usr/local/texlive/2015/texmf-dist/tex/generic/pgf/math/pgfmathparser.code.tex
+)
+(/usr/local/texlive/2015/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.code.
+tex
+(/usr/local/texlive/2015/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.basic
+.code.tex)
+(/usr/local/texlive/2015/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.trigo
+nometric.code.tex)
+(/usr/local/texlive/2015/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.rando
+m.code.tex)
+(/usr/local/texlive/2015/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.compa
+rison.code.tex)
+(/usr/local/texlive/2015/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.base.
+code.tex)
+(/usr/local/texlive/2015/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.round
+.code.tex)
+(/usr/local/texlive/2015/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.misc.
+code.tex)
+(/usr/local/texlive/2015/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.integ
+erarithmetics.code.tex)))
+(/usr/local/texlive/2015/texmf-dist/tex/generic/pgf/math/pgfmathfloat.code.tex)
+))
+`PSTricks' v2.60  <2014/10/25> (tvz)
+(/usr/local/texlive/2015/texmf-dist/tex/generic/pstricks/pstricks.con))
+(/usr/local/texlive/2015/texmf-dist/tex/generic/pstricks/pst-fp.tex)
+(/usr/local/texlive/2015/texmf-dist/tex/latex/xcolor/xcolor.sty
+(/usr/local/texlive/2015/texmf-dist/tex/latex/latexconfig/color.cfg)))
+(/usr/local/texlive/2015/texmf-dist/tex/latex/pst-plot/pst-plot.sty
+(/usr/local/texlive/2015/texmf-dist/tex/latex/xkeyval/pst-xkey.sty)
+(/usr/local/texlive/2015/texmf-dist/tex/latex/multido/multido.sty
+(/usr/local/texlive/2015/texmf-dist/tex/generic/multido/multido.tex
+ v1.42, 2010/05/14 <tvz>))
+(/usr/local/texlive/2015/texmf-dist/tex/generic/pst-plot/pst-plot.tex
+(/usr/local/texlive/2015/texmf-dist/tex/generic/pst-tools/pst-tools.tex
+`PST-tools' v0.05, 2014/05/12 (hv))  v1.70, 2014/08/23 (tvz,hv)))
+(/usr/local/texlive/2015/texmf-dist/tex/latex/pst-node/pst-node.sty
+(/usr/local/texlive/2015/texmf-dist/tex/generic/pst-node/pst-node.tex
+ v1.35, 2014/08/04))
+(/usr/local/texlive/2015/texmf-dist/tex/latex/pst-tree/pst-tree.sty
+(/usr/local/texlive/2015/texmf-dist/tex/generic/pst-tree/pst-tree.tex
+ v1.12, 2011/02/28(tvz,dg,hv)))
+(/usr/local/texlive/2015/texmf-dist/tex/latex/pst-grad/pst-grad.sty
+(/usr/local/texlive/2015/texmf-dist/tex/generic/pst-grad/pst-grad.tex
+`pst-grad' v1.06, 2006/11/27 (tvz,dg,hv)))
+(/usr/local/texlive/2015/texmf-dist/tex/latex/pst-coil/pst-coil.sty
+(/usr/local/texlive/2015/texmf-dist/tex/generic/pst-coil/pst-coil.tex
+ v1.06, 2006/11/27
+(/usr/local/texlive/2015/texmf-dist/tex/generic/pst-node/pst-node.tex)))
+(/usr/local/texlive/2015/texmf-dist/tex/latex/pst-text/pst-text.sty
+(/usr/local/texlive/2015/texmf-dist/tex/generic/pst-text/pst-text.tex
+ v1.00, 2006/11/05(tvz,hv)))
+(/usr/local/texlive/2015/texmf-dist/tex/latex/pst-3d/pst-3d.sty
+(/usr/local/texlive/2015/texmf-dist/tex/generic/pst-3d/pst-3d.tex
+`PST-3d' v1.11, 2010/02/14 (tvz)))
+(/usr/local/texlive/2015/texmf-dist/tex/latex/pst-eps/pst-eps.sty
+(/usr/local/texlive/2015/texmf-dist/tex/generic/pst-eps/pst-eps.tex
+ v1.00, 2006/11/04))
+(/usr/local/texlive/2015/texmf-dist/tex/latex/pst-fill/pst-fill.sty
+(/usr/local/texlive/2015/texmf-dist/tex/generic/pst-fill/pst-fill.tex
+`PST-Fill' v1.01, 2007/03/10 (tvz,dg,hv)))
+(/usr/local/texlive/2015/texmf-dist/tex/latex/pstricks-add/pstricks-add.sty
+(/usr/local/texlive/2015/texmf-dist/tex/latex/pst-math/pst-math.sty
+(/usr/local/texlive/2015/texmf-dist/tex/generic/pst-math/pst-math.tex
+`pst-math' v0.63 , (CJ,hv)))
+(/usr/local/texlive/2015/texmf-dist/tex/generic/pstricks-add/pstricks-add.tex
+`pstricks-add' v3.77, 2014/12/08 (dr,hv))
+(/usr/local/texlive/2015/texmf-dist/tex/latex/pstricks-add/pstricks-add.cfg)))
+(/usr/local/texlive/2015/texmf-dist/tex/latex/pst-poly/pst-poly.sty
+(/usr/local/texlive/2015/texmf-dist/tex/generic/pst-poly/pst-poly.tex
+`PST-Polygon' v1.63, 2014/08/28 (DG/hv)))
+(/usr/local/texlive/2015/texmf-dist/tex/latex/caption/caption.sty
+(/usr/local/texlive/2015/texmf-dist/tex/latex/caption/caption3.sty))
+(/usr/local/texlive/2015/texmf-dist/tex/latex/caption/subcaption.sty)
+(/usr/local/texlive/2015/texmf-dist/tex/latex/setspace/setspace.sty)
+(/usr/local/texlive/2015/texmf-dist/tex/latex/base/inputenc.sty
+(/usr/local/texlive/2015/texmf-dist/tex/latex/base/utf8.def
+(/usr/local/texlive/2015/texmf-dist/tex/latex/base/t1enc.dfu)
+(/usr/local/texlive/2015/texmf-dist/tex/latex/base/ot1enc.dfu)
+(/usr/local/texlive/2015/texmf-dist/tex/latex/base/omsenc.dfu)))
+(/usr/local/texlive/2015/texmf-dist/tex/latex/txfonts/t1txtt.fd)
+(/usr/local/texlive/2015/texmf-dist/tex/latex/listings/listings.sty
+(/usr/local/texlive/2015/texmf-dist/tex/latex/listings/lstmisc.sty)
+(/usr/local/texlive/2015/texmf-dist/tex/latex/listings/listings.cfg))
+No file yuhowNote.aux.
+*geometry* detected driver: dvips
+(/usr/local/texlive/2015/texmf-dist/tex/latex/hyperref/nameref.sty
+(/usr/local/texlive/2015/texmf-dist/tex/generic/oberdiek/gettitlestring.sty))
+
+Package hyperref Warning: Rerun to get /PageLabels entry.
+
+(/usr/local/texlive/2015/texmf-dist/tex/latex/amsfonts/umsa.fd)
+(/usr/local/texlive/2015/texmf-dist/tex/latex/amsfonts/umsb.fd) [1]
+
+LaTeX Warning: Citation `CESE_Shin_Chung_Chang_1995' on page 2 undefined on inp
+ut line 113.
+
+
+LaTeX Warning: Citation `CESE_Shin_Chung_Chang_1995' on page 2 undefined on inp
+ut line 118.
+
+
+Overfull \hbox (13.12988pt too wide) in paragraph at lines 117--122
+\OT1/cmr/m/n/12 pa-per [[]]. Rel-a-tive dis-cus-sion can be found [][][][][][].
+ 
+[2]
+
+LaTeX Warning: Citation `CESE_Shin_Chung_Chang_1995' on page 3 undefined on inp
+ut line 187.
+
+[3] <diagram/mesh_and_ce_se_v1.eps>
+
+LaTeX Warning: Reference `fig:mesh_and_ce_se_v1' on page 4 undefined on input l
+ine 219.
+
+[4] [5] (/usr/local/texlive/2015/texmf-dist/tex/latex/base/omscmr.fd)
+
+LaTeX Warning: Citation `CESE_Shin_Chung_Chang_1995' on page 6 undefined on inp
+ut line 380.
+
+[6]
+
+LaTeX Warning: Reference `subsec:python_code' on page 7 undefined on input line
+ 393.
+
+
+LaTeX Warning: Reference `sec:1d_shock_tube' on page 7 undefined on input line 
+393.
+
+
+LaTeX Warning: Reference `fig:sod_shock_tube_1D' on page 7 undefined on input l
+ine 400.
+
+<diagram/sod_shock_tube_1D.eps>
+
+LaTeX Warning: Reference `fig:sod_shock_tube_1D_no_diaphragm' on page 7 undefin
+ed on input line 420.
+
+<diagram/sod_shock_tube_1D_no_diaphragm.eps>
+
+LaTeX Warning: Reference `fig:mesh_and_ce_v2' on page 7 undefined on input line
+ 436.
+
+<diagram/mesh_and_ce.eps>
+
+LaTeX Warning: Citation `CESE_Shin_Chung_Chang_1995' on page 7 undefined on inp
+ut line 451.
+
+[7]
+
+LaTeX Warning: Reference `tab:mtx_comparision' on page 8 undefined on input lin
+e 457.
+
+
+LaTeX Warning: Citation `CESE_Shin_Chung_Chang_1995' on page 8 undefined on inp
+ut line 458.
+
+[8]
+
+LaTeX Warning: Citation `CESE_Shin_Chung_Chang_1995' on page 9 undefined on inp
+ut line 489.
+
+
+LaTeX Warning: Citation `CESE_Shin_Chung_Chang_1995' on page 9 undefined on inp
+ut line 533.
+
+[9] (/usr/local/texlive/2015/texmf-dist/tex/latex/listings/lstlang1.sty)
+[10]
+
+LaTeX Warning: Citation `CESE_Shin_Chung_Chang_1995' on page 11 undefined on in
+put line 586.
+
+
+LaTeX Warning: Citation `CESE_Shin_Chung_Chang_1995' on page 11 undefined on in
+put line 595.
+
+
+Overfull \hbox (12.51242pt too wide) in paragraph at lines 608--611
+\OT1/cmr/m/n/12 Here $\OML/cmm/m/it/12 $ \OT1/cmr/m/n/12 is an ad-justable con
+-stant for weight-ing and the func-tion $\OML/cmm/m/it/12 W[]$ \OT1/cmr/m/n/12 
+is de-fined by (i) $\OML/cmm/m/it/12 W[]\OT1/cmr/m/n/12 (0\OML/cmm/m/it/12 ; \O
+T1/cmr/m/n/12 0\OML/cmm/m/it/12 ; \OT1/cmr/m/n/12 ) =
+
+LaTeX Warning: Citation `CESE_Shin_Chung_Chang_1995' on page 11 undefined on in
+put line 617.
+
+[11]
+Overfull \hbox (6.84348pt too wide) in paragraph at lines 634--635
+[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][
+][][][][][][][][] 
+
+LaTeX Warning: Reference `subsec:python_code' on page 12 undefined on input lin
+e 652.
+
+[12] (/usr/local/texlive/2015/texmf-dist/tex/latex/base/omlcmr.fd) [13]
+[14]
+Overfull \hbox (16.12033pt too wide) in paragraph at lines 742--743
+[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][
+][][][][][][][][][][][][][][] 
+
+Overfull \hbox (6.84348pt too wide) in paragraph at lines 761--762
+[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][
+][][][][][][][][][] 
+
+Overfull \hbox (31.7003pt too wide) in paragraph at lines 767--768
+[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][
+][][] 
+[15] [16]
+
+LaTeX Warning: Citation `CESE_Shin_Chung_Chang_1995' on page 17 undefined on in
+put line 820.
+
+
+LaTeX Warning: Citation `CESE_Shin_Chung_Chang_1995' on page 17 undefined on in
+put line 824.
+
+[17] (./yuhowNote.aux)
+
+Package rerunfilecheck Warning: File `yuhowNote.out' has changed.
+(rerunfilecheck)                Rerun to get outlines right
+(rerunfilecheck)                or use package `bookmark'.
+
+
+LaTeX Warning: There were undefined references.
+
+
+LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
+
+ )
+(see the transcript file for additional information)
+Output written on yuhowNote.dvi (17 pages, 106036 bytes).
+Transcript written on yuhowNote.log.
