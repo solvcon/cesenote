@@ -25,7 +25,7 @@
 
 \title{Wall Boundary Treatment for Gas Dynamics}
 \author{Yung-Yu Chen}
-\date{2016.2.29}
+\date{2016.3.6}
 
 \maketitle
 
@@ -149,7 +149,7 @@ vector
   \end{array}\right)
 \end{align*}
 The transformation relation Eq.~(\ref{e:rotrel}) can be rewritten in the
-vector-matrix form
+matrix-vector form
 \begin{align}
   \mathbf{p} = \mathrm{R}\bar{\mathbf{p}},
   \; \mbox{and conversely} \;
@@ -179,8 +179,26 @@ $\mathbf{x} = \boldsymbol{\xi}$.
 
 \subsection{Jacobian Rotation}
 
-Consider a vector function $\mathbf{v}(\mathbf{x})$.  Write the Jacobian
-matrices in both the global and local coordinate systems, respectively:
+Consider a vector function $\mathbf{v}(\mathbf{x})$ in Euclidean $n$-space.  A
+Jacobian is defined as
+\begin{align*}
+  \dfrac{\partial\mathbf{v}}{\partial\mathbf{x}}
+  = \dfrac{\partial(v_1, \ldots, v_n)}{\partial(x_1, \ldots, x_n)},
+  \; \mbox{or} \;
+  \renewcommand{\arraystretch}{2.2}
+  \dfrac{\partial\mathbf{v}}{\partial\mathbf{x}}
+  = \left(\begin{array}{ccc}
+    \dfrac{\partial v_1}{\partial x_1} &
+    \cdots &
+    \dfrac{\partial v_2}{\partial x_n} \\
+    \vdots & \ddots & \vdots \\
+    \dfrac{\partial v_n}{\partial x_1} &
+    \cdots &
+    \dfrac{\partial v_n}{\partial x_n}
+  \end{array}\right)
+\end{align*}
+Write the Jacobian matrices of $\mathbf{v}$ in both the global and local
+coordinate systems, respectively:
 \begin{align*}
   \renewcommand{\arraystretch}{2.2}
   \mathrm{J}
@@ -208,24 +226,6 @@ matrices in both the global and local coordinate systems, respectively:
     \dfrac{\partial \bar{v}_3}{\partial\xi_2} &
     \dfrac{\partial \bar{v}_3}{\partial\xi_3}
   \end{array}\right)
-\end{align*}
-Remind that a Jacobian is defined as
-\begin{align*}
-  \dfrac{\partial\mathbf{v}}{\partial\mathbf{x}}
-  = \dfrac{\partial(v_1, \ldots, v_n)}{\partial(x_1, \ldots, x_n)},
-  \; \mbox{or} \;
-  \renewcommand{\arraystretch}{2.2}
-  \dfrac{\partial\mathbf{v}}{\partial\mathbf{x}}
-  = \left(\begin{array}{ccc}
-    \dfrac{\partial v_1}{\partial x_1} &
-    \cdots &
-    \dfrac{\partial v_2}{\partial x_n} \\
-    \vdots & \ddots & \vdots \\
-    \dfrac{\partial v_n}{\partial x_1} &
-    \cdots &
-    \dfrac{\partial v_n}{\partial x_n}
-  \end{array}\right),
-  \; n = \dim(\mathbb{E}^n)
 \end{align*}
 Aided by $\mathbf{v} = \mathrm{R}\bar{\mathbf{v}}$, write
 \begin{align*}
@@ -258,7 +258,7 @@ Combining the above two equations gives
     \right),
   \; i,j = 1, 2, 3
 \end{align*}
-The vector-matrix form of the above equations is
+The matrix-vector form of the above equations is
 \begin{align}
   \mathrm{J} = \mathrm{R\bar{J}R^{-1}},
   \; \mbox{with the inverse transformation} \;
@@ -315,7 +315,7 @@ Aided by letting
     1 & 0 & 0 \\ 0 & -1 & 0 \\ 0 & 0 & -1
   \end{array}\right)
 \end{align*}
-the treatments can be written in the vector-matrix form in the local coordinate
+the treatments can be written in the matrix-vector form in the local coordinate
 system $(\xi_1, \xi_2, \xi_3)$:
 \begin{gather*}
   \left(\begin{array}{c}
@@ -359,7 +359,7 @@ or, more concisely,
   \bar{\mathrm{J}}'' = \mathrm{N\bar{J}'N}
 \end{align*}
 
-\subsection{Treatment Final Form}
+\subsection{Treat Directly in the Global Coordinate System}
 
 It is not convenient nor efficient to specify the boundary condition using the
 local coordinate system $(\xi_1, \xi_2, \xi_3)$.  We'd like to use the global
@@ -492,7 +492,7 @@ tangential component of $\mathbf{v}$
   \frac{\partial \alpha'}{\partial\zeta}
 \end{gathered}
 \end{align*}
-Aided by $\mathrm{R}$, write it in the vector-matrix form
+Aided by $\mathrm{R}$, write it in the matrix-vector form
 \begin{align}
 \begin{gathered}
   \alpha'' = \alpha', \\
@@ -522,7 +522,125 @@ Aided by $\mathrm{R}$, write it in the vector-matrix form
 \label{e:treat:sca}
 \end{align}
 
-\section{The Euler Equation}
+\section{The Euler Equations}
+
+The conservation variables of the Euler equation is defined as
+\begin{align*}
+  \renewcommand{\arraystretch}{2}
+  \mathbf{u} = \left(\begin{array}{c}
+    \rho \\ \rho v_1 \\ \rho v_2 \\ \rho v_3 \\
+    \rho\left(e + \dfrac{v_1^2+v_2^2+v_3^2}{2}\right)
+  \end{array}\right)
+  = \left(\begin{array}{c}
+    u_1 \\ u_2 \\ u_3 \\ u_4 \\ u_5
+  \end{array}\right)
+\end{align*}
+where $\rho$ is the density, $\mathbf{v}$ the velocity, and $e$ the internal
+energy.  Note $\mathbf{u}$ is a 5-component vector while $\mathbf{v}$ is a
+3-component Cartesian vector.  $\left(\begin{array}{ccc} u_2 & u_3 & u_4
+\end{array}\right)^t$ is a Cartesian vector and $u_1$ and $u_5$ are scalar.
+%
+Aided by Eq.~(\ref{e:treat:vec}), write
+\begin{align}
+\begin{aligned}
+  \left(\begin{array}{c}
+    u''_2 \\ u''_3 \\ u''_4
+  \end{array}\right)
+  = &\;
+ -\left(\begin{array}{ccc}
+    T_{11} & T_{12} & T_{13} \\
+    T_{21} & T_{22} & T_{23} \\
+    T_{31} & T_{32} & T_{33}
+  \end{array}\right)
+  \left(\begin{array}{c}
+    u'_2 \\ u'_3 \\ u'_4
+  \end{array}\right),
+  \\
+  \renewcommand{\arraystretch}{2.2}
+  \left(\begin{array}{ccc}
+    \dfrac{\partial u''_2}{\partial x_1} &
+    \dfrac{\partial u''_2}{\partial x_2} &
+    \dfrac{\partial u''_2}{\partial x_3} \\
+    \dfrac{\partial u''_3}{\partial x_1} &
+    \dfrac{\partial u''_3}{\partial x_2} &
+    \dfrac{\partial u''_3}{\partial x_3} \\
+    \dfrac{\partial u''_4}{\partial x_1} &
+    \dfrac{\partial u''_4}{\partial x_2} &
+    \dfrac{\partial u''_4}{\partial x_3}
+  \end{array}\right)
+  = &\;
+  \renewcommand{\arraystretch}{2.2}
+  \left(\begin{array}{ccc}
+    T_{11} & T_{12} & T_{13} \\
+    T_{21} & T_{22} & T_{23} \\
+    T_{31} & T_{32} & T_{33}
+  \end{array}\right)
+  \left(\begin{array}{ccc}
+    \dfrac{\partial u'_2}{\partial x_1} &
+    \dfrac{\partial u'_2}{\partial x_2} &
+    \dfrac{\partial u'_2}{\partial x_3} \\
+    \dfrac{\partial u'_3}{\partial x_1} &
+    \dfrac{\partial u'_3}{\partial x_2} &
+    \dfrac{\partial u'_3}{\partial x_3} \\
+    \dfrac{\partial u'_4}{\partial x_1} &
+    \dfrac{\partial u'_4}{\partial x_2} &
+    \dfrac{\partial u'_4}{\partial x_3}
+  \end{array}\right)
+  \\ &\;
+  \renewcommand{\arraystretch}{2.2}
+  \left(\begin{array}{ccc}
+    T_{11} & T_{12} & T_{13} \\
+    T_{21} & T_{22} & T_{23} \\
+    T_{31} & T_{32} & T_{33}
+  \end{array}\right)
+\end{aligned}
+\label{e:treat:euler3d:vec}
+\end{align}
+%
+Aided by Eq.~(\ref{e:treat:sca}), write
+\begin{gather}
+  u''_1 = u'_1, u''_5 = u'_5,
+  \label{e:treat:euler3d:sca}
+  \\
+  \renewcommand{\arraystretch}{2.2}
+  \left(\begin{array}{c}
+    \dfrac{\partial u''_1}{\partial x} \\
+    \dfrac{\partial u''_1}{\partial y} \\
+    \dfrac{\partial u''_1}{\partial z} \\
+  \end{array}\right)
+  = \left(\begin{array}{ccc}
+    \xi_{11} & \xi_{12} & \xi_{13} \\
+    \xi_{21} & \xi_{22} & \xi_{23} \\
+    \xi_{31} & \xi_{32} & \xi_{33}
+  \end{array}\right)
+  \left(\begin{array}{c}
+    \dfrac{\partial u'_1}{\partial x} \\
+    \dfrac{\partial u'_1}{\partial y} \\
+    \dfrac{\partial u'_1}{\partial z} \\
+  \end{array}\right),
+  \left(\begin{array}{c}
+    \dfrac{\partial u''_5}{\partial x} \\
+    \dfrac{\partial u''_5}{\partial y} \\
+    \dfrac{\partial u''_5}{\partial z} \\
+  \end{array}\right)
+  = \left(\begin{array}{ccc}
+    \xi_{11} & \xi_{12} & \xi_{13} \\
+    \xi_{21} & \xi_{22} & \xi_{23} \\
+    \xi_{31} & \xi_{32} & \xi_{33}
+  \end{array}\right)
+  \left(\begin{array}{c}
+    \dfrac{\partial u'_5}{\partial x} \\
+    \dfrac{\partial u'_5}{\partial y} \\
+    \dfrac{\partial u'_5}{\partial z} \\
+  \end{array}\right)
+  \notag
+\end{gather}
+%
+Equations (\ref{e:treat:euler3d:vec}) and (\ref{e:treat:euler3d:sca}) complete
+the treatment for the no-penetration boundary condition of the Euler equations
+in the three-dimensional space.
+
+\subsection{Two-Dimensional Treatments}
 
 Regarding gas dynamics, almost all problem setups involve walls.  For the Euler
 equation, which doesn't have a diffusion term, inviscid solid walls are
