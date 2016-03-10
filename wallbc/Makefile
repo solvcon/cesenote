@@ -25,7 +25,7 @@ EPS_DIR := eps
 SCHEMATIC_DIR := schematic
 LATEX_DERIVED_EXT := toc aux log out dvi ps pdf
 NOWDATE := $(shell date +"%Y%m%d")
-NOWID := $(shell hg parent --template '{node|short}\n')
+NOWID := $(shell git rev-parse --short HEAD)
 HANDOVER_DIR := handover
 HANDOVER_FN = $(HANDOVER_DIR)/$(basename $<).$(NOWID).$(NOWDATE).pdf
 
