@@ -25,7 +25,7 @@
 
 \title{Wall Boundary Treatment for Gas Dynamics}
 \author{Yung-Yu Chen}
-\date{2016.3.10}
+\date{2016.3.11}
 
 \maketitle
 
@@ -533,7 +533,7 @@ Aided by $\mathrm{R}$, write it in the matrix-vector form
 \label{e:treat:sca}
 \end{align}
 
-\section{The Euler Equation}
+\subsection{The Euler Equation}
 
 The conservation variables of the Euler equation is defined as
 \begin{align*}
@@ -651,7 +651,7 @@ Equations (\ref{e:treat:euler3d:vec}) and (\ref{e:treat:euler3d:sca}) complete
 the treatment for the no-penetration boundary condition of the Euler equation
 in the three-dimensional space.
 
-\subsection{Two-Dimensional Treatment}
+\subsection{Two-Dimensional Treatment of the Euler Equation}
 
 In two-dimensional space, the coordinate transformation becomes simpler.  See
 Fig.~\ref{f:wall_coordinate}.  $\bigtriangleup ABD$ is a cell with the boundary
@@ -760,6 +760,9 @@ Aided by Eq.~(\ref{e:treat:sca}), write
   \end{array}\right)
 \end{gather*}
 
+\section{No-Slip Boundary Condition}
+
+\addcontentsline{toc}{section}{References}
 \begin{thebibliography}{99}
 \bibitem{laney_computational_1998} C. B. Laney, Computational Gasdynamics.
 Cambridge: Cambridge University Press, 1998.
