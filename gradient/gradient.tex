@@ -1,0 +1,86 @@
+\documentclass[a4paper,12pt,dvips]{article}
+\usepackage[textwidth=6.5in,textheight=9in]{geometry}
+\usepackage[colorlinks=true]{hyperref}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage[monochrome]{color}
+\usepackage{graphicx}     % From LaTeX distribution
+%\usepackage{subfigure}    % From CTAN/macros/latex/contrib/supported/subfigure
+\usepackage{pst-all}      % From PSTricks
+\usepackage{pst-poly}     % From pstricks/contrib/pst-poly
+\usepackage{multido}      % From PSTricks
+\usepackage[center,footnotesize]{caption}
+\usepackage[subrefformat=parens]{subcaption}
+
+\graphicspath{{eps/}}
+
+%\numberwithin{equation}{section}
+
+\newcommand*\diff{\mathop{}\!\mathrm{d}}
+\newcommand*\Diff[1]{\mathop{}\!\mathrm{d^#1}}
+\newcommand*\defeq{\buildrel{\text{def}}\over{=}}
+
+\begin{document}
+
+\title{Gradient Approximation}
+\author{Yung-Yu Chen}
+\date{2016.10.22}
+
+\maketitle
+
+%\tableofcontents
+%\listoffigures
+
+The space-time conservation element and solution element (CESE) method supports
+unstructured meshes in multi-dimensional space.  The triangular elements are
+discussed here.  In Fig.~\ref{f:tri_mesh} there are 6 triangles shown.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics{tri_mesh.eps}
+\caption{Triangular mesh in two-dimensional space.}
+\label{f:tri_mesh}
+\end{figure}
+
+The CESE method place the solutions at the geometrical centers of the elements.
+The element centers alone with the mesh vertices consist of the conservation
+elements.  See Fig.~\ref{f:ce}.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics{ce.eps}
+\caption{Conservation elements of triangular meshes.}
+\label{f:ce}
+\end{figure}
+
+Consider a function $u(\mathbf{x})$ in $\mathbb{E}^N$ space.  Say on $N+1$
+non-colinear points $\mathbf{x}^{(0)}, \mathbf{x}^{(1)}, \ldots,
+\mathbf{x}^{(N)}$, the value of the function is known as $u^{(\mu)} \defeq
+u(\mathbf{x}^{(\mu)}), \mu = 0, 1, \ldots, N$.  The gradient of $u$ at
+$\mathbf{x}^{(0)}$ can be approximated by
+\begin{align}
+\nabla u(\mathbf{x}^{(0)}) = \mathrm{S}^{-1} \left(\begin{array}{c}
+  u^{(1)} - u^{(0)} \\ \vdots \\ u^{(N)} - u^{(0)}
+\end{array}\right)
+\end{align}
+where
+\begin{align}
+\mathrm{S} \defeq \left(\begin{array}{ccc}
+  x^{(1)}_1 - x^{(0)}_1 &
+  \cdots &
+  x^{(1)}_N - x^{(0)}_N \\
+  \vdots & \ddots & \vdots \\
+  x^{(N)}_1 - x^{(0)}_1 &
+  \cdots &
+  x^{(N)}_N - x^{(0)}_N
+\end{array}\right)
+\end{align}
+
+%\addcontentsline{toc}{section}{References}
+%\begin{thebibliography}{99}
+%\bibitem{laney_computational_1998} C. B. Laney, Computational Gasdynamics.
+%Cambridge: Cambridge University Press, 1998.
+%\end{thebibliography}
+
+\end{document}
