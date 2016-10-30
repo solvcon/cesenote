@@ -1,9 +1,15 @@
 eps/
 handover/
+# latex
 *.toc
 *.aux
 *.log
 *.out
 *.dvi
+# bibtex
+*.bbl
+*.blg
+# dvips
 *.ps
+# ps2pdf
 *.pdf

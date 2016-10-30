@@ -23,7 +23,10 @@ endif # FIXME: other platform?
 MAIN_FN := gradient
 EPS_DIR := eps
 SCHEMATIC_DIR := schematic
-LATEX_DERIVED_EXT := toc aux log out dvi ps pdf
+LATEX_DERIVED_EXT := toc aux log out dvi # latex
+LATEX_DERIVED_EXT += bbl blg # bibtex
+LATEX_DERIVED_EXT += ps # dvips
+LATEX_DERIVED_EXT += pdf # ps2pdf
 NOWDATE := $(shell date +"%Y%m%d")
 NOWID := $(shell git rev-parse --short HEAD)
 HANDOVER_DIR := handover
@@ -32,7 +35,7 @@ HANDOVER_FN = $(HANDOVER_DIR)/$(basename $<).$(NOWID).$(NOWDATE).pdf
 # Targets.
 ALL_TEX = $(wildcard $(SCHEMATIC_DIR)/*.tex)
 ALL_EPS = $(patsubst $(SCHEMATIC_DIR)/%.tex,$(EPS_DIR)/%.eps,$(ALL_TEX))
-ALL_SRC = $(MAIN_FN).tex $(ALL_TEX)
+ALL_SRC = $(MAIN_FN).tex $(MAIN_FN).bib $(ALL_TEX)
 
 default: $(MAIN_FN).pdf
 
@@ -44,6 +47,7 @@ $(MAIN_FN).dvi: $(MAIN_FN).tex $(ALL_EPS) Makefile
 	@echo "Having EPS files: $(ALL_EPS)"
 	num=1 ; while [[ $$num -le $(NUM) ]] ; do \
 		latex $< 2>&1 | tee $@.$$num.cmd.log $(CMDLOG_REDIRECT) ; \
+		bibtex $(basename $<) 2>&1 | tee $@.$$num.bib.cmd.log $(CMDLOG_REDIRECT) ; \
 		(( num = num + 1 )) ; \
 	done
 

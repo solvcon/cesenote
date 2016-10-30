@@ -23,18 +23,35 @@
 
 \begin{document}
 
-\title{Gradient Approximation}
+\title{Multi-Dimensional Simplex Formulation}
 \author{Yung-Yu Chen}
-\date{2016.10.22}
+\date{2016.11.4}
 
 \maketitle
 
-%\tableofcontents
+\tableofcontents
 %\listoffigures
 
-The space-time conservation element and solution element (CESE) method supports
-unstructured meshes in multi-dimensional space.  The triangular elements are
-discussed here.  In Fig.~\ref{f:tri_mesh} there are 6 triangles shown.
+\section{Multi-Dimensional Space}
+
+The space-time conservation element and solution element (CESE) method utilizes
+staggered meshes\cite{chang_method_1995}.  It is simple in the one-dimensional
+space, but in the multi-dimensional space the staggered mesh takes additional
+set-up.
+
+In multi-dimensional space, the CESE method is formulated using
+simplices\cite{chang_space-time_1999}.  A simplex composes of $N+1$
+non-collinear points $\mathbf{x}^{(0)}, \mathbf{x}^{(1)}, \ldots,
+\mathbf{x}^{(N)}$ in Euclidean $N$-space, $\mathbb{E}^N$.  In two- and
+three-dimensional space, a simplex is a triangle and a tetrahedron,
+respectively.  Elements of the two shapes are treated in this note.
+
+\section{Two-Dimensional Triangular Mesh}
+
+Figure~\ref{f:tri_mesh} exhibits 6 triangular mesh elements in two-dimensional
+space.  The CESE method places the solutions at the geometrical centers of the
+elements.  The element centers and the mesh vertices consist of the
+conservation elements.  See Fig.~\ref{f:ce}.
 
 \begin{figure}[htbp]
 \centering
@@ -43,16 +60,16 @@ discussed here.  In Fig.~\ref{f:tri_mesh} there are 6 triangles shown.
 \label{f:tri_mesh}
 \end{figure}
 
-The CESE method place the solutions at the geometrical centers of the elements.
-The element centers alone with the mesh vertices consist of the conservation
-elements.  See Fig.~\ref{f:ce}.
-
 \begin{figure}[htbp]
 \centering
 \includegraphics{ce.eps}
 \caption{Conservation elements of triangular meshes.}
 \label{f:ce}
 \end{figure}
+
+\clearpage
+
+\section{Gradient Calculation}
 
 Consider a function $u(\mathbf{x})$ in $\mathbb{E}^N$ space.  Say on $N+1$
 non-colinear points $\mathbf{x}^{(0)}, \mathbf{x}^{(1)}, \ldots,
@@ -77,10 +94,8 @@ where
 \end{array}\right)
 \end{align}
 
-%\addcontentsline{toc}{section}{References}
-%\begin{thebibliography}{99}
-%\bibitem{laney_computational_1998} C. B. Laney, Computational Gasdynamics.
-%Cambridge: Cambridge University Press, 1998.
-%\end{thebibliography}
+\addcontentsline{toc}{section}{References}
+\bibliographystyle{plain}
+\bibliography{gradient}
 
 \end{document}
