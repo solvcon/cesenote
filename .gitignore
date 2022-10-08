@@ -1,5 +1,7 @@
-.hg/
 .DS_Store
+.idea/
+.hg/
+.ipynb_checkpoints/
 tmp/
 
 # stcon

@@ -1,0 +1,17 @@
+/log/
+/handover
+/eps/
+/*.aux
+/*.bbl
+/*.blg
+/*.dvi
+/*.fdb_latexmk
+/*.fls
+/*.log
+/*.toc
+/*.out
+/*.xwm
+/*.synctex.gz
+/*.pdfsync
+/*.pdf
+/*.ps
