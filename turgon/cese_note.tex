@@ -335,6 +335,49 @@ necessary to keep the solution from diverging.
 
 \section{The One-Dimensional Euler Equations}
 
+\section{Sod's Shock Tube Problem}
+
+\begin{figure}[h]
+\centering
+\includegraphics{tube_at_rest.eps}
+\caption{Gases are at rest in the tube.}
+\label{f:tube_at_rest}
+\end{figure}
+
+Consider a one-dimensional tube filled with two gases that are separated by a
+diaphragm (see \figurename~\ref{f:tube_at_rest}).  A high-pressure gas is at
+the left-hand side, and a low-pressure gas is at the right-hand side.  $p$
+denotes the pressure, $\rho$ the mass density, $\gamma$ the ratio of specific
+heat, and $u$ the velocity.  The gases is at rest initially ($t = t_0$).
+\begin{align}
+  p_1 < p_4 , \quad
+  \rho_1 < \rho_4, \quad
+  u_1 = u_4
+\end{align}
+The gas at the high-pressure side is called the driving gas, while the gas at
+the low-pressure side is called the driven gas.  When the diaphragm is removed,
+the driving gas pushes toward the driven gas and the gases around the diaphragm
+starts to move to right.  See \figurename~\ref{f:tube_move_right}.
+
+\begin{figure}[h]
+\centering
+\includegraphics{tube_move_right.eps}
+\caption{Gases move to right after the diaphragm disrupts.}
+\label{f:tube_move_right}
+\end{figure}
+
+Disruption of the diaphragm generates a right-moving normal shock wave and a
+left-moving expansion wave.  The flow in the tube looks like
+\figurename~\ref{f:tube_zones}.
+
+\begin{figure}[h]
+\centering
+\includegraphics{tube_zones.eps}
+\caption{The flow after the diaphragm disrupts in the tube.}
+\label{f:tube_zones}
+\end{figure}
+
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%
 \chapter{Two- and Three-Dimensional Unstructured Mesh}
