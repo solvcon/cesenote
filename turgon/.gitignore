@@ -1,5 +1,6 @@
 /log/
 /handover
+/setup.mk
 /*_eps/
 /*.aux
 /*.bbl
