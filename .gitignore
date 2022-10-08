@@ -3,14 +3,3 @@
 .hg/
 .ipynb_checkpoints/
 tmp/
-
-# stcon
-stcon/eps/
-stcon/handover/
-stcon/*.toc
-stcon/*.aux
-stcon/*.log
-stcon/*.out
-stcon/*.dvi
-stcon/*.ps
-stcon/*.pdf
