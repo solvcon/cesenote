@@ -489,72 +489,64 @@ form
 \end{align}
 %
 the symbol $\mathbf{s}$ at the right-hand side is the lumped source term.
-The flux functions $\mathbf{f}^{(1)}$, $\mathbf{f}^{(2)}$, and
-$\mathbf{f}^{(3)}$ are defined as:
+There are 5 equations in Eq.~(\ref{e:euler:vec}).
+The flux function $\mathbf{f}^{(1)}$ is defined as
 %
 \begin{align}
-  \mathbf{f}^{(1)} &= \left(
-  \begin{array}{c}
-    f^{(1)}_1 \\ f^{(1)}_2 \\ f^{(1)}_3 \\ f^{(1)}_4 \\ f^{(1)}_5
-  \end{array}\right) \defeq \left(
-  \begin{array}{l}
-    u_2                                   \\
-    (\gamma-1)u_5 - \frac{\gamma-3}{2}\frac{u_2^2}{u_1}
+  \begin{aligned}
+    f^{(1)}_1 &= u_2 \\
+    f^{(1)}_2 &= (\gamma-1)u_5 - \frac{\gamma-3}{2}\frac{u_2^2}{u_1}
     - \frac{\gamma-1}{2}\frac{u_3^2}{u_1}
     - \frac{\gamma-1}{2}\frac{u_4^2}{u_1} \\
-    \frac{u_2u_3}{u_1}                    \\
-    \frac{u_2u_4}{u_1}                    \\
-    \gamma\frac{u_2u_5}{u_1}
+    f^{(1)}_3 &= \frac{u_2u_3}{u_1} \\
+    f^{(1)}_4 &= \frac{u_2u_4}{u_1} \\
+    f^{(1)}_5 &= \gamma\frac{u_2u_5}{u_1}
     - \frac{\gamma-1}{2}\frac{u_2^2+u_3^2+u_4^2}{u_1}\frac{u_2}{u_1}
-  \end{array}\right)
+  \end{aligned}
   \label{e:euler:flux1}
 \end{align}
 %
+$\mathbf{f}^{(2)}$ as
+%
 \begin{align}
-  \mathbf{f}^{(2)} &= \left(
-  \begin{array}{c}
-    f^{(2)}_1 \\ f^{(2)}_2 \\ f^{(2)}_3 \\ f^{(2)}_4 \\ f^{(2)}_5
-  \end{array}\right) \defeq \left(
-  \begin{array}{l}
-    u_3                                   \\
-    \frac{u_2u_3}{u_1}                    \\
-    (\gamma-1)u_5 - \frac{\gamma-1}{2}\frac{u_2^2}{u_1}
+  \begin{aligned}
+    f^{(2)}_1 &= u_3 \\
+    f^{(2)}_2 &= \frac{u_2 u_3}{u_1} \\
+    f^{(2)}_3 &= (\gamma-1)u_5 - \frac{\gamma-1}{2}\frac{u_2^2}{u_1}
     - \frac{\gamma-3}{2}\frac{u_3^2}{u_1}
     - \frac{\gamma-1}{2}\frac{u_4^2}{u_1} \\
-    \frac{u_3u_4}{u_1}                    \\
-    \gamma\frac{u_3u_5}{u_1}
+    f^{(2)}_4 &= \frac{u_3 u_4}{u_1} \\
+    f^{(2)}_5 &= \gamma\frac{u_3u_5}{u_1}
     - \frac{\gamma-1}{2}\frac{u_2^2+u_3^2+u_4^2}{u_1}\frac{u_3}{u_1}
-  \end{array}\right)
+  \end{aligned}
   \label{e:euler:flux2}
 \end{align}
 %
+$\mathbf{f}^{(3)}$ as
+%
 \begin{align}
-  \mathbf{f}^{(3)} &= \left(
-  \begin{array}{c}
-    f^{(3)}_1 \\ f^{(3)}_2 \\ f^{(3)}_3 \\ f^{(3)}_4 \\ f^{(3)}_5
-  \end{array}\right) \defeq \left(
-  \begin{array}{l}
-    u_4                                   \\
-    \frac{u_2u_4}{u_1}                    \\
-    \frac{u_3u_4}{u_1}                    \\
-    (\gamma-1)u_5 - \frac{\gamma-1}{2}\frac{u_2^2}{u_1}
+  \begin{aligned}
+    f^{(3)}_1 &= u_4 \\
+    f^{(3)}_2 &= \frac{u_2 u_4}{u_1} \\
+    f^{(3)}_3 &= \frac{u_3 u_4}{u_1} \\
+    f^{(3)}_4 &= (\gamma-1)u_5 - \frac{\gamma-1}{2}\frac{u_2^2}{u_1}
     - \frac{\gamma-1}{2}\frac{u_3^2}{u_1}
     - \frac{\gamma-3}{2}\frac{u_4^2}{u_1} \\
-    \gamma\frac{u_4u_5}{u_1}
+    f^{(3)}_5 &= \gamma\frac{u_4u_5}{u_1}
     - \frac{\gamma-1}{2}\frac{u_2^2+u_3^2+u_4^2}{u_1}\frac{u_4}{u_1}
-  \end{array}\right)
+  \end{aligned}
   \label{e:euler:flux3}
 \end{align}
 %
-The lumped source term is
+The lumped source term $\mathbf{s}$ is
 \begin{align}
-  \mathbf{s} = \left(
-  \begin{array}{c}
-    s_1 \\ s_2 \\ s_3 \\ s_4 \\ s_5
-  \end{array}\right) \defeq \left(
-  \begin{array}{l}
-    0 \\ b_1u_1 \\ b_2u_1 \\ b_3u_3 \\ \dot{q}u_1 + b_1u_2 + b_2u_3 + b_3u_4
-  \end{array}\right)
+  \begin{aligned}
+    s_1 &= 0 \\
+    s_2 &= b_1 u_1 \\
+    s_3 &= b_2 u_1 \\
+    s_4 &= b_3 u_3 \\
+    s_5 &= \dot{q}u_1 + b_1 u_2 + b_2 u_3 + b_3 u_4
+  \end{aligned}
   \label{e:euler:sterm}
 \end{align}
 
@@ -580,12 +572,15 @@ The source term on the right-hand side of the above equation
   \label{e:euler:idx}
 \end{align}
 %
-Aided by the definition
+Aided by the notation
 %
 \begin{align*}
-  u_{mt} &\defeq \frac{\partial u_m}{\partial t} \\
-  u_{mx_{\mu}} &\defeq \frac{\partial u_m}{\partial x_{\mu}} \\
-  f^{(\mu)}_{m,l} &\defeq \frac{\partial f^{(\mu)}_m}{\partial u_l}
+  \begin{aligned}
+    u_{mt} &\defeq \frac{\partial u_m}{\partial t} \\
+    u_{mx_{\mu}} &\defeq \frac{\partial u_m}{\partial x_{\mu}} \\
+    f^{(\mu)}_{m,l} &\defeq \frac{\partial f^{(\mu)}_m}{\partial u_l}
+  \end{aligned},
+  \quad m, l = 1, 2, 3, 4, 5
 \end{align*}
 %
 the Euler equations can be written in the quasi-linear form:
@@ -595,103 +590,148 @@ the Euler equations can be written in the quasi-linear form:
   \mathrm{A}^{(\mu)} \frac{\partial\mathbf{u}}{\partial x_{\mu}} = 0
   \label{e:euler:qlinear}
 \end{align}
+%
+where
+\begin{align*}
+  \mathrm{A}^{(\mu)} = \left[f^{(\mu)}_{m,l}\right],
+  \quad \mu = 1, 2, 3 \;\mathrm{and}\; m, l = 1, 2, 3, 4, 5
+\end{align*}
 
-The elements of $\mathrm{A^{(1)}}$, $\mathrm{A^{(2)}}$, and $\mathrm{A^{(3)}}$
-are listed in the following equations.
+List the elements of $\mathrm{A^{(1)}}$, $\mathrm{A^{(2)}}$, and
+$\mathrm{A^{(3)}}$ as
 %
-\begin{align}
-  \begin{aligned}
-    f^{(1)}_{1,1} &= f^{(1)}_{1,3} = f^{(1)}_{1,4} = f^{(1)}_{1,5} = \\
-    f^{(2)}_{1,1} &= f^{(2)}_{1,2} = f^{(2)}_{1,4} = f^{(2)}_{1,5} = \\
-    f^{(3)}_{1,1} &= f^{(3)}_{1,2} = f^{(3)}_{1,3} = f^{(3)}_{1,5} = 0, \\
-    f^{(1)}_{1,2} &= f^{(2)}_{1,3} = f^{(3)}_{1,4} = 1
-  \end{aligned}
-  \label{e:euler:jaco0}
-\end{align}
+\begin{gather}
+  \begin{gathered}
+    \mathrm{A}^{(1)} = \left(
+    \begin{array}{ccccc}
+      0             & 1             & 0             & 0             & 0 \\
+      f^{(1)}_{2,1} & f^{(1)}_{2,2} & f^{(1)}_{2,3} & f^{(1)}_{2,4} &
+      \gamma - 1 \\
+      f^{(1)}_{3,1} & f^{(1)}_{3,2} & f^{(1)}_{3,3} & 0             & 0 \\
+      f^{(1)}_{4,1} & f^{(1)}_{4,2} & 0             & f^{(1)}_{4,4} & 0 \\
+      f^{(1)}_{5,1} & f^{(1)}_{5,2} & f^{(1)}_{5,3} & f^{(1)}_{5,4} &
+      f^{(1)}_{5,5}
+    \end{array}
+    \right)
+    \\
+    \begin{aligned}
+      f^{(1)}_{2,1} &= \frac{\gamma-3}{2}\frac{u_2^2}{u_1^2}
+      + \frac{\gamma-1}{2}\frac{u_3^2}{u_1^2}
+      + \frac{\gamma-1}{2}\frac{u_4^2}{u_1^2}, \\
+      f^{(1)}_{2,2} &= -(\gamma-3)\frac{u_2}{u_1}, \quad
+      f^{(1)}_{2,3} = -(\gamma-1)\frac{u_3}{u_1}, \quad
+      f^{(1)}_{2,4} = -(\gamma-1)\frac{u_4}{u_1}, \\
+      f^{(1)}_{3,1} &= -\frac{u_2 u_3}{u_1^2}, \quad
+      f^{(1)}_{3,2} = \frac{u_3}{u_1}, \quad
+      f^{(1)}_{3,3} = f^{(1)}_{4,4} = \frac{u_2}{u_1}, \\
+      f^{(1)}_{4,1} &= -\frac{u_2 u_4}{u_1^2}, \quad
+      f^{(1)}_{4,2} = \frac{u_4}{u_1}, \quad
+      f^{(1)}_{4,4} = f^{(1)}_{3,3} = \frac{u_2}{u_1}, \\
+      f^{(1)}_{5,1} &= -\gamma\frac{u_2 u_5}{u_1^2}
+      + (\gamma-1)\frac{u_2^2+u_3^2+u_4^2}{u_1^2}\frac{u_2}{u_1}, \\
+      f^{(1)}_{5,2} &= \gamma\frac{u_5}{u_1}
+      - \frac{\gamma-1}{2}\frac{3u_2^2 + u_3^2 + u_4^2}{u_1^2}, \\
+      f^{(1)}_{5,3} &= -(\gamma-1)\frac{u_2 u_3}{u_1^2}, \quad
+      f^{(1)}_{5,4} = -(\gamma-1)\frac{u_2 u_4}{u_1^2}, \quad
+      f^{(1)}_{5,5} = \gamma\frac{u_2}{u_1}
+    \end{aligned}
+  \end{gathered}
+\end{gather}
 %
-\begin{align}
-  \begin{aligned}
-    f^{(1)}_{2,1} &= \frac{\gamma-3}{2}\frac{u_2^2}{u_1^2}
-    + \frac{\gamma-1}{2}\frac{u_3^2}{u_1^2}
-    + \frac{\gamma-1}{2}\frac{u_4^2}{u_1^2}, \\
-    f^{(1)}_{2,2} &= -(\gamma-3)\frac{u_2}{u_1}, \quad
-    f^{(1)}_{2,3} = -(\gamma-1)\frac{u_3}{u_1}, \quad
-    f^{(1)}_{2,4} = -(\gamma-1)\frac{u_4}{u_1}, \quad
-    f^{(1)}_{2,5} = \gamma-1, \\
-    f^{(1)}_{3,1} &= -\frac{u_2u_3}{u_1^2}, \quad
-    f^{(1)}_{3,2} = \frac{u_3}{u_1}, \quad
-    f^{(1)}_{3,3} = \frac{u_2}{u_1}, \quad
-    f^{(1)}_{3,4} = f^{(1)}_{3,5} = 0, \\
-    f^{(1)}_{4,1} &= -\frac{u_2u_4}{u_1^2}, \quad
-    f^{(1)}_{4,2} = \frac{u_4}{u_1}, \quad
-    f^{(1)}_{4,4} = \frac{u_2}{u_1}, \quad
-    f^{(1)}_{4,3} = f^{(1)}_{4,5} = 0, \\
-    f^{(1)}_{5,1} &= -\gamma\frac{u_2u_5}{u_1^2}
-    + (\gamma-1)\frac{u_2^2+u_3^2+u_4^2}{u_1^2}\frac{u_2}{u_1}, \quad
-    f^{(1)}_{5,2} = \gamma\frac{u_5}{u_1}
-    - \frac{\gamma-1}{2}\frac{3u_2^2 + u_3^2 + u_4^2}{u_1^2}, \\
-    f^{(1)}_{5,3} &= -(\gamma-1)\frac{u_2u_3}{u_1^2}, \quad
-    f^{(1)}_{5,4} = -(\gamma-1)\frac{u_2u_4}{u_1^2}, \quad
-    f^{(1)}_{5,5} = \gamma\frac{u_2}{u_1}
-  \end{aligned}
-  \label{e:euler:jaco1}
-\end{align}
+\begin{gather}
+  \begin{gathered}
+    \mathrm{A}^{(2)} = \left(
+    \begin{array}{ccccc}
+      0             & 0             & 1             & 0             & 0 \\
+      f^{(2)}_{2,1} & f^{(2)}_{2,2} & f^{(2)}_{2,3} & 0             & 0 \\
+      f^{(2)}_{3,1} & f^{(2)}_{3,2} & f^{(2)}_{3,3} & f^{(2)}_{3,4} &
+      \gamma - 1 \\
+      f^{(2)}_{4,1} & 0             & f^{(2)}_{4,3} & f^{(2)}_{4,4} & 0 \\
+      f^{(2)}_{5,1} & f^{(2)}_{5,2} & f^{(2)}_{5,3} & f^{(2)}_{5,4} &
+      f^{(1)}_{5,5}
+    \end{array}
+    \right)
+    \\
+    \begin{aligned}
+      f^{(2)}_{2,1} &= -\frac{u_2 u_3}{u_1^2}, \quad
+      f^{(2)}_{2,2} = f^{(2)}_{4,4} = \frac{u_3}{u_1}, \quad
+      f^{(2)}_{2,3} = \frac{u_2}{u_1}, \\
+      f^{(2)}_{3,1} &= \frac{\gamma-1}{2}\frac{u_2^2}{u_1^2}
+      + \frac{\gamma-3}{2}\frac{u_3^2}{u_1^2}
+      + \frac{\gamma-1}{2}\frac{u_4^2}{u_1^2}, \\
+      f^{(2)}_{3,2} &= -(\gamma-1)\frac{u_2}{u_1}, \quad
+      f^{(2)}_{3,3} = -(\gamma-3)\frac{u_3}{u_1}, \quad
+      f^{(2)}_{3,4} = -(\gamma-1)\frac{u_4}{u_1}, \\
+      f^{(2)}_{4,1} &= -\frac{u_3 u_4}{u_1^2}, \quad
+      f^{(2)}_{4,3} = \frac{u_4}{u_1}, \quad
+      f^{(2)}_{4,4} = f^{(2)}_{2,2} = \frac{u_3}{u_1}, \\
+      f^{(2)}_{5,1} &= -\gamma\frac{u_3 u_5}{u_1^2}
+      + (\gamma-1)\frac{u_2^2+u_3^2+u_4^2}{u_1^2}\frac{u_3}{u_1}, \\
+      f^{(2)}_{5,2} &= -(\gamma-1)\frac{u_2 u_3}{u_1^2}, \\
+      f^{(2)}_{5,3} &= \gamma\frac{u_5}{u_1}
+      - \frac{\gamma-1}{2}\frac{u_2^2 + 3u_3^2 + u_4^2}{u_1^2}, \\
+      f^{(2)}_{5,4} &= -(\gamma-1)\frac{u_3 u_4}{u_1^2}, \quad
+      f^{(2)}_{5,5} = \gamma\frac{u_3}{u_1}
+    \end{aligned}
+  \end{gathered}
+\end{gather}
 %
-\begin{align}
-  \begin{aligned}
-    f^{(2)}_{2,1} &= -\frac{u_2u_3}{u_1^2}, \quad
-    f^{(2)}_{2,2} = \frac{u_3}{u_1}, \quad
-    f^{(2)}_{2,3} = \frac{u_2}{u_1}, \quad
-    f^{(2)}_{2,4} = f^{(2)}_{2,5} = 0, \\
-    f^{(2)}_{3,1} &= \frac{\gamma-1}{2}\frac{u_2^2}{u_1^2}
-    + \frac{\gamma-3}{2}\frac{u_3^2}{u_1^2}
-    + \frac{\gamma-1}{2}\frac{u_4^2}{u_1^2}, \\
-    f^{(2)}_{3,2} &= -(\gamma-1)\frac{u_2}{u_1}, \quad
-    f^{(2)}_{3,3} = -(\gamma-3)\frac{u_3}{u_1}, \quad
-    f^{(2)}_{3,4} = -(\gamma-1)\frac{u_4}{u_1}, \quad
-    f^{(2)}_{3,5} = \gamma-1, \\
-    f^{(2)}_{4,1} &= -\frac{u_3u_4}{u_1^2}, \quad
-    f^{(2)}_{4,3} = \frac{u_4}{u_1}, \quad
-    f^{(2)}_{4,4} = \frac{u_3}{u_1}, \quad
-    f^{(2)}_{4,2} = f^{(2)}_{4,5} = 0, \\
-    f^{(2)}_{5,1} &= -\gamma\frac{u_3u_5}{u_1^2}
-    + (\gamma-1)\frac{u_2^2+u_3^2+u_4^2}{u_1^2}\frac{u_3}{u_1}, \quad
-    f^{(2)}_{5,3} = \gamma\frac{u_5}{u_1}
-    - \frac{\gamma-1}{2}\frac{u_2^2 + 3u_3^2 + u_4^2}{u_1^2}, \\
-    f^{(2)}_{5,2} &= -(\gamma-1)\frac{u_2u_3}{u_1^2}, \quad
-    f^{(2)}_{5,4} = -(\gamma-1)\frac{u_3u_4}{u_1^2}, \quad
-    f^{(2)}_{5,5} = \gamma\frac{u_3}{u_1}
-  \end{aligned}
-  \label{e:euler:jaco2}
-\end{align}
+\begin{gather}
+  \begin{gathered}
+    \mathrm{A}^{(3)} = \left(
+    \begin{array}{ccccc}
+      0             & 0             & 0             & 1             & 0 \\
+      f^{(3)}_{2,1} & f^{(3)}_{2,2} & 0             & f^{(3)}_{2,4} & 0 \\
+      f^{(3)}_{3,1} & 0             & f^{(3)}_{3,3} & f^{(3)}_{3,4} & 0 \\
+      f^{(3)}_{4,1} & f^{(3)}_{4,2} & f^{(3)}_{4,3} & f^{(3)}_{4,4} &
+      \gamma - 1 \\
+      f^{(3)}_{5,1} & f^{(3)}_{5,2} & f^{(3)}_{5,3} & f^{(3)}_{5,4} &
+      f^{(3)}_{5,5}
+    \end{array}
+    \right)
+    \\
+    \begin{aligned}
+      f^{(3)}_{2,1} &= -\frac{u_2 u_4}{u_1^2}, \quad
+      f^{(3)}_{2,2} = f^{(3)}_{3,3} = \frac{u_4}{u_1}, \quad
+      f^{(3)}_{2,4} = \frac{u_2}{u_1}, \\
+      f^{(3)}_{3,1} &= -\frac{u_3 u_4}{u_1^2}, \quad
+      f^{(3)}_{3,3} = f^{(3)}_{2,2} = \frac{u_4}{u_1}, \quad
+      f^{(3)}_{3,4} = \frac{u_3}{u_1}, \\
+      f^{(3)}_{4,1} &= \frac{\gamma-1}{2}\frac{u_2^2}{u_1^2}
+      + \frac{\gamma-1}{2}\frac{u_3^2}{u_1^2}
+      + \frac{\gamma-3}{2}\frac{u_4^2}{u_1^2}, \\
+      f^{(3)}_{4,2} &= -(\gamma-1)\frac{u_2}{u_1}, \quad
+      f^{(3)}_{4,3} = -(\gamma-1)\frac{u_3}{u_1}, \quad
+      f^{(3)}_{4,4} = -(\gamma-3)\frac{u_4}{u_1}, \\
+      f^{(3)}_{5,1} &= -\gamma\frac{u_4 u_5}{u_1^2}
+      + (\gamma-1)\frac{u_2^2+u_3^2+u_4^2}{u_1^2}\frac{u_4}{u_1}, \quad
+      f^{(3)}_{5,4} = \gamma\frac{u_5}{u_1}
+      - \frac{\gamma-1}{2}\frac{u_2^2 + u_3^2 + 3u_4^2}{u_1^2}, \\
+      f^{(3)}_{5,2} &= -(\gamma-1)\frac{u_2 u_4}{u_1^2}, \quad
+      f^{(3)}_{5,3} = -(\gamma-1)\frac{u_3 u_4}{u_1^2}, \quad
+      f^{(3)}_{5,5} = \gamma\frac{u_4}{u_1}
+    \end{aligned}
+  \end{gathered}
+\end{gather}
+
+Equation~(\ref{e:euler:idx}) and the chain rule provide the following
+properties:
 %
-\begin{align}
-  \begin{aligned}
-    f^{(3)}_{2,1} &= -\frac{u_2u_4}{u_1^2}, \quad
-    f^{(3)}_{2,2} = \frac{u_4}{u_1}, \quad
-    f^{(3)}_{2,4} = \frac{u_2}{u_1}, \quad
-    f^{(3)}_{2,3} = f^{(3)}_{2,5} = 0, \\
-    f^{(3)}_{3,1} &= -\frac{u_3u_4}{u_1^2}, \quad
-    f^{(3)}_{3,3} = \frac{u_4}{u_1}, \quad
-    f^{(3)}_{3,4} = \frac{u_3}{u_1}, \quad
-    f^{(3)}_{3,2} = f^{(3)}_{3,5} = 0, \\
-    f^{(3)}_{4,1} &= \frac{\gamma-1}{2}\frac{u_2^2}{u_1^2}
-    + \frac{\gamma-1}{2}\frac{u_3^2}{u_1^2}
-    + \frac{\gamma-3}{2}\frac{u_4^2}{u_1^2}, \\
-    f^{(3)}_{4,2} &= -(\gamma-1)\frac{u_2}{u_1}, \quad
-    f^{(3)}_{4,3} = -(\gamma-1)\frac{u_3}{u_1}, \quad
-    f^{(3)}_{4,4} = -(\gamma-3)\frac{u_4}{u_1}, \quad
-    f^{(3)}_{4,5} = \gamma-1, \\
-    f^{(3)}_{5,1} &= -\gamma\frac{u_4u_5}{u_1^2}
-    + (\gamma-1)\frac{u_2^2+u_3^2+u_4^2}{u_1^2}\frac{u_4}{u_1}, \quad
-    f^{(3)}_{5,4} = \gamma\frac{u_5}{u_1}
-    - \frac{\gamma-1}{2}\frac{u_2^2 + u_3^2 + 3u_4^2}{u_1^2}, \\
-    f^{(3)}_{5,2} &= -(\gamma-1)\frac{u_2u_4}{u_1^2}, \quad
-    f^{(3)}_{5,3} = -(\gamma-1)\frac{u_3u_4}{u_1^2}, \quad
-    f^{(3)}_{5,5} = \gamma\frac{u_4}{u_1}
-  \end{aligned}
-  \label{e:euler:jaco3}
-\end{align}
+\begin{gather}
+  u_{mt} =
+  -\sum_{\mu=1}^3
+  \left(
+  \sum_{l=1}^5 f^{(\mu)}_{m,l} u_{lx_{\mu}}
+  \right),
+  \quad m = 1, 2, 3, 4, 5
+  \label{e:euler:ut}
+  \\
+  f^{(\mu)}_{mt} =
+  \sum_{l=1}^5 f^{(\mu)}_{m,l} u_{lt},
+  \quad \mu = 1, 2, 3, m = 1, 2, 3, 4, 5
+  \label{e:euler:ft}
+\end{gather}
+
 
 \section{Sod's Shock Tube Problem}
 
