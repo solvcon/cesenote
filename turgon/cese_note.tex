@@ -333,7 +333,448 @@ necessary to keep the solution from diverging.
 %%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\section{The One-Dimensional Euler Equations}
+\section{The Euler Equations}
+\label{s:syseq:euler}
+
+\subsection{Governing Equations of Fluid Flows}
+
+The governing equations of fluid flow consist of the conservation of mass,
+momentum, and energy
+%
+\begin{align}
+  \frac{\partial\rho}{\partial t} + \frac{\partial\rho v_j}{\partial x_j}
+  &= 0
+  \label{e:euler:mass}
+  \\
+  \frac{\partial\rho v_i}{\partial t}
+  + \frac{\partial\rho v_iv_j}{\partial x_j}
+  &= \frac{\partial p}{\partial x_j} + \rho b_i
+  \label{e:euler:momentum}
+  \\
+  \frac{\partial}{\partial t}
+  \left[\rho\left( e + \frac{v_k^2}{2} \right)\right]
+  + \frac{\partial}{\partial x_j}
+  \left[\rho\left( e + \frac{v_k^2}{2} \right)v_j\right]
+  &= \rho \dot{q} - \frac{\partial pv_j}{\partial x_j} + \rho b_jv_j
+  \label{e:euler:energy}
+\end{align}
+%
+Einstein's index summation convention is used.
+The unknowns are density $\rho$, velocity $\mathbf{v}$, pressure $p$, and
+internal energy $e$.
+Body force $\mathbf{b}$ and heat generation $\dot{q}$ are given.
+
+There are 5 equations and 6 unknowns ($\rho$, $\mathbf{v}$, $p$, and $e$).
+The equation of state is used to close the system of equation:
+%
+\begin{align}
+  p = \rho RT \label{e:euler:eos}
+\end{align}
+where $R$ is the ideal gas constant and $T$ the temperature.
+%
+The temperature $T$ is related to the internal energy $e$ by
+%
+\begin{align}
+  e = c_vT = \frac{RT}{\gamma-1} = \frac{1}{\gamma-1}\frac{p}{\rho}
+  \label{e:euler:internal_energy}
+\end{align}
+%
+where $c_v$ is the specific heat at constant volume and $\gamma$ the specific
+heat ratio.
+
+The 5 governing equations (\ref{e:euler:mass}) (\ref{e:euler:momentum})
+(\ref{e:euler:energy}) are closed by using the two additional equations
+(\ref{e:euler:eos}) and (\ref{e:euler:internal_energy}) and the additional
+variable $T$.
+
+The conservation variables:
+%
+\begin{align}
+  \mathbf{u} \defeq \left(
+  \begin{array}{c}
+    u_1 \\ u_2 \\ u_3 \\ u_4 \\ u_5
+  \end{array}\right) = \left(
+  \begin{array}{c}
+    \rho \\ \rho v_1 \\ \rho v_2 \\ \rho v_3 \\
+    \rho\left(e+\frac{v_k^2}{2}\right)
+  \end{array}\right)
+  \label{e:euler:unknown}
+\end{align}
+%
+Pressure is an important quantity and the representation by the conservation
+variables is (subscripts are expanded explicitly):
+\begin{align*}
+  p = (\gamma-1)\left(u_5 - \frac{u_2^2+u_3^2+u_4^2}{2u_1}\right)
+\end{align*}
+%
+Rewrite the 5 governing equations by using the conservation variables:
+%
+\begin{align}
+  \frac{\partial u_1}{\partial t}
+  + \frac{\partial u_2}{\partial x_1}
+  + \frac{\partial u_3}{\partial x_2}
+  + \frac{\partial u_4}{\partial x_3} = 0
+  \label{e:euler:gov1}
+\end{align}
+%
+\begin{align}
+  \begin{aligned} &\frac{\partial u_2}{\partial t}
+  + \frac{\partial}{\partial x_1}\left(\frac{u_2^2}{u_1}\right)
+  + \frac{\partial}{\partial x_2}\left(\frac{u_2u_3}{u_1}\right)
+  + \frac{\partial}{\partial x_3}\left(\frac{u_2u_4}{u_1}\right) = \\
+  &\quad -\frac{\partial}{\partial x_1}\left[
+    (\gamma-1)\left(u_5 - \frac{u_2^2+u_3^2+u_4^2}{2u_1}\right)
+    \right] + b_1u_1
+  \end{aligned}
+  \label{e:euler:gov2}
+\end{align}
+%
+\begin{align}
+  \begin{aligned} &\frac{\partial u_3}{\partial t}
+  + \frac{\partial}{\partial x_1}\left(\frac{u_2u_3}{u_1}\right)
+  + \frac{\partial}{\partial x_2}\left(\frac{u_3^2}{u_1}\right)
+  + \frac{\partial}{\partial x_3}\left(\frac{u_3u_4}{u_1}\right) = \\
+  &\quad -\frac{\partial}{\partial x_2}\left[
+    (\gamma-1)\left(u_5 - \frac{u_2^2+u_3^2+u_4^2}{2u_1}\right)
+    \right] + b_2u_1
+  \end{aligned}
+  \label{e:euler:gov3}
+\end{align}
+%
+\begin{align}
+  \begin{aligned} &\frac{\partial u_4}{\partial t}
+  + \frac{\partial}{\partial x_1}\left(\frac{u_2u_4}{u_1}\right)
+  + \frac{\partial}{\partial x_2}\left(\frac{u_3u_4}{u_1}\right)
+  + \frac{\partial}{\partial x_3}\left(\frac{u_4^2}{u_1}\right) = \\
+  &\quad -\frac{\partial}{\partial x_3}\left[
+    (\gamma-1)\left(u_5 - \frac{u_2^2+u_3^2+u_4^2}{2u_1}\right)
+    \right] + b_3u_1
+  \end{aligned}
+  \label{e:euler:gov4}
+\end{align}
+%
+\begin{align}
+  \begin{aligned} &\frac{\partial u_5}{\partial t}
+  + \frac{\partial}{\partial x_1}\left(\frac{u_2u_5}{u_1}\right)
+  + \frac{\partial}{\partial x_2}\left(\frac{u_3u_5}{u_1}\right)
+  + \frac{\partial}{\partial x_3}\left(\frac{u_4u_5}{u_1}\right) = \\
+  &\quad - \frac{\partial}{\partial x_1}\left[
+    (\gamma-1)\left(u_5 - \frac{u_2^2+u_3^2+u_4^2}{2u_1}\right)
+    \frac{u_2}{u_1}
+    \right] \\
+  &\quad - \frac{\partial}{\partial x_2}\left[
+    (\gamma-1)\left(u_5 - \frac{u_2^2+u_3^2+u_4^2}{2u_1}\right)
+    \frac{u_3}{u_1}
+    \right] \\
+  &\quad - \frac{\partial}{\partial x_3}\left[
+    (\gamma-1)\left(u_5 - \frac{u_2^2+u_3^2+u_4^2}{2u_1}\right)
+    \frac{u_4}{u_1}
+    \right]
+  + \rho\dot{q} + b_1u_2 + b_2u_3 + b_3u_4
+  \end{aligned}
+  \label{e:euler:gov5}
+\end{align}
+
+\subsection{Vector Flux Functions}
+
+Reorganize the above 5 equations (\ref{e:euler:gov1}) (\ref{e:euler:gov2})
+(\ref{e:euler:gov3}) (\ref{e:euler:gov4}) (\ref{e:euler:gov5}) into a vector
+form
+%
+\begin{align}
+  \frac{\partial\mathbf{u}}{\partial t}
+  + \sum_{\mu=1}^3 \frac{\partial\mathbf{f}^{(\mu)}}{\partial x_{\mu}}
+  = \mathbf{s}
+  \label{e:euler:vec}
+\end{align}
+%
+the symbol $\mathbf{s}$ at the right-hand side is the lumped source term.
+There are 5 equations in Eq.~(\ref{e:euler:vec}).
+The flux function $\mathbf{f}^{(1)}$ is defined as
+%
+\begin{align}
+  \begin{aligned}
+    f^{(1)}_1 &= u_2 \\
+    f^{(1)}_2 &= (\gamma-1)u_5 - \frac{\gamma-3}{2}\frac{u_2^2}{u_1}
+    - \frac{\gamma-1}{2}\frac{u_3^2}{u_1}
+    - \frac{\gamma-1}{2}\frac{u_4^2}{u_1} \\
+    f^{(1)}_3 &= \frac{u_2u_3}{u_1} \\
+    f^{(1)}_4 &= \frac{u_2u_4}{u_1} \\
+    f^{(1)}_5 &= \gamma\frac{u_2u_5}{u_1}
+    - \frac{\gamma-1}{2}\frac{u_2^2+u_3^2+u_4^2}{u_1}\frac{u_2}{u_1}
+  \end{aligned}
+  \label{e:euler:flux1}
+\end{align}
+%
+$\mathbf{f}^{(2)}$ as
+%
+\begin{align}
+  \begin{aligned}
+    f^{(2)}_1 &= u_3 \\
+    f^{(2)}_2 &= \frac{u_2 u_3}{u_1} \\
+    f^{(2)}_3 &= (\gamma-1)u_5 - \frac{\gamma-1}{2}\frac{u_2^2}{u_1}
+    - \frac{\gamma-3}{2}\frac{u_3^2}{u_1}
+    - \frac{\gamma-1}{2}\frac{u_4^2}{u_1} \\
+    f^{(2)}_4 &= \frac{u_3 u_4}{u_1} \\
+    f^{(2)}_5 &= \gamma\frac{u_3u_5}{u_1}
+    - \frac{\gamma-1}{2}\frac{u_2^2+u_3^2+u_4^2}{u_1}\frac{u_3}{u_1}
+  \end{aligned}
+  \label{e:euler:flux2}
+\end{align}
+%
+$\mathbf{f}^{(3)}$ as
+%
+\begin{align}
+  \begin{aligned}
+    f^{(3)}_1 &= u_4 \\
+    f^{(3)}_2 &= \frac{u_2 u_4}{u_1} \\
+    f^{(3)}_3 &= \frac{u_3 u_4}{u_1} \\
+    f^{(3)}_4 &= (\gamma-1)u_5 - \frac{\gamma-1}{2}\frac{u_2^2}{u_1}
+    - \frac{\gamma-1}{2}\frac{u_3^2}{u_1}
+    - \frac{\gamma-3}{2}\frac{u_4^2}{u_1} \\
+    f^{(3)}_5 &= \gamma\frac{u_4u_5}{u_1}
+    - \frac{\gamma-1}{2}\frac{u_2^2+u_3^2+u_4^2}{u_1}\frac{u_4}{u_1}
+  \end{aligned}
+  \label{e:euler:flux3}
+\end{align}
+%
+The lumped source term $\mathbf{s}$ is
+\begin{align}
+  \begin{aligned}
+    s_1 &= 0 \\
+    s_2 &= b_1 u_1 \\
+    s_3 &= b_2 u_1 \\
+    s_4 &= b_3 u_3 \\
+    s_5 &= \dot{q}u_1 + b_1 u_2 + b_2 u_3 + b_3 u_4
+  \end{aligned}
+  \label{e:euler:sterm}
+\end{align}
+
+\subsection{Quasi-Linear System Equations}
+
+Expand Eq.~(\ref{e:euler:vec}) to an index form:
+%
+\begin{align}
+  \frac{\partial u_m}{\partial t}
+  + \sum_{\mu=1}^3 \frac{\partial f^{(\mu)}_m}{\partial x_{\mu}}
+  = s_m, \quad m = 1, \ldots, 5
+  \label{e:euler:idx_full}
+\end{align}
+%
+The Euler equations are inviscid.
+The source term on the right-hand side of the above equation
+(\ref{e:euler:idx_full}) is dropped for the Euler equations:
+%
+\begin{align}
+  \frac{\partial u_m}{\partial t}
+  + \sum_{\mu=1}^3 \frac{\partial f^{(\mu)}_m}{\partial x_{\mu}}
+  = 0, \quad m = 1, \ldots, 5
+  \label{e:euler:idx}
+\end{align}
+%
+Aided by the notation
+%
+\begin{align*}
+  \begin{aligned}
+    u_{mt} &\defeq \frac{\partial u_m}{\partial t} \\
+    u_{mx_{\mu}} &\defeq \frac{\partial u_m}{\partial x_{\mu}} \\
+    f^{(\mu)}_{m,l} &\defeq \frac{\partial f^{(\mu)}_m}{\partial u_l}
+  \end{aligned},
+  \quad m, l = 1, 2, 3, 4, 5
+\end{align*}
+%
+the Euler equations can be written in the quasi-linear form:
+%
+\begin{align}
+  \frac{\partial\mathbf{u}}{\partial t} + \sum_{\mu=1}^3
+  \mathrm{A}^{(\mu)} \frac{\partial\mathbf{u}}{\partial x_{\mu}} = 0
+  \label{e:euler:qlinear}
+\end{align}
+%
+where
+\begin{align*}
+  \mathrm{A}^{(\mu)} = \left[f^{(\mu)}_{m,l}\right],
+  \quad \mu = 1, 2, 3 \;\mathrm{and}\; m, l = 1, 2, 3, 4, 5
+\end{align*}
+
+List the elements of $\mathrm{A^{(1)}}$, $\mathrm{A^{(2)}}$, and
+$\mathrm{A^{(3)}}$ as
+%
+\begin{gather}
+  \begin{gathered}
+    \mathrm{A}^{(1)} = \left(
+    \begin{array}{ccccc}
+      0             & 1             & 0             & 0             & 0 \\
+      f^{(1)}_{2,1} & f^{(1)}_{2,2} & f^{(1)}_{2,3} & f^{(1)}_{2,4} &
+      \gamma - 1 \\
+      f^{(1)}_{3,1} & f^{(1)}_{3,2} & f^{(1)}_{3,3} & 0             & 0 \\
+      f^{(1)}_{4,1} & f^{(1)}_{4,2} & 0             & f^{(1)}_{4,4} & 0 \\
+      f^{(1)}_{5,1} & f^{(1)}_{5,2} & f^{(1)}_{5,3} & f^{(1)}_{5,4} &
+      f^{(1)}_{5,5}
+    \end{array}
+    \right)
+    \\
+    \begin{aligned}
+      f^{(1)}_{2,1} &= \frac{\gamma-3}{2}\frac{u_2^2}{u_1^2}
+      + \frac{\gamma-1}{2}\frac{u_3^2}{u_1^2}
+      + \frac{\gamma-1}{2}\frac{u_4^2}{u_1^2}, \\
+      f^{(1)}_{2,2} &= -(\gamma-3)\frac{u_2}{u_1}, \quad
+      f^{(1)}_{2,3} = -(\gamma-1)\frac{u_3}{u_1}, \quad
+      f^{(1)}_{2,4} = -(\gamma-1)\frac{u_4}{u_1}, \\
+      f^{(1)}_{3,1} &= -\frac{u_2 u_3}{u_1^2}, \quad
+      f^{(1)}_{3,2} = \frac{u_3}{u_1}, \quad
+      f^{(1)}_{3,3} = f^{(1)}_{4,4} = \frac{u_2}{u_1}, \\
+      f^{(1)}_{4,1} &= -\frac{u_2 u_4}{u_1^2}, \quad
+      f^{(1)}_{4,2} = \frac{u_4}{u_1}, \quad
+      f^{(1)}_{4,4} = f^{(1)}_{3,3} = \frac{u_2}{u_1}, \\
+      f^{(1)}_{5,1} &= -\gamma\frac{u_2 u_5}{u_1^2}
+      + (\gamma-1)\frac{u_2^2+u_3^2+u_4^2}{u_1^2}\frac{u_2}{u_1}, \\
+      f^{(1)}_{5,2} &= \gamma\frac{u_5}{u_1}
+      - \frac{\gamma-1}{2}\frac{3u_2^2 + u_3^2 + u_4^2}{u_1^2}, \\
+      f^{(1)}_{5,3} &= -(\gamma-1)\frac{u_2 u_3}{u_1^2}, \quad
+      f^{(1)}_{5,4} = -(\gamma-1)\frac{u_2 u_4}{u_1^2}, \quad
+      f^{(1)}_{5,5} = \gamma\frac{u_2}{u_1}
+    \end{aligned}
+  \end{gathered}
+\end{gather}
+%
+\begin{gather}
+  \begin{gathered}
+    \mathrm{A}^{(2)} = \left(
+    \begin{array}{ccccc}
+      0             & 0             & 1             & 0             & 0 \\
+      f^{(2)}_{2,1} & f^{(2)}_{2,2} & f^{(2)}_{2,3} & 0             & 0 \\
+      f^{(2)}_{3,1} & f^{(2)}_{3,2} & f^{(2)}_{3,3} & f^{(2)}_{3,4} &
+      \gamma - 1 \\
+      f^{(2)}_{4,1} & 0             & f^{(2)}_{4,3} & f^{(2)}_{4,4} & 0 \\
+      f^{(2)}_{5,1} & f^{(2)}_{5,2} & f^{(2)}_{5,3} & f^{(2)}_{5,4} &
+      f^{(1)}_{5,5}
+    \end{array}
+    \right)
+    \\
+    \begin{aligned}
+      f^{(2)}_{2,1} &= -\frac{u_2 u_3}{u_1^2}, \quad
+      f^{(2)}_{2,2} = f^{(2)}_{4,4} = \frac{u_3}{u_1}, \quad
+      f^{(2)}_{2,3} = \frac{u_2}{u_1}, \\
+      f^{(2)}_{3,1} &= \frac{\gamma-1}{2}\frac{u_2^2}{u_1^2}
+      + \frac{\gamma-3}{2}\frac{u_3^2}{u_1^2}
+      + \frac{\gamma-1}{2}\frac{u_4^2}{u_1^2}, \\
+      f^{(2)}_{3,2} &= -(\gamma-1)\frac{u_2}{u_1}, \quad
+      f^{(2)}_{3,3} = -(\gamma-3)\frac{u_3}{u_1}, \quad
+      f^{(2)}_{3,4} = -(\gamma-1)\frac{u_4}{u_1}, \\
+      f^{(2)}_{4,1} &= -\frac{u_3 u_4}{u_1^2}, \quad
+      f^{(2)}_{4,3} = \frac{u_4}{u_1}, \quad
+      f^{(2)}_{4,4} = f^{(2)}_{2,2} = \frac{u_3}{u_1}, \\
+      f^{(2)}_{5,1} &= -\gamma\frac{u_3 u_5}{u_1^2}
+      + (\gamma-1)\frac{u_2^2+u_3^2+u_4^2}{u_1^2}\frac{u_3}{u_1}, \\
+      f^{(2)}_{5,2} &= -(\gamma-1)\frac{u_2 u_3}{u_1^2}, \\
+      f^{(2)}_{5,3} &= \gamma\frac{u_5}{u_1}
+      - \frac{\gamma-1}{2}\frac{u_2^2 + 3u_3^2 + u_4^2}{u_1^2}, \\
+      f^{(2)}_{5,4} &= -(\gamma-1)\frac{u_3 u_4}{u_1^2}, \quad
+      f^{(2)}_{5,5} = \gamma\frac{u_3}{u_1}
+    \end{aligned}
+  \end{gathered}
+\end{gather}
+%
+\begin{gather}
+  \begin{gathered}
+    \mathrm{A}^{(3)} = \left(
+    \begin{array}{ccccc}
+      0             & 0             & 0             & 1             & 0 \\
+      f^{(3)}_{2,1} & f^{(3)}_{2,2} & 0             & f^{(3)}_{2,4} & 0 \\
+      f^{(3)}_{3,1} & 0             & f^{(3)}_{3,3} & f^{(3)}_{3,4} & 0 \\
+      f^{(3)}_{4,1} & f^{(3)}_{4,2} & f^{(3)}_{4,3} & f^{(3)}_{4,4} &
+      \gamma - 1 \\
+      f^{(3)}_{5,1} & f^{(3)}_{5,2} & f^{(3)}_{5,3} & f^{(3)}_{5,4} &
+      f^{(3)}_{5,5}
+    \end{array}
+    \right)
+    \\
+    \begin{aligned}
+      f^{(3)}_{2,1} &= -\frac{u_2 u_4}{u_1^2}, \quad
+      f^{(3)}_{2,2} = f^{(3)}_{3,3} = \frac{u_4}{u_1}, \quad
+      f^{(3)}_{2,4} = \frac{u_2}{u_1}, \\
+      f^{(3)}_{3,1} &= -\frac{u_3 u_4}{u_1^2}, \quad
+      f^{(3)}_{3,3} = f^{(3)}_{2,2} = \frac{u_4}{u_1}, \quad
+      f^{(3)}_{3,4} = \frac{u_3}{u_1}, \\
+      f^{(3)}_{4,1} &= \frac{\gamma-1}{2}\frac{u_2^2}{u_1^2}
+      + \frac{\gamma-1}{2}\frac{u_3^2}{u_1^2}
+      + \frac{\gamma-3}{2}\frac{u_4^2}{u_1^2}, \\
+      f^{(3)}_{4,2} &= -(\gamma-1)\frac{u_2}{u_1}, \quad
+      f^{(3)}_{4,3} = -(\gamma-1)\frac{u_3}{u_1}, \quad
+      f^{(3)}_{4,4} = -(\gamma-3)\frac{u_4}{u_1}, \\
+      f^{(3)}_{5,1} &= -\gamma\frac{u_4 u_5}{u_1^2}
+      + (\gamma-1)\frac{u_2^2+u_3^2+u_4^2}{u_1^2}\frac{u_4}{u_1}, \quad
+      f^{(3)}_{5,4} = \gamma\frac{u_5}{u_1}
+      - \frac{\gamma-1}{2}\frac{u_2^2 + u_3^2 + 3u_4^2}{u_1^2}, \\
+      f^{(3)}_{5,2} &= -(\gamma-1)\frac{u_2 u_4}{u_1^2}, \quad
+      f^{(3)}_{5,3} = -(\gamma-1)\frac{u_3 u_4}{u_1^2}, \quad
+      f^{(3)}_{5,5} = \gamma\frac{u_4}{u_1}
+    \end{aligned}
+  \end{gathered}
+\end{gather}
+
+Equation~(\ref{e:euler:idx}) and the chain rule provide the following
+properties:
+%
+\begin{gather}
+  u_{mt} =
+  -\sum_{\mu=1}^3
+  \left(
+  \sum_{l=1}^5 f^{(\mu)}_{m,l} u_{lx_{\mu}}
+  \right),
+  \quad m = 1, 2, 3, 4, 5
+  \label{e:euler:ut}
+  \\
+  f^{(\mu)}_{mt} =
+  \sum_{l=1}^5 f^{(\mu)}_{m,l} u_{lt},
+  \quad \mu = 1, 2, 3, m = 1, 2, 3, 4, 5
+  \label{e:euler:ft}
+\end{gather}
+
+
+\section{Sod's Shock Tube Problem}
+
+\begin{figure}[h]
+\centering
+\includegraphics{tube_at_rest.eps}
+\caption{Gases are at rest in the tube.}
+\label{f:tube_at_rest}
+\end{figure}
+
+Consider a one-dimensional tube filled with two gases that are separated by a
+diaphragm (see \figurename~\ref{f:tube_at_rest}).  A high-pressure gas is at
+the left-hand side, and a low-pressure gas is at the right-hand side.  $p$
+denotes the pressure, $\rho$ the mass density, $\gamma$ the ratio of specific
+heat, and $u$ the velocity.  The gases is at rest initially ($t = t_0$).
+\begin{align}
+  p_1 < p_4 , \quad
+  \rho_1 < \rho_4, \quad
+  u_1 = u_4
+\end{align}
+The gas at the high-pressure side is called the driving gas, while the gas at
+the low-pressure side is called the driven gas.  When the diaphragm is removed,
+the driving gas pushes toward the driven gas and the gases around the diaphragm
+starts to move to right.  See \figurename~\ref{f:tube_move_right}.
+
+\begin{figure}[h]
+\centering
+\includegraphics{tube_move_right.eps}
+\caption{Gases move to right after the diaphragm disrupts.}
+\label{f:tube_move_right}
+\end{figure}
+
+Disruption of the diaphragm generates a right-moving normal shock wave and a
+left-moving expansion wave.  The flow in the tube looks like
+\figurename~\ref{f:tube_zones}.
+
+\begin{figure}[h]
+\centering
+\includegraphics{tube_zones.eps}
+\caption{The flow after the diaphragm disrupts in the tube.}
+\label{f:tube_zones}
+\end{figure}
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%
