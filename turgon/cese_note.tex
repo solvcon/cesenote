@@ -341,23 +341,23 @@ necessary to keep the solution from diverging.
 The governing equations of fluid flow consist of the conservation of mass,
 momentum, and energy
 %
-\begin{align}
+\begin{gather}
   \frac{\partial\rho}{\partial t} + \frac{\partial\rho v_j}{\partial x_j}
-  &= 0
+  = 0
   \label{e:euler:mass}
   \\
   \frac{\partial\rho v_i}{\partial t}
   + \frac{\partial\rho v_iv_j}{\partial x_j}
-  &= \frac{\partial p}{\partial x_j} + \rho b_i
+  = \frac{\partial p}{\partial x_j} + \rho b_i
   \label{e:euler:momentum}
   \\
   \frac{\partial}{\partial t}
   \left[\rho\left( e + \frac{v_k^2}{2} \right)\right]
   + \frac{\partial}{\partial x_j}
   \left[\rho\left( e + \frac{v_k^2}{2} \right)v_j\right]
-  &= \rho \dot{q} - \frac{\partial pv_j}{\partial x_j} + \rho b_jv_j
+  = \rho \dot{q} - \frac{\partial pv_j}{\partial x_j} + \rho b_jv_j
   \label{e:euler:energy}
-\end{align}
+\end{gather}
 %
 Einstein's index summation convention is used.
 The unknowns are density $\rho$, velocity $\mathbf{v}$, pressure $p$, and
@@ -636,6 +636,7 @@ $\mathrm{A^{(3)}}$ as
       f^{(1)}_{5,5} = \gamma\frac{u_2}{u_1}
     \end{aligned}
   \end{gathered}
+  \label{e:euler:jaco1}
 \end{gather}
 %
 \begin{gather}
@@ -674,6 +675,7 @@ $\mathrm{A^{(3)}}$ as
       f^{(2)}_{5,5} = \gamma\frac{u_3}{u_1}
     \end{aligned}
   \end{gathered}
+  \label{e:euler:jaco1}
 \end{gather}
 %
 \begin{gather}
@@ -712,6 +714,7 @@ $\mathrm{A^{(3)}}$ as
       f^{(3)}_{5,5} = \gamma\frac{u_4}{u_1}
     \end{aligned}
   \end{gathered}
+  \label{e:euler:jaco1}
 \end{gather}
 
 Equation~(\ref{e:euler:idx}) and the chain rule provide the following
@@ -732,8 +735,127 @@ properties:
   \label{e:euler:ft}
 \end{gather}
 
+\subsection{One-Dimension Euler Equations}
 
-\section{Sod's Shock Tube Problem}
+Reduce the governing equations (\ref{e:euler:mass}), (\ref{e:euler:momentum}),
+and(\ref{e:euler:energy}) to one dimensional:
+%
+\begin{gather}
+  \frac{\partial\rho}{\partial t} + \frac{\partial\rho v}{\partial x}
+  = 0
+  \label{e:euler1d:mass}
+  \\
+  \frac{\partial\rho v}{\partial t}
+  + \frac{\partial\rho v^2}{\partial x}
+  = \frac{\partial p}{\partial x} + \rho b
+  \label{e:euler1d:momentum}
+  \\
+  \frac{\partial}{\partial t}
+  \left[\rho\left( e + \frac{v^2}{2} \right)\right]
+  + \frac{\partial}{\partial x}
+  \left[\rho\left( e + \frac{v^2}{2} \right)v\right]
+  = \rho \dot{q} - \frac{\partial pv}{\partial x} + \rho b v
+  \label{e:euler1d:energy}
+\end{gather}
+%
+Equations~(\ref{e:euler:eos}) and (\ref{e:euler:internal_energy}) are also used
+to close the equations.
+
+The conservation variables:
+%
+\begin{align}
+  \mathbf{u} \defeq \left(
+  \begin{array}{c}
+    u_1 \\ u_2 \\ u_3
+  \end{array}\right) = \left(
+  \begin{array}{c}
+    \rho \\ \rho v \\ \rho\left(e+\frac{v^2}{2}\right)
+  \end{array}\right)
+  \label{e:euler1d:unknown}
+\end{align}
+%
+Important physical quantities
+%
+\begin{gather*}
+  \rho = u_1 \\
+  v = \frac{u_2}{u_1} \\
+  p = (\gamma - 1)(u_3 - \frac{u_2^2}{2u_1}) \\
+  T = \frac{\gamma - 1}{R}
+  \left(
+  \frac{u_3}{u_1} - \frac{1}{2} \frac{u_2^2}{u_1^2}
+  \right)
+\end{gather*}
+%
+\begin{gather}
+  \frac{\partial\mathbf{u}}{\partial t} + \frac{\partial\mathbf{f}}{\partial x}
+  = 0
+  \label{e:euler1d:vec}
+\end{gather}
+%
+The flux function is
+%
+\begin{align}
+  \begin{aligned}
+    f_1 &= u_2 \\
+    f_2 &= (\gamma-1)u_3 - \frac{\gamma-3}{2}\frac{u_2^2}{u_1} \\
+    f_3 &= \gamma\frac{u_2 u_3}{u_1}
+    - \frac{\gamma-1}{2}\frac{u_2^3}{u_1^2}
+  \end{aligned}
+  \label{e:euler1d:flux}
+\end{align}
+
+The index form is expanded from Eq.~(\ref{e:euler1d:vec})
+%
+\begin{align}
+  \frac{\partial u_m}{\partial t} + \frac{\partial f_m}{\partial x}
+  = 0, \quad m = 1, 2, 3
+  \label{e:euler1:idx}
+\end{align}
+%
+The properties derived from the index form
+%
+\begin{gather}
+  u_{mt} = -\sum_{l=1}^3 f_{m,l} u_{lx},  \quad m = 1, 2, 3
+  \label{e:euler1:ut}
+  \\
+  f_{mt} = \sum_{l=1}^3 f_{m,l} u_{lt},  \quad m = 1, 2, 3
+  \label{e:euler1:ft}
+\end{gather}
+%
+The quasi-linear form
+%
+\begin{align}
+  \frac{\partial\mathbf{u}}{\partial t}
+  + \mathrm{A} \frac{\partial\mathbf{u}}{\partial x} = 0
+  \label{e:euler1d:qlinear}
+\end{align}
+%
+has the elements in the matrix
+%
+\begin{gather}
+  \begin{gathered}
+    \mathrm{A}^{(1)} = \left(
+    \begin{array}{ccc}
+      0             & 1             & 0 \\
+      f_{2,1} & f_{2,2} & \gamma - 1 \\
+      f_{3,1} & f_{3,2} & f_{3,3}
+    \end{array}
+    \right)
+    \\
+    \begin{aligned}
+      f_{2,1} &= \frac{\gamma-3}{2}\frac{u_2^2}{u_1^2}, \quad
+      f_{2,2} = -(\gamma-3)\frac{u_2}{u_1}, \\
+      f_{3,1} &= -\gamma\frac{u_2 u_3}{u_1^2}
+      + (\gamma-1)\frac{u_2^3}{u_1^3}, \\
+      f_{3,2} &= \gamma\frac{u_3}{u_1}
+      - \frac{3}{2}(\gamma-1)\frac{u_2^2}{u_1^2}, \\
+      f_{3,3} &= \gamma\frac{u_2}{u_1}
+    \end{aligned}
+  \end{gathered}
+  \label{e:euler1d:jaco}
+\end{gather}
+
+\subsection{Sod's Shock Tube Problem}
 
 \begin{figure}[h]
 \centering
