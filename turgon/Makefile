@@ -1,3 +1,9 @@
+SETUP_FILE ?= ./setup.mk
+
+ifneq (,$(wildcard $(SETUP_FILE)))
+	include $(SETUP_FILE)
+endif
+
 PYTHON ?= python3
 SHELL = /bin/bash
 NUM ?= 3 # For LaTeX to correctly cross-reference.  To save time, use 1.
@@ -9,9 +15,6 @@ else
 	CMDLOG_DIR_REDIRECT := >&1
 endif
 PSTAKE := ./pstake.py
-
-PYTHONPATH := $(abspath ../spacetime):$(PYTHONPATH)
-export PYTHONPATH
 
 # tool binaries
 LATEX := latex -halt-on-error -interaction=nonstopmode -synctex=1
