@@ -20,7 +20,8 @@ PSTAKE := ./pstake.py
 LATEX := latex -halt-on-error -interaction=nonstopmode -synctex=1
 BIBTEX := bibtex
 DVIPS := dvips
-PS2PDF := ps2pdf
+# -dALLOWPSTRANSPARENCY is needed by fillstyle=solid
+PS2PDF := ps2pdf -dALLOWPSTRANSPARENCY
 ifeq ($(DOEPS),0)
 	DO_PSTAKE = mkdir -p $(EPS_DIR) ; touch $@
 	DO_PSPY = mkdir -p $(EPS_DIR) ; touch $@

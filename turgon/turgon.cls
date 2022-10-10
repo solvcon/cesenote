@@ -25,6 +25,7 @@ bottom=1.5cm,
 \usepackage{amsfonts}
 \usepackage{amsthm}
 \usepackage{arydshln}
+\usepackage{cancel}
 % Authoring.
 %\usepackage{authblk}
 \usepackage{xcolor}

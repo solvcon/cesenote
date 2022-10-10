@@ -675,7 +675,7 @@ $\mathrm{A^{(3)}}$ as
       f^{(2)}_{5,5} = \gamma\frac{u_3}{u_1}
     \end{aligned}
   \end{gathered}
-  \label{e:euler:jaco1}
+  \label{e:euler:jaco2}
 \end{gather}
 %
 \begin{gather}
@@ -714,7 +714,7 @@ $\mathrm{A^{(3)}}$ as
       f^{(3)}_{5,5} = \gamma\frac{u_4}{u_1}
     \end{aligned}
   \end{gathered}
-  \label{e:euler:jaco1}
+  \label{e:euler:jaco3}
 \end{gather}
 
 Equation~(\ref{e:euler:idx}) and the chain rule provide the following
@@ -855,50 +855,211 @@ has the elements in the matrix
   \label{e:euler1d:jaco}
 \end{gather}
 
-\subsection{Sod's Shock Tube Problem}
+\subsection{Shock Tube}
 
-\begin{figure}[h]
-\centering
-\includegraphics{tube_at_rest.eps}
-\caption{Gases are at rest in the tube.}
-\label{f:tube_at_rest}
-\end{figure}
-
-Consider a one-dimensional tube filled with two gases that are separated by a
-diaphragm (see \figurename~\ref{f:tube_at_rest}).
+Consider a (one-dimensional) tube filled with two gases that are separated by a
+diaphragm (\figurename~\ref{f:tube_at_rest}).
 A high-pressure gas is at the left-hand side, and a low-pressure gas is at
 the right-hand side.
 $p$ denotes the pressure, $\rho$ the mass density, $\gamma$ the ratio of
-specific heat, and $u$ the velocity.
+specific heat, and $v$ the velocity.
 The gases is at rest initially ($t = t_0$).
+%
 \begin{align}
-  p_1 < p_4 , \quad
-  \rho_1 < \rho_4, \quad
-  v_1 = v_4
+  p_1 > p_5 , \quad
+  \rho_1 > \rho_5, \quad
+  v_1 = v_5
 \end{align}
-The gas at the high-pressure side is called the driving gas, while the gas at
-the low-pressure side is called the driven gas.  When the diaphragm is removed,
-the driving gas pushes toward the driven gas and the gases around the diaphragm
-starts to move to right.  See \figurename~\ref{f:tube_move_right}.
+%
+The gas at the high-pressure side is called the driver gas, while the gas at
+the low-pressure side is called the driven gas.
+When the diaphragm is removed, the driver gas pushes toward the driven gas
+and the gases around the diaphragm starts to move to right.
+See \figurename~\ref{f:tube_move_right}.
 
 \begin{figure}[h]
-\centering
-\includegraphics{tube_move_right.eps}
-\caption{Gases move to right after the diaphragm disrupts.}
-\label{f:tube_move_right}
+  \centering
+  \includegraphics{tube_at_rest.eps}
+  \caption{Gases are at rest in the tube.}
+  \label{f:tube_at_rest}
+  \includegraphics{tube_move_right.eps}
+  \caption{Gases move to right after the diaphragm rupture.}
+  \label{f:tube_move_right}
 \end{figure}
-
-Disruption of the diaphragm generates a right-moving normal shock wave and a
-left-moving expansion wave.  The flow in the tube looks like
-\figurename~\ref{f:tube_zones}.
 
 \begin{figure}[h]
-\centering
-\includegraphics{tube_zones.eps}
-\caption{The flow after the diaphragm disrupts in the tube.}
-\label{f:tube_zones}
+  \centering
+  \includegraphics{tube_zones.eps}
+  \caption{The flow after the diaphragm disrupts in the tube.}
+  \label{f:tube_zones}
 \end{figure}
 
+The rupture of the diaphragm generates a right-moving normal shock wave and a
+left-moving expansion wave.
+The flow in the tube looks like
+\figurename~\ref{f:tube_zones}~\citep{anderson_modern_2003}.
+
+\subsubsection{Moving Normal Shock}
+
+Across zones 4 and 5 there is a normal shock moving at the speed $v_s$.
+The gas velocity $v_5$ in zone 5 is 0.
+The conservation of mass, momentum, and energy across the normal shock moving
+at the speed $v_s$ are written as
+%
+\begin{align}
+  \rho_4 (v_s - v_4) &= \rho_5 v_s
+  \label{e:nshock:mass}
+  \\
+  p_4 + \rho_4 (v_s - v_4)^2 &= p_5 + \rho_5 v_s^2
+  \label{e:nshock:momentum}
+  \\
+  h_4 + \frac{(v_s - v_4)^2}{2} &= h_5 + \frac{v_s^2}{2}
+  \label{e:nshock:energe}
+\end{align}
+%
+Obtain the relationship between $v_s$ and $v_s-v_4$ by using
+Eq.~(\ref{e:nshock:mass}) (conservation of mass)
+%
+\begin{gather*}
+  v_s = \frac{\rho_4}{\rho_5}(v_s - v_4) \\
+  v_s - v_4 = \frac{\rho_5}{\rho_4}v_s
+\end{gather*}
+%
+Substitute the equation above to Eq.(\ref{e:nshock:momentum}) to have
+%
+\begin{gather*}
+  p_4 + \rho_4 \left(\frac{\rho_5}{\rho_4}v_s\right)^2 = p_5 + \rho_5 v_s^2 \\
+  \Rightarrow \quad
+  p_4 - p_5 = \rho_5 v_s^2 - \frac{\rho_5^2}{\rho_4} v_s^2
+  = \rho_5 v_s^2 \left(1 - \frac{\rho_5}{\rho_4}\right) \\
+  \Rightarrow \quad
+  v_s^2 = \frac{p_4 - p_5}{\rho_5\left(1 - \frac{\rho_5}{\rho_4}\right)}
+  = \left(\frac{\rho_4}{\rho_5}\right)
+  \left(\frac{p_4 - p_5}{\rho_4 - \rho_5}\right) \\
+  \Rightarrow \quad
+  (v_s - v_4)^2 = \left(\frac{\rho_5}{\rho_4}\right)^2 v_s^2
+  = \left(\frac{\rho_5}{\rho_4}\right)
+  \left(\frac{p_4 - p_5}{\rho_4 - \rho_5}\right) \\
+\end{gather*}
+%
+Recall the relationship $h = e + \frac{p}{\rho}$ and use the above expressions
+of $v_s^2$ and $(v_s - v_4)^2$.
+Substitute them to Eq.~(\ref{e:nshock:mass}) to have
+%
+\begin{gather*}
+  e_4 + \frac{p_4}{\rho_4}
+  + \frac{1}{2} \left(\frac{\rho_5}{\rho_4}\right)
+  \left(\frac{p_4 - p_5}{\rho_4 - \rho_5}\right)
+  = e_5 + \frac{p_5}{\rho_5}
+  + \left(\frac{\rho_4}{\rho_5}\right)
+  \left(\frac{p_4 - p_5}{\rho_4 - \rho_5}\right)
+  \\
+  \Rightarrow
+  e_4 - e_5 = \frac{p_5}{\rho_5} - \frac{p_4}{\rho_4}
+  + \frac{1}{2} \left(\frac{\rho_4}{\rho_5} - \frac{\rho_5}{\rho_4}\right)
+  \left(\frac{p_4 - p_5}{\rho_4 - \rho_5}\right)
+\end{gather*}
+%
+Rewrite to obtain
+%
+\begin{align*}
+  e_4 - e_5 &= \frac{2 (\rho_4 p_5 - \rho_5 p_4) (\rho_4 - \rho_5)}
+  {2 \rho_4 \rho_5 (\rho_4 - \rho_5)}
+  + \frac{(\rho_4^2 - \rho_5^2) (p_4 - p_5)}
+  {2 \rho_4 \rho_5 (\rho_4 - \rho_5)}
+  \\
+  &= \left(\frac{1}{2 \rho_4 \rho_5}\right)
+  \left(
+  \cancel{2} \rho_4 p_5 - \cancel{2} \rho_5 p_4
+  + \rho_4 p_4 - \cancel{\rho_4 p_5} + \cancel{\rho_5 p_4} - \rho_5 p_5
+  \right)
+  \\
+  &= \left(\frac{p_4 + p_5}{2}\right)
+  \left(\frac{\rho_4 - \rho_5}{\rho_4 \rho_5}\right)
+\end{align*}
+%
+The Hugoniot equation is obtained for the moving shock
+%
+\begin{align}
+  e_4 - e_5 = \left(\frac{p_4 + p_5}{2}\right)
+  \left(\frac{1}{\rho_5} - \frac{1}{\rho_4}\right)
+  \label{e:nshock:hugoniot}
+\end{align}
+
+By assuming calorically ideal gas, $e = c_v T$, $\gamma = \frac{R}{c_v} + 1$,
+and $p = \rho RT$, the Hugoniot equation leads to
+%
+\begin{gather}
+  \frac{T_4}{T_5} = \frac{p_4}{p_5}
+  \left(
+  \frac{\dfrac{\gamma + 1}{\gamma - 1} + \dfrac{p_4}{p_5}}
+  {1 + \dfrac{\gamma + 1}{\gamma - 1} \dfrac{p_4}{p_5}}
+  \right)
+  \label{e:nshock:T}
+  \\
+  \frac{\rho_4}{\rho_5} =
+  \left(
+  \frac{1 + \dfrac{\gamma + 1}{\gamma - 1} \dfrac{p_4}{p_5}}
+  {\dfrac{\gamma + 1}{\gamma - 1} + \dfrac{p_4}{p_5}}
+  \right)
+  \label{e:nshock:rho}
+\end{gather}
+%
+Define the Mach number of the moving normal shock
+%
+\begin{gather*}
+  M_s = \frac{v_s}{a_5}
+\end{gather*}
+%
+The relation of the pressure across the shock wave is
+%
+\begin{gather*}
+  \frac{p_4}{p_5} = 1 + \frac{2\gamma}{\gamma + 1}(M_s^2 - 1) \\
+  \Rightarrow \quad
+  M_s = \sqrt{\frac{\gamma + 1}{2\gamma}\left(\frac{p_4}{p_5} - 1\right) + 1}
+\end{gather*}
+
+Aided by the definition of $M_s$, the velocity of the shock can be written as
+%
+\begin{gather}
+  v_s = a_5
+  \sqrt{\frac{\gamma + 1}{2\gamma}\left(\frac{p_4}{p_5} - 1\right) + 1}
+  \label{e:nshock:v_s}
+\end{gather}
+%
+Plug Eq.~(\ref{e:nshock:rho}) and the above equation (\ref{e:nshock:v_s}) to
+Eq.~(\ref{e:nshock:mass}) (conservation of mass) to have
+%
+\begin{align*}
+  v_4 &= \left(1 - \frac{\rho_5}{\rho_4}\right) v_s
+  \\
+  &= a_5 \left(1 - \frac{\rho_5}{\rho_4}\right)
+  \sqrt{\frac{\gamma + 1}{2\gamma}\left(\frac{p_4}{p_5} - 1\right) + 1}
+  \\
+  &=
+  \frac{a_5}{\gamma} \left(\frac{p_4}{p_5} - 1\right)
+  \left[
+    \left(\frac{\gamma+1}{2\gamma}\right) \left(\frac{p_4}{p_5} - 1\right) + 1
+    \right]^{-\frac{1}{2}}
+\end{align*}
+%
+Further simplify to get
+%
+\begin{align}
+  v_4 = \frac{a_5}{\gamma} \left(\frac{p_4}{p_5} - 1\right)
+  \left(
+  \dfrac{\dfrac{2\gamma}{\gamma+1}}
+  {\dfrac{p_4}{p_5} + \dfrac{\gamma-1}{\gamma+1}}
+  \right)^{\frac{1}{2}}
+  \label{e:nshock:v_4}
+\end{align}
+%
+The value of the speed of sound (assuming calorically ideal gas) can be
+obtained by
+%
+\begin{align*}
+  a = \sqrt{\gamma R T} = \sqrt{\frac{\gamma p}{\rho}}
+\end{align*}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%
